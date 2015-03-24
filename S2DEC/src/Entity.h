@@ -59,6 +59,7 @@ namespace S2D{
 		}
 
 		virtual bool update(sf::Time frameTime);
+		virtual bool draw(sf::RenderTarget& target);
 
 		const int getId();
 		const string getName();

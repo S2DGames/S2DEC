@@ -18,7 +18,7 @@
 // 3. This notice may not be removed or altered from any source distribution.
 #pragma once
 #include "Box2D\Dynamics\b2WorldCallbacks.h"
-#include "Physics.h"
+#include "Component.h"
 
 namespace S2D{
 

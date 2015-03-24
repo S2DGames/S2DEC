@@ -4,6 +4,7 @@
 #include <bitset>
 #include <memory>
 #include <algorithm>
+#include "SFML/System/Time.hpp"
 #include "SFML/Graphics/RenderTarget.hpp"
 #include "Box2D/Dynamics/Contacts/b2Contact.h"
 using std::string;

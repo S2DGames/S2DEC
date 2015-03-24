@@ -87,23 +87,19 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\CollisionListener.cpp" />
     <ClCompile Include="src\Controls.cpp" />
-    <ClCompile Include="src\Drawable.cpp" />
     <ClCompile Include="src\EventManager.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Entity.cpp" />
-    <ClCompile Include="src\Physics.cpp" />
     <ClCompile Include="src\ResourceManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CollisionListener.h" />
     <ClInclude Include="src\Component.h" />
-    <ClInclude Include="src\ComponentMaintainer.h" />
     <ClInclude Include="src\Controls.h" />
-    <ClInclude Include="src\Drawable.h" />
+    <ClInclude Include="src\EntityManager.h" />
     <ClInclude Include="src\EventManager.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\Entity.h" />
-    <ClInclude Include="src\Physics.h" />
     <ClInclude Include="src\Position.h" />
     <ClInclude Include="src\ResourceManager.h" />
     <ClInclude Include="src\Size.h" />

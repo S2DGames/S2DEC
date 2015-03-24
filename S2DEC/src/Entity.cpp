@@ -22,4 +22,12 @@ bool Entity::update(sf::Time frameTime){
 	for(auto& component : components){
 		component->update(frameTime);
 	}
+	return false;
+}
+
+bool Entity::draw(sf::RenderTarget& target){
+	for(auto& component : components){
+		component->draw(target);
+	}
+	return false;
 }

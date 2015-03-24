@@ -5,6 +5,7 @@
 #include "Controls.h"
 #include "ResourceManager.h"
 #include "EventManager.h"
+#include "EntityManager.h"
 #include "CollisionListener.h"
 
 namespace S2D{
@@ -21,7 +22,7 @@ namespace S2D{
 	*/
 	const int32 POSITION_ITERATIONS = 8;
 
-	class Game : public sf::RenderWindow, public b2World, public Controls, public ResourceManager, public EventManager, public CollisionListener{
+	class Game : public sf::RenderWindow, public b2World, public Controls, public ResourceManager, public EventManager, public EntityManager, public CollisionListener{
 	private:
 		/*!
 		* The amount of time between each step in the box2D world.
@@ -33,10 +34,15 @@ namespace S2D{
 		 */
 		bool running;
 
+		sf::VideoMode videoMode;
+
+		string title;
+
 	public:
 		Game(unsigned int width, unsigned int height, const string name);
 
 		void setGravity(sf::Vector2f gravity);
+		void init();
 		int play();
 	};
 

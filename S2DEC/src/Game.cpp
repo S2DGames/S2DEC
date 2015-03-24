@@ -2,21 +2,27 @@
 #include "../TestObject.h"
 using namespace S2D;
 
-Game::Game(unsigned int width, unsigned int height, const string name) : 
-		sf::RenderWindow(sf::VideoMode(width, height), name),
+Game::Game(unsigned int width, unsigned int height, const string name) :
+		sf::RenderWindow(),
 		b2World(b2Vec2(0.0, 0.0)),
 		Controls(this),
-		EventManager(this){
+		EventManager(this),
+		videoMode(width, height),
+		title(name){
 
 	b2World::SetContactListener(this);
 	running = false;
 
 	timeStep = 1.0f / (float)FRAMERATE;
-	sf::RenderWindow::setFramerateLimit(FRAMERATE);
 }
 
 void Game::setGravity(sf::Vector2f gravity){
 	b2World::SetGravity(b2Vec2(gravity.x, gravity.y));
+}
+
+void Game::init(){
+	sf::RenderWindow::create(videoMode, title);
+	sf::RenderWindow::setFramerateLimit(FRAMERATE);
 }
 
 int Game::play(){
