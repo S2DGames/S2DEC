@@ -21,8 +21,8 @@
 using namespace S2D;
 
 void CollisionListener::BeginContact(b2Contact* contact){
-	Physics* a = (Physics*)contact->GetFixtureA()->GetBody()->GetUserData();
-	Physics* b = (Physics*)contact->GetFixtureB()->GetBody()->GetUserData();
+	Component* a = (Component*)contact->GetFixtureA()->GetBody()->GetUserData();
+	Component* b = (Component*)contact->GetFixtureB()->GetBody()->GetUserData();
 	if(a != nullptr){
 		a->beginCollision(b, contact);
 	}
@@ -32,8 +32,8 @@ void CollisionListener::BeginContact(b2Contact* contact){
 }
 
 void CollisionListener::EndContact(b2Contact* contact){
-	Physics* a = (Physics*)contact->GetFixtureA()->GetBody()->GetUserData();
-	Physics* b = (Physics*)contact->GetFixtureB()->GetBody()->GetUserData();
+	Component* a = (Component*)contact->GetFixtureA()->GetBody()->GetUserData();
+	Component* b = (Component*)contact->GetFixtureB()->GetBody()->GetUserData();
 	if(a != nullptr){
 		a->endCollision(b, contact);
 	}

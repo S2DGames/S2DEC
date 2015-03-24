@@ -2,7 +2,7 @@
 #include "../TestObject.h"
 using namespace S2D;
 
-Game::Game(unsigned int width, unsigned int height, string name) : 
+Game::Game(unsigned int width, unsigned int height, const string name) : 
 		sf::RenderWindow(sf::VideoMode(width, height), name),
 		b2World(b2Vec2(0.0, 0.0)),
 		Controls(this),
@@ -11,9 +11,8 @@ Game::Game(unsigned int width, unsigned int height, string name) :
 	b2World::SetContactListener(this);
 	running = false;
 
-	timeStep = 1.0f / 60.0f;
-	velocityIterations = 9;
-	positionIterations = 8;
+	timeStep = 1.0f / (float)FRAMERATE;
+	sf::RenderWindow::setFramerateLimit(FRAMERATE);
 }
 
 void Game::setGravity(sf::Vector2f gravity){
@@ -22,7 +21,8 @@ void Game::setGravity(sf::Vector2f gravity){
 
 int Game::play(){
 	//Load all resources
-	TestObject test(this);
+	//TestObject test(this);
+	Entity testEntity("test");
 
 	//Create batched texture
 	ResourceManager::createBatch();
@@ -41,19 +41,19 @@ int Game::play(){
 
 		//update objects in the scene
 			//update physics
-			b2World::Step(timeStep, velocityIterations, positionIterations);
+			b2World::Step(timeStep, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 
 			//update other stuff
 			//TODO
-			//EntityManager::update(clock.getElapsedTime());
+			EntityManager::update(clock.getElapsedTime());
+
+		clock.restart();
 
 		//draw objects in the scene
 			//EntityManager::draw();
 			sf::RenderWindow::clear();
 			
 			sf::RenderWindow::display();
-
-		clock.restart();
 	}
 	return 0;
 }

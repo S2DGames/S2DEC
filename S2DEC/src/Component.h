@@ -1,49 +1,84 @@
 #pragma once
 
 #include <string>
+#include <bitset>
+#include <memory>
+#include <algorithm>
+#include "SFML/Graphics/RenderTarget.hpp"
+#include "Box2D/Dynamics/Contacts/b2Contact.h"
 using std::string;
+using std::size_t;
+using std::bitset;
+using std::is_base_of;
+
+#ifndef _MSC_VER
+#define NOEXCEPT noexcept
+#else
+#define NOEXCEPT
+#endif
 
 namespace S2D{
 
+#define MAX_COMPONENTS 64
+
+	//The next two functions are from Vittorio Romeo. https://www.youtube.com/watch?v=QAmtgvwHInM
+	inline size_t getComponentID() NOEXCEPT{
+		static size_t lastID{0u};
+		return lastID++;
+	}
+
+	template<class T>
+	inline size_t getComponentTypeID() NOEXCEPT{
+		static_assert(is_base_of<Component, T>::value, "T must inheret from Component");
+		static size_t typeID{getComponentID()};
+		return typeID;
+	}
+
+	class Entity;
+
 	class Component{
 	private:
-		const string type;
+		Entity* owner;
 
 	public:
-		Component() : type("NO TYPE"){
+		Component(){
 
 		}
 
-		Component(string type) : type(type){
-			
+		virtual ~Component(){
+
 		}
 
-		const string getType(){
-			return type;
-		}
+		virtual void init(){
 
-		virtual const bool hasPosition(){
-			return false;
-		}
-
-		virtual const bool hasControls(){
-			return false;
-		}
-
-		virtual const bool hasSize(){
-			return false;
-		}
-
-		virtual const bool hasImage(){
-			return false;
 		}
 
 		virtual void onStart(){
 
 		}
 
-		virtual bool update(){
+		virtual bool update(sf::Time frameTime){
 			return false;
+		}
+
+		virtual void draw(sf::RenderTarget& target){
+
+		}
+
+		virtual void draw(sf::RenderTarget& target, sf::RenderStates& states){
+
+		}
+
+		virtual void beginCollision(Component* collidedComponent, b2Contact* contact){
+
+		}
+
+		virtual void endCollision(Component* collidedComponent, b2Contact* contact){
+
+		}
+
+		void setOwner(Entity* owner){
+			this->owner = owner;
 		}
 	};
 

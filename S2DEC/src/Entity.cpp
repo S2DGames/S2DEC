@@ -10,7 +10,7 @@ Entity::~Entity(){
 
 }
 
-const int Entity::getId() {
+const int Entity::getId(){
 	return id;
 }
 
@@ -18,18 +18,8 @@ const string Entity::getName(){
 	return name;
 }
 
-bool Entity::addComponent(Component* component){
-	return ComponentMaintainer::addComponent(component);
-}
-
-bool Entity::update(){
-	return false;
-}
-
-void Entity::beginCollision(Physics* physicsComponent, b2Contact* contact){
-
-}
-
-void Entity::endCollision(Physics* physicsComponent, b2Contact* contact){
-
+bool Entity::update(sf::Time frameTime){
+	for(auto& component : components){
+		component->update(frameTime);
+	}
 }
