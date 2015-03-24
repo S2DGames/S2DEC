@@ -38,7 +38,8 @@ namespace S2D{
 	class Entity;
 
 	class Component{
-	private:
+	friend class Entity;
+	protected:
 		Entity* owner;
 
 	public:
