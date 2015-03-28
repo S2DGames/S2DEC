@@ -93,6 +93,9 @@
     <ClCompile Include="src\ResourceManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ShipControls.h" />
+    <ClInclude Include="ShipImage.h" />
+    <ClInclude Include="ShipPhysics.h" />
     <ClInclude Include="src\CollisionListener.h" />
     <ClInclude Include="src\Component.h" />
     <ClInclude Include="src\Controls.h" />
@@ -103,6 +106,7 @@
     <ClInclude Include="src\Position.h" />
     <ClInclude Include="src\ResourceManager.h" />
     <ClInclude Include="src\Size.h" />
+    <ClInclude Include="StarImage.h" />
     <ClInclude Include="TestObject.h" />
     <ClInclude Include="TestObject2.h" />
   </ItemGroup>
