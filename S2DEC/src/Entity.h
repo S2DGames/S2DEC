@@ -1,21 +1,26 @@
 #pragma once
 
 #include <vector>
+#include <array>
 #include <iostream>
 #include "SFML/System/Time.hpp"
 #include "Component.h"
 
 using std::string;
 using std::vector;
+using std::array;
 using std::unique_ptr;
+using std::bitset;
 using std::move;
 using std::cerr;
 using std::endl;
 
 namespace S2D{
-
+#define MAX_COMPONENTS 64
 	static int currentId;
 
+	class Component;
+	
 	class Entity{
 	private:
 		int id;
@@ -23,11 +28,11 @@ namespace S2D{
 		string name;
 
 		vector<unique_ptr<Component>> components;
-		Component* componentArray[MAX_COMPONENTS];
+		//Component* componentArray[MAX_COMPONENTS];
+		array<Component*, MAX_COMPONENTS> componentArray;
 
 	public:
 		Entity(string name);
-		virtual ~Entity();
 
 		//The next 3 functions are from Vittorio Romeo. https://www.youtube.com/watch?v=QAmtgvwHInM
 		template<class T>
@@ -43,7 +48,7 @@ namespace S2D{
 			unique_ptr<Component> uniqueComponentPtr{component};
 			components.emplace_back(move(uniqueComponentPtr));
 			size_t componentID = getComponentTypeID<T>();
-			componentArray[componentID];
+			componentArray[componentID] = component;
 			componentBitset[componentID] = true;
 
 			component->setOwner(this);
@@ -52,7 +57,7 @@ namespace S2D{
 		}
 
 		template<class T>
-		T& getComponent() const{
+		T& getComponent(){
 			assert(hasComponent<T>());
 			auto componentPtr(componentArray[getComponentTypeID<T>()]);
 			return *static_cast<T*>(componentPtr);

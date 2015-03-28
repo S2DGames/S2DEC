@@ -6,10 +6,6 @@ Entity::Entity(string name) : id(currentId), name(name){
 	currentId++;
 }
 
-Entity::~Entity(){
-
-}
-
 const int Entity::getId(){
 	return id;
 }

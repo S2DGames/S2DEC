@@ -10,6 +10,8 @@
 
 namespace S2D{
 
+	enum GameState{CLOSING = 0, RUNNING, PAUSED, LOADING, INITIALIZING};
+
 	const unsigned int FRAMERATE = 60;
 
 	/*!
@@ -22,6 +24,8 @@ namespace S2D{
 	*/
 	const int32 POSITION_ITERATIONS = 8;
 
+	const sf::Vector2u SCREEN_SIZE{1366, 768};
+
 	class Game : public sf::RenderWindow, public b2World, public Controls, public ResourceManager, public EventManager, public EntityManager, public CollisionListener{
 	private:
 		/*!
@@ -32,7 +36,7 @@ namespace S2D{
 		/*!
 		 * If the game is running, this will be true.
 		 */
-		bool running;
+		GameState state;
 
 		sf::VideoMode videoMode;
 

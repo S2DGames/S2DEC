@@ -7,6 +7,7 @@
 #include "SFML/System/Time.hpp"
 #include "SFML/Graphics/RenderTarget.hpp"
 #include "Box2D/Dynamics/Contacts/b2Contact.h"
+#include "Entity.h"
 using std::string;
 using std::size_t;
 using std::bitset;
@@ -19,8 +20,6 @@ using std::is_base_of;
 #endif
 
 namespace S2D{
-
-#define MAX_COMPONENTS 64
 
 	//The next two functions are from Vittorio Romeo. https://www.youtube.com/watch?v=QAmtgvwHInM
 	inline size_t getComponentID() NOEXCEPT{

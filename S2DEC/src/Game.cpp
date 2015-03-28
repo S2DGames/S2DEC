@@ -1,5 +1,4 @@
 #include "Game.h"
-#include "../TestObject.h"
 using namespace S2D;
 
 Game::Game(unsigned int width, unsigned int height, const string name) :
@@ -9,9 +8,9 @@ Game::Game(unsigned int width, unsigned int height, const string name) :
 		EventManager(this),
 		videoMode(width, height),
 		title(name){
-
+	
 	b2World::SetContactListener(this);
-	running = false;
+	state = INITIALIZING;
 
 	timeStep = 1.0f / (float)FRAMERATE;
 }
@@ -27,19 +26,18 @@ void Game::init(){
 
 int Game::play(){
 	//Load all resources
-	//TestObject test(this);
-	Entity testEntity("test");
-
+	state = LOADING;
 	//Create batched texture
 	ResourceManager::createBatch();
 
-	running = true;
+	state = RUNNING;
 	sf::Clock clock;
 	clock.restart();
-	while(running){
+	while(state == RUNNING){
 		//capture and store input
 			if(Controls::updateControls() == CLOSE){
-				return CLOSE;
+				state = CLOSING;
+				break;
 			}
 
 		//update events
@@ -49,17 +47,19 @@ int Game::play(){
 			//update physics
 			b2World::Step(timeStep, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 
-			//update other stuff
-			//TODO
+			//update components
 			EntityManager::update(clock.getElapsedTime());
 
-		clock.restart();
+		//reset clock and screen
+			clock.restart();
+			sf::RenderWindow::clear();
 
 		//draw objects in the scene
-			//EntityManager::draw();
-			sf::RenderWindow::clear();
-			
+			EntityManager::draw(*this);
 			sf::RenderWindow::display();
 	}
+
+	sf::RenderWindow::close();
+	
 	return 0;
 }
