@@ -17,14 +17,12 @@ namespace S2D{
 	/*!
 	* The number of frames that box2D will process small diminshing changes in velocity.
 	*/
-	const int32 VELOCITY_ITERATIONS = 9;
+	const int32 VELOCITY_ITERATIONS = 7;
 
 	/*!
 	* The number of frames that box2D will process small diminishing changes in position.
 	*/
-	const int32 POSITION_ITERATIONS = 8;
-
-	const sf::Vector2u SCREEN_SIZE{1366, 768};
+	const int32 POSITION_ITERATIONS = 5;
 
 	class Game : public sf::RenderWindow, public b2World, public Controls, public ResourceManager, public EventManager, public EntityManager, public CollisionListener{
 	private:
@@ -44,10 +42,10 @@ namespace S2D{
 
 	public:
 		Game(unsigned int width, unsigned int height, const string name);
-
-		void setGravity(sf::Vector2f gravity);
 		void init();
 		int play();
+
+		static sf::Vector2u SCREEN_SIZE;
 	};
 
 }

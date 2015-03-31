@@ -14,6 +14,12 @@ const string Entity::getName(){
 	return name;
 }
 
+void Entity::onStart(){
+	for(auto& component : components){
+		component->onStart();
+	}
+}
+
 bool Entity::update(sf::Time frameTime){
 	for(auto& component : components){
 		component->update(frameTime);
@@ -21,9 +27,8 @@ bool Entity::update(sf::Time frameTime){
 	return false;
 }
 
-bool Entity::draw(sf::RenderTarget& target){
+void Entity::draw(sf::RenderTarget& target){
 	for(auto& component : components){
 		component->draw(target);
 	}
-	return false;
 }

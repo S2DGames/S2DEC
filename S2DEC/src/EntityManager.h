@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Entity.h"
 
 namespace S2D{
@@ -7,14 +9,22 @@ namespace S2D{
 		vector<unique_ptr<Entity>> entities;
 
 	public:
-		void addEntity(Entity* entity){
+		Entity& createEntity(string name){
+			Entity* entity = new Entity(name);
 			unique_ptr<Entity> uniqueEntityPtr{entity};
 			entities.emplace_back(move(uniqueEntityPtr));
+			return *entity;
 		}
 
-		void update(const sf::Time frameTime){
+		void onStart(){
 			for(auto& entity : entities){
-				entity->update(frameTime);
+				entity->onStart();
+			}
+		}
+
+		void update(sf::Clock& frameClock){
+			for(auto& entity : entities){
+				entity->update(frameClock.getElapsedTime());
 			}
 		}
 

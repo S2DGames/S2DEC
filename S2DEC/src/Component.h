@@ -37,16 +37,12 @@ namespace S2D{
 	class Entity;
 
 	class Component{
-	friend class Entity;
+		friend class CollisionListener;
+		friend class Entity;
 	protected:
 		Entity* owner;
 
-	public:
 		Component(){
-
-		}
-
-		virtual ~Component(){
 
 		}
 
@@ -80,6 +76,11 @@ namespace S2D{
 
 		void setOwner(Entity* owner){
 			this->owner = owner;
+		}
+
+	public:
+		virtual ~Component(){
+
 		}
 	};
 

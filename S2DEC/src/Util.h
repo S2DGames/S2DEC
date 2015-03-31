@@ -1,0 +1,4 @@
+#define PI 3.141592653589793
+#define RADTODEG 180/PI
+#define DEGTORAD PI/180
+#define SCALE 100

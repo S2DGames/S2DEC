@@ -20,8 +20,10 @@ namespace S2D{
 	static int currentId;
 
 	class Component;
+	class EntityManager;
 	
 	class Entity{
+		friend class EntityManager;
 	private:
 		int id;
 		bitset<MAX_COMPONENTS> componentBitset;
@@ -31,9 +33,9 @@ namespace S2D{
 		//Component* componentArray[MAX_COMPONENTS];
 		array<Component*, MAX_COMPONENTS> componentArray;
 
-	public:
 		Entity(string name);
 
+	public:
 		//The next 3 functions are from Vittorio Romeo. https://www.youtube.com/watch?v=QAmtgvwHInM
 		template<class T>
 		bool hasComponent(){
@@ -63,8 +65,9 @@ namespace S2D{
 			return *static_cast<T*>(componentPtr);
 		}
 
-		virtual bool update(sf::Time frameTime);
-		virtual bool draw(sf::RenderTarget& target);
+		void onStart();
+		bool update(sf::Time frameTime);
+		void draw(sf::RenderTarget& target);
 
 		const int getId();
 		const string getName();

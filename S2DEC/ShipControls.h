@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Component.h"
 #include "Controls.h"
 
@@ -11,6 +13,7 @@ private:
 		if(ks == KEY_PRESSED || ks == KEY_HELD){
 			return true;
 		}
+		return false;
 	}
 
 public:
@@ -20,21 +23,21 @@ public:
 
 	bool up(){
 		KeyState ks = controls->getKeyState(sf::Keyboard::W);
-		pressedOrHeld(ks);
+		return pressedOrHeld(ks);
 	}
 
 	bool down(){
 		KeyState ks = controls->getKeyState(sf::Keyboard::S);
-		pressedOrHeld(ks);
+		return pressedOrHeld(ks);
 	}
 
 	bool left(){
 		KeyState ks = controls->getKeyState(sf::Keyboard::A);
-		pressedOrHeld(ks);
+		return pressedOrHeld(ks);
 	}
 
 	bool right(){
 		KeyState ks = controls->getKeyState(sf::Keyboard::D);
-		pressedOrHeld(ks);
+		return pressedOrHeld(ks);
 	}
 };

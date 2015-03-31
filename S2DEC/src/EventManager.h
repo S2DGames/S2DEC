@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Controls.h"
 #include "Entity.h"
 #include <functional>
