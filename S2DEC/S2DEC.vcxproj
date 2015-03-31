@@ -85,6 +85,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ShipPhysics.cpp" />
     <ClCompile Include="src\CollisionListener.cpp" />
     <ClCompile Include="src\Controls.cpp" />
     <ClCompile Include="src\EventManager.cpp" />
@@ -103,12 +104,9 @@
     <ClInclude Include="src\EventManager.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\Entity.h" />
-    <ClInclude Include="src\Position.h" />
     <ClInclude Include="src\ResourceManager.h" />
-    <ClInclude Include="src\Size.h" />
+    <ClInclude Include="src\Util.h" />
     <ClInclude Include="StarImage.h" />
-    <ClInclude Include="TestObject.h" />
-    <ClInclude Include="TestObject2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
