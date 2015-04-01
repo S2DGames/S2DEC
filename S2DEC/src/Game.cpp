@@ -26,7 +26,7 @@ int Game::play(){
 	//Load all resources
 	state = LOADING;
 	//Create batched texture
-	ResourceManager::createBatch();
+	//ResourceManager::createBatch();
 
 	//call onStart for each component
 	EntityManager::onStart();

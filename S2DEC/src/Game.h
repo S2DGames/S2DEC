@@ -24,16 +24,13 @@ namespace S2D{
 	*/
 	const int32 POSITION_ITERATIONS = 5;
 
-	class Game : public sf::RenderWindow, public b2World, public Controls, public ResourceManager, public EventManager, public EntityManager, public CollisionListener{
+	class Game : public sf::RenderWindow, public b2World, public Controls, public EventManager, public EntityManager, public CollisionListener{
 	private:
 		/*!
 		* The amount of time between each step in the box2D world.
 		*/
 		float32 timeStep;
 
-		/*!
-		 * If the game is running, this will be true.
-		 */
 		GameState state;
 
 		sf::VideoMode videoMode;
