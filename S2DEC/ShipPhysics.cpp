@@ -2,7 +2,7 @@
 #include "ShipImage.h"
 #include "Util.h"
 
-ShipPhysics::ShipPhysics(Game* game) : world(game), window(*game){
+ShipPhysics::ShipPhysics(Game* game) : world(*game), window(*game){
 	bodyDef.type = b2_dynamicBody;
 	shape.m_radius = 1.0f;
 	fixtureDef.shape = &shape;
@@ -13,10 +13,10 @@ ShipPhysics::ShipPhysics(Game* game) : world(game), window(*game){
 void ShipPhysics::init(){
 	if(owner->hasComponent<ShipControls>()){
 		shipControls = &owner->getComponent<ShipControls>();
-	} else{
+	}else{
 		cerr << owner->getName() << ": ShipControls component missing" << endl;
 	}
-	body = world->CreateBody(&bodyDef);
+	body = world.CreateBody(&bodyDef);
 	body->SetUserData(this);
 	body->SetAngularDamping(2.5f);
 }
@@ -30,11 +30,13 @@ void ShipPhysics::onStart(){
 	}
 	body->CreateFixture(&fixtureDef);
 	view = window.getView();
+
+	view.setSize(view.getSize().x - 200.0f, view.getSize().y - 112.5f);
 }
 
 bool ShipPhysics::update(sf::Time frameTime){
 	view.setCenter(body->GetPosition().x * SCALE, body->GetPosition().y * SCALE);
-	view.setRotation(body->GetAngle() * RADTODEG);
+	view.setRotation((float)(body->GetAngle() * RADTODEG));
 	window.setView(view);
 
 	b2Vec2 velocity = body->GetLinearVelocity();
@@ -61,21 +63,21 @@ bool ShipPhysics::update(sf::Time frameTime){
 	float desiredAngle = 0.0f;
 
 	if(shipControls->left()){
-		desiredAngle = angle * RADTODEG - 90;
+		desiredAngle = (float)(angle * RADTODEG - 90);
 	}
 
 	if(shipControls->right()){
-		desiredAngle = angle * RADTODEG + 90;
+		desiredAngle = (float)(angle * RADTODEG + 90);
 	}
 
 	if(shipControls->left() || shipControls->right()){
 		float nextAngle = angle + body->GetAngularVelocity() / 60;
-		float totalRotation = desiredAngle * DEGTORAD - nextAngle;
-		while(totalRotation < -180 * DEGTORAD){
-			totalRotation += 360 * DEGTORAD;
+		float totalRotation = desiredAngle * (float)DEGTORAD - nextAngle;
+		while(totalRotation < -180 * (float)DEGTORAD){
+			totalRotation += 360 * (float)DEGTORAD;
 		}
-		while(totalRotation > 180 * DEGTORAD){
-			totalRotation -= 360 * DEGTORAD;
+		while(totalRotation > 180 * (float)DEGTORAD){
+			totalRotation -= 360 * (float)DEGTORAD;
 		}
 		float desiredAngularVel = totalRotation * .25f;
 		if(desiredAngularVel > 1 / 8.0){
@@ -100,9 +102,9 @@ void ShipPhysics::endCollision(Component* collidedComponent, b2Contact* contact)
 }
 
 sf::Vector2f ShipPhysics::getPosition() const{
-	return{body->GetPosition().x, body->GetPosition().y};
+	return{body->GetPosition().x * SCALE, body->GetPosition().y * SCALE};
 }
 
 float ShipPhysics::getAngle() const{
-	return body->GetAngle() * RADTODEG;
+	return (float)(body->GetAngle() * RADTODEG);
 }

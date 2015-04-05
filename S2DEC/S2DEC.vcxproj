@@ -91,9 +91,11 @@
     <ClCompile Include="src\EventManager.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Entity.cpp" />
-    <ClCompile Include="src\ResourceManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BulletImage.h" />
+    <ClInclude Include="BulletPhysics.h" />
+    <ClInclude Include="Gun.h" />
     <ClInclude Include="ShipControls.h" />
     <ClInclude Include="ShipImage.h" />
     <ClInclude Include="ShipPhysics.h" />
@@ -104,7 +106,6 @@
     <ClInclude Include="src\EventManager.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\Entity.h" />
-    <ClInclude Include="src\ResourceManager.h" />
     <ClInclude Include="src\Util.h" />
     <ClInclude Include="StarImage.h" />
   </ItemGroup>

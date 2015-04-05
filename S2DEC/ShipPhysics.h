@@ -12,7 +12,7 @@ class ShipImage;
 class ShipPhysics : public Component{
 private:
 	ShipControls* shipControls{nullptr};
-	b2World* world{nullptr};
+	b2World& world;
 	b2Body* body{nullptr};
 	sf::RenderWindow& window;
 	b2BodyDef bodyDef;

@@ -18,7 +18,7 @@ Game::Game(unsigned int width, unsigned int height, const string name) :
 }
 
 void Game::init(){
-	sf::RenderWindow::create(videoMode, title, sf::Style::None);
+	sf::RenderWindow::create(videoMode, title, sf::Style::Fullscreen);
 	sf::RenderWindow::setFramerateLimit(FRAMERATE);
 }
 

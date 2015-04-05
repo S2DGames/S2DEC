@@ -8,6 +8,7 @@
 #include "SFML/Graphics/RenderTarget.hpp"
 #include "Box2D/Dynamics/Contacts/b2Contact.h"
 #include "Entity.h"
+
 using std::string;
 using std::size_t;
 using std::bitset;
@@ -39,6 +40,9 @@ namespace S2D{
 	class Component{
 		friend class CollisionListener;
 		friend class Entity;
+	private:
+		size_t id;
+
 	protected:
 		Entity* owner;
 

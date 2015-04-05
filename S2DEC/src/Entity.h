@@ -28,15 +28,23 @@ namespace S2D{
 		int id;
 		bitset<MAX_COMPONENTS> componentBitset;
 		string name;
+		bool alive{true};
 
 		vector<unique_ptr<Component>> components;
-		//Component* componentArray[MAX_COMPONENTS];
 		array<Component*, MAX_COMPONENTS> componentArray;
+		
+		//Allows components to add other components during the update.
+		//New components will be added before the next update.
+		bool iterating{false};
+		vector<Component*> queuedComponents;
 
 		Entity(string name);
 
+		void addQueuedComponents();
+
 	public:
 		//The next 3 functions are from Vittorio Romeo. https://www.youtube.com/watch?v=QAmtgvwHInM
+		//Some modifications were made.
 		template<class T>
 		bool hasComponent(){
 			return componentBitset[getComponentTypeID<T>()];
@@ -47,14 +55,18 @@ namespace S2D{
 			assert(!hasComponent<T>());
 
 			T* component(new T(forward<args>(componentArgs)...));
-			unique_ptr<Component> uniqueComponentPtr{component};
-			components.emplace_back(move(uniqueComponentPtr));
 			size_t componentID = getComponentTypeID<T>();
-			componentArray[componentID] = component;
-			componentBitset[componentID] = true;
-
+			component->id = componentID;
 			component->setOwner(this);
-			component->init();
+			if(!iterating){
+				unique_ptr<Component> uniqueComponentPtr{component};
+				components.emplace_back(move(uniqueComponentPtr));
+				componentArray[componentID] = component;
+				componentBitset[componentID] = true;
+				component->init();
+			}else{
+				queuedComponents.emplace_back(component);
+			}
 			return *component;
 		}
 
@@ -71,6 +83,8 @@ namespace S2D{
 
 		const int getId();
 		const string getName();
+		const bool isAlive();
+		void destroy();
 	};
 
 }

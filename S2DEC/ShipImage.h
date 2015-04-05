@@ -33,7 +33,7 @@ public:
 		
 	bool update(sf::Time frameTime) override{
 		if(shipPhysics != nullptr){
-			sprite.setPosition(shipPhysics->getPosition().x * SCALE, shipPhysics->getPosition().y * SCALE);
+			sprite.setPosition(shipPhysics->getPosition().x, shipPhysics->getPosition().y);
 			sprite.setRotation(shipPhysics->getAngle());
 		}	
 		return false;

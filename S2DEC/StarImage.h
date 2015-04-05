@@ -13,16 +13,20 @@ private:
 
 	sf::Time animationTime;
 
+	bool onScreen;
+
 	unsigned int frame = 0;
 
 	unsigned int absoluteFrame = 0;
+
+	sf::RenderWindow& window;
 
 	void setAnimationFrame(sf::IntRect frame){
 		sprite.setTextureRect(frame);
 	}
 
 public:
-	StarImage(string filename, sf::Vector2f position, float offset){
+	StarImage(Game* game, string filename, sf::Vector2f position, float offset) : window(*game){
 		texture.loadFromFile(filename);
 		sprite.setTexture(texture);
 		sprite.setPosition(position);
@@ -30,6 +34,18 @@ public:
 	}
 
 	bool update(sf::Time frameTime) override{
+		sf::Vector2f cameraPosition = {window.getView().getCenter().x - (window.getSize().x / 2.0f), window.getView().getCenter().y - (window.getSize().y / 2.0f)};
+		sf::Vector2f cullingRect = {cameraPosition.x - window.getSize().x, cameraPosition.y - window.getSize().y};
+		sf::FloatRect viewRect = {cullingRect.x,
+								  cullingRect.y,
+								  (float)window.getSize().x * 3,
+								  (float)window.getSize().y * 3};
+		if(viewRect.contains(sprite.getPosition())){
+			onScreen = true;
+		}else{
+			onScreen = false;
+		}
+
 		animationTime += frameTime;
 
 		if(animationTime.asSeconds() >= 30.0f && absoluteFrame < 1){
@@ -86,10 +102,27 @@ public:
 			absoluteFrame = 0;
 		}
 
+		if(!onScreen){
+			if(sprite.getPosition().x < cullingRect.x){
+				sprite.setPosition(sprite.getPosition().x + window.getSize().x * 2, sprite.getPosition().y);
+			}
+			if(sprite.getPosition().x > cameraPosition.x + window.getSize().x * 2){
+				sprite.setPosition(sprite.getPosition().x - window.getSize().x * 2, sprite.getPosition().y);
+			}
+			if(sprite.getPosition().y < cullingRect.y){
+				sprite.setPosition(sprite.getPosition().x, sprite.getPosition().y + window.getSize().y * 2);
+			}
+			if(sprite.getPosition().y > cameraPosition.y + window.getSize().y * 2){
+				sprite.setPosition(sprite.getPosition().x, sprite.getPosition().y - window.getSize().y * 2);
+			}
+		}
+
 		return true;
 	}
 
 	void draw(sf::RenderTarget& target) override{
-		target.draw(sprite);
+		if(onScreen){
+			target.draw(sprite);
+		}
 	}
 };

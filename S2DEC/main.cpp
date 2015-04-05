@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "ShipImage.h"
 #include "StarImage.h"
+#include "Gun.h"
 #include <random>
 
 using namespace S2D;
@@ -13,16 +14,17 @@ int main(){
 	uniform_real_distribution<float> xDist(-(float)Game::SCREEN_SIZE.x, Game::SCREEN_SIZE.x);
 	uniform_real_distribution<float> yDist(-(float)Game::SCREEN_SIZE.y, Game::SCREEN_SIZE.y);
 	uniform_real_distribution<float> offsetDist(0.0f, 30.65f);
+	
+	for(int i = 0; i < 1000; i++){
+		Entity& star = game.createEntity("star" + std::to_string(i));
+		star.addComponent<StarImage>(&game, "resources/stars.png", sf::Vector2f{xDist(rng), yDist(rng)}, offsetDist(rng));
+	}
 
 	Entity& ship = game.createEntity("ship");
 	ship.addComponent<ShipControls>(&game);
 	ship.addComponent<ShipPhysics>(&game);
 	ship.addComponent<ShipImage>("resources/ship.png");
-	
-	for(int i = 0; i < 1000; i++){
-		Entity& star = game.createEntity("star" + std::to_string(i));
-		star.addComponent<StarImage>("resources/stars.png", sf::Vector2f{xDist(rng), yDist(rng)}, offsetDist(rng));
-	}
+	ship.addComponent<Gun>(&game);
 
 	game.init();
 	game.play();

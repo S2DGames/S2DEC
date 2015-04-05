@@ -3,7 +3,6 @@
 #include "Box2D/Dynamics/b2World.h"
 #include "Entity.h"
 #include "Controls.h"
-#include "ResourceManager.h"
 #include "EventManager.h"
 #include "EntityManager.h"
 #include "CollisionListener.h"
