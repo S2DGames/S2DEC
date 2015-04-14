@@ -9,8 +9,14 @@
 
 namespace S2D{
 
-	enum GameState{CLOSING = 0, RUNNING, PAUSED, LOADING, INITIALIZING};
+	/*!
+	 * An enumeration of the possibles states of the game engine.
+	 */
+	enum GameState{RUNNING = 0, CLOSING, PAUSED, LOADING, INITIALIZING};
 
+	/*!
+	 * The max frame rate that the game will run at. NOT IMPLEMENTED
+	 */
 	const unsigned int FRAMERATE = 60;
 
 	/*!
@@ -30,15 +36,41 @@ namespace S2D{
 		*/
 		float32 timeStep;
 
+		/*!
+		 * The current state of the engine,
+		 */
 		GameState state;
 
+		/*!
+		 * The video mode that will be used to create the window with SFML. Contains window width, height, and bit depth.
+		 */
 		sf::VideoMode videoMode;
 
+		/*!
+		 * The title of the window that will be created.
+		 */
 		string title;
 
 	public:
+		/*!
+		 * Constructor
+		 *
+		 * \param width The width of the window that will be created.
+		 * \param height The height of the window that will be created.
+		 * \param name The title of the window that will be created.
+		 */
 		Game(unsigned int width, unsigned int height, const string name);
+
+		/*!
+		 * Initializes a game. This must be called before calling Game::play().
+		 * Creates SFML window with the specified width and height passed in the constructor.
+		 */
 		void init();
+
+		/*!
+		 * The main loop of the engine. This is where objects are udpated, input is captured,
+		 * and everything is rendered each frame.
+		 */
 		int play();
 
 		static sf::Vector2u SCREEN_SIZE;

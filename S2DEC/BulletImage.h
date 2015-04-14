@@ -39,4 +39,8 @@ public:
 	void draw(sf::RenderTarget& target) override{
 		target.draw(sprite);
 	}
+
+	sf::Sprite& getSprite(){
+		return sprite;
+	}
 };

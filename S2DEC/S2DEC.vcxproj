@@ -84,9 +84,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BulletPhysics.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ShipPhysics.cpp" />
     <ClCompile Include="src\CollisionListener.cpp" />
+    <ClCompile Include="src\CompareEntityZ.cpp" />
     <ClCompile Include="src\Controls.cpp" />
     <ClCompile Include="src\EventManager.cpp" />
     <ClCompile Include="src\Game.cpp" />
@@ -100,6 +102,7 @@
     <ClInclude Include="ShipImage.h" />
     <ClInclude Include="ShipPhysics.h" />
     <ClInclude Include="src\CollisionListener.h" />
+    <ClInclude Include="src\CompareEntityZ.h" />
     <ClInclude Include="src\Component.h" />
     <ClInclude Include="src\Controls.h" />
     <ClInclude Include="src\EntityManager.h" />

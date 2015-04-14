@@ -11,8 +11,8 @@ using std::uniform_real_distribution;
 int main(){
 	Game game(1280, 720, "S2DEC");
 	default_random_engine rng;
-	uniform_real_distribution<float> xDist(-(float)Game::SCREEN_SIZE.x, Game::SCREEN_SIZE.x);
-	uniform_real_distribution<float> yDist(-(float)Game::SCREEN_SIZE.y, Game::SCREEN_SIZE.y);
+	uniform_real_distribution<float> xDist(-(float)Game::SCREEN_SIZE.x, (float)Game::SCREEN_SIZE.x);
+	uniform_real_distribution<float> yDist(-(float)Game::SCREEN_SIZE.y, (float)Game::SCREEN_SIZE.y);
 	uniform_real_distribution<float> offsetDist(0.0f, 30.65f);
 	
 	for(int i = 0; i < 1000; i++){

@@ -1,3 +1,27 @@
+/*USAGE
+
+InputEvent ie;
+
+//key events
+KeyEvent ke;
+ke.key = sf::Keyboard::W;
+ke.keyState = KEY_HELD;
+ie.keyEvents.push_back(ke);
+
+//mouse events
+MouseEvent me;
+me.button = sf::Mouse::Button::Left;
+me.buttonState = KEY_HELD;
+me.type = BUTTON;
+ie.mouseEvents.push_back(me);
+
+//To watch the event
+Game::watchEvent(ie, std::bind(&SomeClass::FunctionToCall, this));
+//"this" should be an instance of SomeClass
+//This will create an event that calls SomeClass::FunctionToCall when both the w key and
+//the left mouse button are held
+*/
+
 #pragma once
 
 #include "Controls.h"
@@ -79,7 +103,7 @@ namespace S2D{
 			CallbackEvent callbackEvent(controls, event, forward<TYPE>(fn));
 			if(!iterating){
 				callbackEvents.push_back(callbackEvent);
-			} else{
+			}else{
 				queuedEvents.push_back(callbackEvent);
 			}
 		}

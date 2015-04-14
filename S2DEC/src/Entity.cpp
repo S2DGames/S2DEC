@@ -2,12 +2,8 @@
 
 using namespace S2D;
 
-Entity::Entity(string name) : id(currentId), name(name){
-	currentId++;
-}
+Entity::Entity(string name) : name(name){
 
-const int Entity::getId(){
-	return id;
 }
 
 const string Entity::getName(){
@@ -34,6 +30,14 @@ void Entity::draw(sf::RenderTarget& target){
 	for(auto& component : components){
 		component->draw(target);
 	}
+}
+
+int Entity::getZ(){
+	return z;
+}
+
+void Entity::setZ(int newZ){
+	z = newZ;
 }
 
 const bool Entity::isAlive(){

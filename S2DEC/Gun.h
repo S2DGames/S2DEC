@@ -9,11 +9,15 @@ using namespace S2D;
 
 class Gun : public Component{
 private:
-	const int MAX_BULLET_COUNT = 10;
-	
 	Game* game{nullptr};
 	ShipPhysics* shipPhysics;
 
+
+	const int rateOfFire = 12; //10 frames for 1 bullet
+
+	int frameCount = 0;
+	bool count = false;
+	bool readyToFire = true;
 public:
 	Gun(Game* game) : game(game){
 
@@ -29,13 +33,25 @@ public:
 
 	void spawn(){
 		Entity& bullet = game->createEntity("bullet");
-		bullet.addComponent<BulletPhysics>(game, shipPhysics->getPosition(), shipPhysics->getAngle());
+		bullet.addComponent<BulletPhysics>(game, shipPhysics->getPosition(), shipPhysics->getAngle() * DEGTORAD, shipPhysics);
 		bullet.addComponent<BulletImage>("resources/bullet.png");
+		bullet.onStart();
+		bullet.setZ(-1);
 	}
 
 	bool update(sf::Time frameTime) override{
-		if(game->getKeyState(sf::Keyboard::Space) == KEY_PRESSED && game->getKeyState(sf::Keyboard::Space) != KEY_HELD){
+		if(readyToFire && ((game->getKeyState(sf::Keyboard::Space) == KEY_PRESSED))){
 			spawn();
+			readyToFire = false;
+			count = true;
+		}
+		if(count){
+			if(frameCount > rateOfFire){
+				frameCount = 0;
+				count = false;
+				readyToFire = true;
+			}
+			frameCount++;
 		}
 		return true;
 	}

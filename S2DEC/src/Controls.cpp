@@ -41,7 +41,9 @@ void Controls::setWindow(sf::RenderWindow* window){
 
 int Controls::keyPressed(sf::Event::KeyEvent key){
 	prevKeyStates[key.code] = keyStates[key.code];
-	if(keyStates[key.code] == KEY_PRESSED){
+	if(keyStates[key.code] == KEY_HELD){
+		return key.code;
+	}else if(keyStates[key.code] == KEY_PRESSED){
 		keyStates[key.code] = KEY_HELD;
 	}else{
 		keyStates[key.code] = KEY_PRESSED;

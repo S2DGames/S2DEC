@@ -1,6 +1,9 @@
 #pragma once
 
 #include "Entity.h"
+#include "CompareEntityZ.h"
+
+using std::sort;
 
 namespace S2D{
 
@@ -49,6 +52,7 @@ namespace S2D{
 		}
 
 		void draw(sf::RenderTarget& target){
+			sort(entities.begin(), entities.end(), CompareZ);
 			for(auto& entity : entities){
 				entity->draw(target);
 			}

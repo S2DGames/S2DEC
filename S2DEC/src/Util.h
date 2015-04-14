@@ -2,3 +2,4 @@
 #define RADTODEG 180/PI
 #define DEGTORAD PI/180
 #define SCALE 100
+//#define IGNORE_DEBUG

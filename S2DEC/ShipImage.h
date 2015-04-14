@@ -41,6 +41,19 @@ public:
 
 	void draw(sf::RenderTarget& target) override{
 		target.draw(sprite);
+#ifdef _DEBUG
+	#ifndef IGNORE_DEBUG
+		sf::RectangleShape outline;
+		outline.setFillColor(sf::Color::Transparent);
+		outline.setOutlineColor(sf::Color::Red);
+		outline.setOutlineThickness(1.0f);
+		outline.setSize((sf::Vector2f)texture.getSize());
+		outline.setOrigin(texture.getSize().x / 2.0f, texture.getSize().y / 2.0f);
+		outline.setPosition(sprite.getPosition());
+		outline.setRotation(sprite.getRotation());
+		target.draw(outline);
+	#endif
+#endif
 	}
 
 	sf::Sprite& getSprite(){

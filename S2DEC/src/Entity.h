@@ -17,18 +17,18 @@ using std::endl;
 
 namespace S2D{
 #define MAX_COMPONENTS 64
-	static int currentId;
-
+	
 	class Component;
 	class EntityManager;
 	
 	class Entity{
 		friend class EntityManager;
+		friend class CompareEntityZ;
 	private:
-		int id;
 		bitset<MAX_COMPONENTS> componentBitset;
 		string name;
 		bool alive{true};
+		int z = 0;
 
 		vector<unique_ptr<Component>> components;
 		array<Component*, MAX_COMPONENTS> componentArray;
@@ -80,8 +80,9 @@ namespace S2D{
 		void onStart();
 		bool update(sf::Time frameTime);
 		void draw(sf::RenderTarget& target);
+		int getZ();
+		void setZ(int newZ);
 
-		const int getId();
 		const string getName();
 		const bool isAlive();
 		void destroy();
