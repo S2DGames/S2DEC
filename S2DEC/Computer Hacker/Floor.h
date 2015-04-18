@@ -17,18 +17,15 @@ private:
 
 	vector<b2Vec2> vertices;
 
-	sf::RectangleShape rs;
-
-
-	//b2Body* testBody;
-	//b2BodyDef testBodyDef;
-	//b2Fixture* testFixture;
-	//b2PolygonShape testShape;
+	vector<sf::RectangleShape> rectangleShapes;
 
 public:
 	Floor(Game* game) : game(game){
 		bodyDef.type = b2_staticBody;
-		//testBodyDef.type = b2_staticBody;
+	}
+
+	~Floor(){
+		game->DestroyBody(body);
 	}
 
 	void init() override{
@@ -41,20 +38,50 @@ public:
 		body->SetUserData(this);
 		fixture = body->CreateFixture(&chainShape, 1.0f);
 		fixture->SetFriction(0.0f);
-		//rs.setPosition({body->GetPosition().x * SCALE, body->GetPosition().y * SCALE});
 
-		//testShape.SetAsBox(10.0f / SCALE, 100.0f / SCALE);
-		//testBody = game->CreateBody(&testBodyDef);
-		//testBody->SetUserData(this);
-
-		rs.setSize({1280, 1});
-		//rs.setOrigin({rs.getSize().x / 2, rs.getSize().y / 2});
-		rs.setPosition({0.0f, 720.0f});
 	}
 
 	void addVertex(b2Vec2 v){
-		if(vertices.size() == 0){
-			//bodyDef.position = v;
+		if(vertices.size() > 0){
+			sf::RectangleShape rs;
+			b2Vec2 prevVertex = vertices[vertices.size() - 1];
+			sf::Vector2f rSize;
+			sf::Vector2f rPosition;
+			if(prevVertex.x <= v.x){
+				rSize.x = v.x - prevVertex.x;
+				rPosition.x = prevVertex.x;
+			} else{
+				rSize.x = prevVertex.x - v.x;
+				rPosition.x = v.x;
+			}
+
+			if(prevVertex.y <= v.y){
+				rSize.y = v.y - prevVertex.y;
+				rPosition.y = prevVertex.y;
+			} else{
+				rSize.y = prevVertex.y - v.y;
+				rPosition.y = v.y;
+			}
+
+			if(rSize.x < 0){
+				rSize.x *= -1.0f;
+			}
+
+			if(rSize.y < 0){
+				rSize.y *= -1.0f;
+			}
+
+			if(rSize.x == 0){
+				rSize.x = 1.0f / SCALE;
+			}
+
+			if(rSize.y == 0){
+				rSize.y = 1.0f / SCALE;
+			}
+
+			rs.setSize({rSize.x * SCALE, rSize.y * SCALE});
+			rs.setPosition({rPosition.x * SCALE, rPosition.y * SCALE});
+			rectangleShapes.push_back(rs);
 		}
 		if(game->getState() == RUNNING){
 			game->DestroyBody(body);
@@ -67,7 +94,9 @@ public:
 	}
 
 	void draw(sf::RenderTarget& target) override{
-		target.draw(rs);
+		for(auto rs : rectangleShapes){
+			target.draw(rs);
+		}
 	}
 
 };

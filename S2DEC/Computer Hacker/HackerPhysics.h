@@ -23,14 +23,17 @@ private:
 	bool onGround{false};
 
 public:
-	HackerPhysics(Game* game) : game(game){
+	HackerPhysics(Game* game, sf::Vector2f position) : game(game){
 		bodyDef.type = b2_dynamicBody;
+		bodyDef.position = {position.x / SCALE, position.y / SCALE};
 		rectangleShape.SetAsBox(50.0f / SCALE / 2.0f, 75.0f / SCALE / 2.0f);
 		fixtureDef.shape = &rectangleShape;
 		fixtureDef.density = 1.0f;
 		fixtureDef.friction = 0.0f;
+	}
 
-		bodyDef.position = {game->getView().getCenter().x / SCALE, game->getView().getCenter().y / SCALE};
+	~HackerPhysics(){
+		game->DestroyBody(body);
 	}
 
 	void init() override{
@@ -44,12 +47,13 @@ public:
 		view = game->getView();
 		//view.setSize({(float)game->getSize().x + 200.0f, (float)game->getSize().y + 112.5f});
 		view.setSize({1280, 720});
+		view.setCenter(view.getCenter().x, view.getCenter().y + 100);
 		game->setView(view);
 	}
 
 	void update(sf::Time frameTime) override{
-		//view.setCenter(body->GetPosition().x * SCALE, view.getCenter().y);
-		view.setCenter(body->GetPosition().x * SCALE, body->GetPosition().y * SCALE);
+		view.setCenter(body->GetPosition().x * SCALE, view.getCenter().y);
+		//view.setCenter(body->GetPosition().x * SCALE, body->GetPosition().y * SCALE);
 		game->setView(view);
 
 		b2Vec2 speed{0, body->GetLinearVelocity().y};

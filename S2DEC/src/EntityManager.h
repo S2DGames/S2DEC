@@ -57,6 +57,12 @@ namespace S2D{
 				entity->draw(target);
 			}
 		}
+
+		void destroyAll(){
+			for(auto& entity : entities){
+				entity->destroy();
+			}
+		}
 	};
 
 }

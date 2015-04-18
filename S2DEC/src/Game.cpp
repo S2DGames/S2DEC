@@ -62,13 +62,21 @@ int Game::play(){
 		EntityManager::draw(*this);
 		sf::RenderWindow::display();
 		timeStep = clock.getElapsedTime().asSeconds();
-	}
-
-	sf::RenderWindow::close();
-	
+	}	
 	return 0;
 }
 
 GameState Game::getState(){
 	return state;
+}
+
+void Game::endScene(){
+	state = CLOSING;
+	sf::Clock c;
+	EntityManager::destroyAll();
+	EntityManager::update(c);
+}
+
+void Game::close(){
+	sf::RenderWindow::close();
 }

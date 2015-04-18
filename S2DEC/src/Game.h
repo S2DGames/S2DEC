@@ -78,6 +78,10 @@ namespace S2D{
 
 		GameState getState();
 
+		void endScene();
+
+		void close();
+
 		static sf::Vector2u SCREEN_SIZE;
 	};
 

@@ -28,12 +28,17 @@ public:
 		this->game = game;
 	}
 
+	~Block(){
+		game->DestroyBody(body);
+	}
+
 	void init() override{
 		bodyDef.position = position;
 		body = game->CreateBody(&bodyDef);
 		body->SetUserData(this);
 		shape.SetAsBox(size.x / 2.0f, size.y / 2.0f);
 		fixture = body->CreateFixture(&shape, 1.0f);
+		owner->setZ(20);
 	}
 
 	void draw(sf::RenderTarget& target) override{
@@ -47,7 +52,6 @@ public:
 		outline.setSize((sf::Vector2f)rs.getSize());
 		outline.setOrigin(rs.getSize().x / 2.0f, rs.getSize().y / 2.0f);
 		outline.setPosition({body->GetPosition().x * SCALE, body->GetPosition().y * SCALE});
-		printf("%.02f, %.02f\n", body->GetPosition().x * SCALE, body->GetPosition().y * SCALE);
 		target.draw(outline);
 #endif
 #endif
