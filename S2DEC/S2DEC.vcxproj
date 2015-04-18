@@ -98,6 +98,7 @@
     <ClInclude Include="BulletImage.h" />
     <ClInclude Include="BulletPhysics.h" />
     <ClInclude Include="Gun.h" />
+    <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="ShipControls.h" />
     <ClInclude Include="ShipImage.h" />
     <ClInclude Include="ShipPhysics.h" />

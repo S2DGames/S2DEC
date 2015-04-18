@@ -77,7 +77,7 @@ namespace S2D{
 		InputEvent event;
 		function<void()> functionToCall;
 
-		bool checkKeyEvents();
+		bool checkKeyPressedEvents();
 		bool checkMouseEvents();
 		bool checkMouseOverEvents();
 		bool checkMousePressedEvents();

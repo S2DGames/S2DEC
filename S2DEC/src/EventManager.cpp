@@ -26,7 +26,7 @@ CallbackEvent::CallbackEvent(Controls* controls, InputEvent event, function<void
 	this->controls = controls;
 }
 
-bool CallbackEvent::checkKeyEvents(){
+bool CallbackEvent::checkKeyPressedEvents(){
 	for(auto i : event.getKeyEvents()){
 		KeyState state = controls->getKeyState(i.key);
 		switch(i.keyState){
@@ -100,7 +100,7 @@ bool CallbackEvent::checkMousePressedEvents(){
 }
 
 void CallbackEvent::checkEvent(){
-	if(checkKeyEvents() && checkMouseEvents()){
+	if(checkKeyPressedEvents() && checkMouseEvents()){
 		functionToCall();
 	}
 }

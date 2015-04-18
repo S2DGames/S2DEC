@@ -8,17 +8,12 @@
 #include "SFML/Graphics/RenderTarget.hpp"
 #include "Box2D/Dynamics/Contacts/b2Contact.h"
 #include "Entity.h"
+#include "Util.h"
 
 using std::string;
 using std::size_t;
 using std::bitset;
 using std::is_base_of;
-
-#ifndef _MSC_VER
-#define NOEXCEPT noexcept
-#else
-#define NOEXCEPT
-#endif
 
 namespace S2D{
 
