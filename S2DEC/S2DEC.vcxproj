@@ -84,9 +84,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BulletPhysics.cpp" />
+    <ClCompile Include="Computer Hacker\EnemyMovement.cpp" />
+    <ClCompile Include="Computer Hacker\EnemyPhysics.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="ShipPhysics.cpp" />
     <ClCompile Include="src\CollisionListener.cpp" />
     <ClCompile Include="src\CompareEntityZ.cpp" />
     <ClCompile Include="src\Controls.cpp" />
@@ -95,13 +95,12 @@
     <ClCompile Include="src\Entity.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BulletImage.h" />
-    <ClInclude Include="BulletPhysics.h" />
-    <ClInclude Include="Gun.h" />
-    <ClInclude Include="ResourceManager.h" />
-    <ClInclude Include="ShipControls.h" />
-    <ClInclude Include="ShipImage.h" />
-    <ClInclude Include="ShipPhysics.h" />
+    <ClInclude Include="Computer Hacker\EnemyImage.h" />
+    <ClInclude Include="Computer Hacker\EnemyMovement.h" />
+    <ClInclude Include="Computer Hacker\EnemyPhysics.h" />
+    <ClInclude Include="Computer Hacker\Floor.h" />
+    <ClInclude Include="Computer Hacker\HackerImage.h" />
+    <ClInclude Include="Computer Hacker\HackerPhysics.h" />
     <ClInclude Include="src\CollisionListener.h" />
     <ClInclude Include="src\CompareEntityZ.h" />
     <ClInclude Include="src\Component.h" />
@@ -110,8 +109,8 @@
     <ClInclude Include="src\EventManager.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\Entity.h" />
+    <ClInclude Include="src\ResourceManager.h" />
     <ClInclude Include="src\Util.h" />
-    <ClInclude Include="StarImage.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

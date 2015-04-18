@@ -18,8 +18,10 @@ Game::Game(unsigned int width, unsigned int height, const string name) :
 }
 
 void Game::init(){
-	sf::RenderWindow::create(videoMode, title, sf::Style::None);
+	settings.antialiasingLevel = 2;
+	sf::RenderWindow::create(videoMode, title, sf::Style::None, settings);
 	sf::RenderWindow::setVerticalSyncEnabled(true);
+	
 	//sf::RenderWindow::setFramerateLimit(FRAMERATE);
 }
 
@@ -59,9 +61,14 @@ int Game::play(){
 		//draw objects in the scene
 		EntityManager::draw(*this);
 		sf::RenderWindow::display();
+		timeStep = clock.getElapsedTime().asSeconds();
 	}
 
 	sf::RenderWindow::close();
 	
 	return 0;
+}
+
+GameState Game::getState(){
+	return state;
 }

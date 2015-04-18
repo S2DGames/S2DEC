@@ -53,8 +53,8 @@ namespace S2D{
 
 		}
 
-		virtual bool update(sf::Time frameTime){
-			return false;
+		virtual void update(sf::Time frameTime){
+
 		}
 
 		virtual void draw(sf::RenderTarget& target){

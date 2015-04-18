@@ -6,6 +6,7 @@
 #include "EventManager.h"
 #include "EntityManager.h"
 #include "CollisionListener.h"
+#include "ResourceManager.h"
 
 namespace S2D{
 
@@ -29,7 +30,7 @@ namespace S2D{
 	*/
 	const int32 POSITION_ITERATIONS = 5;
 
-	class Game : public sf::RenderWindow, public b2World, public Controls, public EventManager, public EntityManager, public CollisionListener{
+	class Game : public sf::RenderWindow, public b2World, public Controls, public EventManager, public EntityManager, public CollisionListener, public ResourceManager{
 	private:
 		/*!
 		* The amount of time between each step in the box2D world.
@@ -45,6 +46,8 @@ namespace S2D{
 		 * The video mode that will be used to create the window with SFML. Contains window width, height, and bit depth.
 		 */
 		sf::VideoMode videoMode;
+
+		sf::ContextSettings settings;
 
 		/*!
 		 * The title of the window that will be created.
@@ -72,6 +75,8 @@ namespace S2D{
 		 * and everything is rendered each frame.
 		 */
 		int play();
+
+		GameState getState();
 
 		static sf::Vector2u SCREEN_SIZE;
 	};
