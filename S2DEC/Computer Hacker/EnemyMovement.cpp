@@ -1,14 +1,16 @@
 #include "EnemyMovement.h"
 #include "EnemyPhysics.h"
 
-EnemyMovement::EnemyMovement(Game* game, Behavior behavier, sf::Vector2f spawn){
+EnemyMovement::EnemyMovement(Game* game, HackerPhysics* player, Behavior behavier, sf::Vector2f spawn){
 	this->game = game;
+	this->player = player;
 	currentBehavior = behavier;
 	spawnPoint = spawn;
 }
 
-EnemyMovement::EnemyMovement(Game* game, Behavior behavier, sf::Vector2f patrolStart, sf::Vector2f patrolEnd){
+EnemyMovement::EnemyMovement(Game* game, HackerPhysics* player, Behavior behavier, sf::Vector2f patrolStart, sf::Vector2f patrolEnd){
 	this->game = game;
+	this->player = player;
 	currentBehavior = behavier;
 	spawnPoint = patrolStart;
 	if (patrolStart.x < patrolEnd.x){
@@ -42,6 +44,15 @@ void EnemyMovement::update(sf::Time frameTime){
 		} else if(enemyPhysics->getPosition().x >= patrolEnd.x){
 			direction = -1;
 		}
+	}
+	else if (currentBehavior == moveToPlayer){
+		if (enemyPhysics->getPosition().x <= player->getPosition().x)
+			direction = 1;
+		else
+			direction = -1;
+	}
+	else if (currentBehavior == stand){
+		direction = 0;
 	}
 }
 

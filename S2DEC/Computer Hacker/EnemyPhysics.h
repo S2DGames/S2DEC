@@ -16,12 +16,14 @@ private:
 	b2PolygonShape shape;
 	EnemyMovement* enemyMovement;
 	sf::Vector2f position;
+	bool onGround;
 
 public:
 	EnemyPhysics(Game* game);
 	void init() override;
 	void onStart() override;
 	void update(sf::Time frameTime) override;
+	void beginCollision(Component* component, b2Contact* contact) override;
 
 	sf::Vector2f getPosition();
 

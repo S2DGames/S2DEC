@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Game.h"
+#include "HackerPhysics.h"
 
 class EnemyPhysics;
 using namespace S2D;
@@ -11,6 +12,7 @@ class EnemyMovement : public Component{
 private:
 	Behavior currentBehavior;
 	Game* game{ nullptr };
+	HackerPhysics* player{ nullptr };
 
 	float speed = 1.0f;
 	int direction;
@@ -21,8 +23,8 @@ private:
 	EnemyPhysics* enemyPhysics{ nullptr };
 
 public:
-	EnemyMovement(Game* game, Behavior behavior, sf::Vector2f spawn);
-	EnemyMovement(Game* game, Behavior behavior, sf::Vector2f patrolStart, sf::Vector2f patrolEnd);
+	EnemyMovement(Game* game, HackerPhysics* player, Behavior behavior, sf::Vector2f spawn);
+	EnemyMovement(Game* game, HackerPhysics* player, Behavior behavior, sf::Vector2f patrolStart, sf::Vector2f patrolEnd);
 	void init() override;
 	void onStart() override;
 	void update(sf::Time frameTime) override;

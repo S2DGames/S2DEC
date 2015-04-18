@@ -31,9 +31,21 @@ void EnemyPhysics::onStart() {
 
 void EnemyPhysics::update(sf::Time frameTime) {
 	body->SetLinearVelocity({ enemyMovement->getVelocity(), body->GetLinearVelocity().y });
+
 }
 
 sf::Vector2f EnemyPhysics::getPosition(){
 	return{ body->GetPosition().x * SCALE, body->GetPosition().y * SCALE};
 }
 
+void EnemyPhysics::beginCollision(Component* collidedComponent, b2Contact* contact){
+	if (auto f = dynamic_cast<Floor*>(collidedComponent)){
+		onGround = true;
+	}
+	if (auto f = dynamic_cast<HackerPhysics*>(collidedComponent)){
+		if (onGround){
+			float impulse = body->GetMass() * -13.0f;
+			body->ApplyLinearImpulse({ 0, impulse }, body->GetWorldCenter(), true);
+		}	
+	}
+}
