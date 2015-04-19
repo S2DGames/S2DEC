@@ -4,7 +4,7 @@
 #include "Box2D/Dynamics/b2World.h"
 #include "Box2D/Collision/Shapes/b2PolygonShape.h"
 #include "Floor.h"
-#include "../Health.h"
+#include "Health.h"
 #include "EnemyPhysics.h"
 
 using namespace S2D;
@@ -91,11 +91,26 @@ public:
 
 	virtual void endCollision(Component* collidedComponent, b2Contact* contact){
 		if(auto f = dynamic_cast<Floor*>(collidedComponent)){
-			onGround = false;
+			int i = 0;
+			for(b2ContactEdge* ce = body->GetContactList(); ce; ce = ce->next){
+				i++;
+			}
+
+			if(i == 0){
+				onGround = false;
+			}
 		}
 	}
 
 	const sf::Vector2f getPosition(){
 		return {body->GetPosition().x * SCALE, body->GetPosition().y * SCALE};
+	}
+
+	bool getOnGround(){
+		return onGround;
+	}
+
+	b2Body* getBody(){
+		return body;
 	}
 };
