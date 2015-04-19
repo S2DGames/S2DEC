@@ -21,6 +21,7 @@ private:
 
 public:
 	EnemyPhysics(Game* game);
+	~EnemyPhysics();
 	void init() override;
 	void onStart() override;
 	void update(sf::Time frameTime) override;

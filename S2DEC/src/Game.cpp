@@ -37,15 +37,11 @@ int Game::play(){
 	state = RUNNING;
 	sf::Clock clock;
 	clock.restart();
-	while(state == RUNNING || state == CLOSING){
+	while(state == RUNNING){
 		//capture and store input
 		if(Controls::updateControls() == CLOSE){
 			state = CLOSED;
-			break;
-		}
-
-		if(state == CLOSING){
-			state = CLOSED;
+			return state;
 		}
 
 		//update events
@@ -67,6 +63,7 @@ int Game::play(){
 		sf::RenderWindow::display();
 		timeStep = clock.getElapsedTime().asSeconds();
 	}
+
 	return 0;
 }
 
@@ -83,4 +80,5 @@ void Game::endScene(){
 void Game::close(){
 	sf::RenderWindow::close();
 	EntityManager::destroyAll();
+	EntityManager::removeDeadEntities();
 }

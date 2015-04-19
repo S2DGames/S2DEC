@@ -1,15 +1,18 @@
 #include "Game.h"
+
 #include "Computer Hacker/HackerPhysics.h"
 #include "Computer Hacker/HackerImage.h"
 #include "Computer Hacker/Floor.h"
 #include "Computer Hacker/EnemyMovement.h"
 #include "Computer Hacker/EnemyPhysics.h"
 #include "Computer Hacker/EnemyImage.h"
+#include "Computer Hacker/Backbground.h"
+#include "Computer Hacker/LevelExit.h"
+#include "Computer Hacker/Health.h"
+#include "Computer Hacker/HealthBar.h"
+#include "Computer Hacker/ComputerAttack.h"
+
 #include "Util.h"
-#include "Backbground.h"
-#include "LevelExit.h"
-#include "Health.h"
-#include "HealthBar.h"
 
 using namespace S2D;
 
@@ -23,11 +26,15 @@ int main(){
 	loadWorld1(&game);
 
 	game.init();
-	game.play();
+	if(game.play() != CLOSED){
+		game.removeDeadEntities();
+		loadWorld2(&game);
+		game.play();
+	}
 
-	loadWorld2(&game);
+	game.close();
+	game.removeDeadEntities();
 
-	game.play();
 	return 0;
 }
 
@@ -40,6 +47,7 @@ void loadWorld1(Game* game){
 	hacker.addComponent<HackerImage>(game, "resources/hacker.png");
 	hacker.addComponent<Health>(10);
 	hacker.addComponent<HealthBar>(game);
+	hacker.addComponent<ComputerAttack>(game);
 
 	Entity& floor = game->createEntity("Floor");
 	Floor& f = floor.addComponent<Floor>(game);
@@ -67,6 +75,8 @@ void loadWorld2(Game* game){
 	HackerPhysics& hp = hacker.addComponent<HackerPhysics>(game, sf::Vector2f{ 10.0f, 10.0f });
 	hacker.addComponent<HackerImage>(game, "resources/hacker.png");
 	hacker.addComponent<Health>(10);
+	hacker.addComponent<HealthBar>(game);
+	hacker.addComponent<ComputerAttack>(game);
 
 	Entity& floor = game->createEntity("Floor");
 	Floor& f = floor.addComponent<Floor>(game);

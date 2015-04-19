@@ -17,7 +17,8 @@ private:
 	b2BodyDef bodyDef;
 	b2Fixture* fixture;
 	b2PolygonShape rectangleShape;
-	b2RevoluteJointDef jointDef;
+	b2RevoluteJointDef jointDef; 
+	b2Joint* joint;
 
 	HackerPhysics* hackerPhysics;
 
@@ -30,6 +31,10 @@ private:
 public:
 	ComputerAttack(Game* game) : game(game){
 		bodyDef.type = b2_dynamicBody;
+	}
+
+	~ComputerAttack(){
+		game->DestroyBody(body);
 	}
 
 	void init() override{
@@ -48,7 +53,7 @@ public:
 		jointDef.collideConnected = false;
 		jointDef.localAnchorA.Set(10.0f / SCALE, -10.0f / SCALE);
 		jointDef.localAnchorB.Set(10.0f / SCALE, -30.0f / SCALE);
-		game->CreateJoint(&jointDef);
+		joint = game->CreateJoint(&jointDef);
 		rs.setSize({25, 25});
 		rs.setOrigin(25 / 2.0f, 25 / 2.0f);
 		rs.setPosition({body->GetPosition().x * SCALE, body->GetPosition().y * SCALE});

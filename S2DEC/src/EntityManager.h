@@ -41,7 +41,7 @@ namespace S2D{
 		}
 
 		void update(sf::Clock& frameClock){
-			entities.erase(std::remove_if(std::begin(entities), std::end(entities), [](const std::unique_ptr<Entity>& mEntity){return !mEntity->isAlive();}), std::end(entities));
+			removeDeadEntities();
 
 			iterating = true;
 			for(auto& entity : entities){
@@ -62,6 +62,10 @@ namespace S2D{
 			for(auto& entity : entities){
 				entity->destroy();
 			}
+		}
+
+		void removeDeadEntities(){
+			entities.erase(std::remove_if(std::begin(entities), std::end(entities), [](const std::unique_ptr<Entity>& mEntity){return !mEntity->isAlive(); }), std::end(entities));
 		}
 	};
 

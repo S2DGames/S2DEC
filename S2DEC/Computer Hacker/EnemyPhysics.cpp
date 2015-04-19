@@ -11,6 +11,11 @@ EnemyPhysics::EnemyPhysics(Game* game){
 	position = sf::Vector2f(100.0f, 100.0f);
 
 }
+
+EnemyPhysics::~EnemyPhysics(){
+	game->DestroyBody(body);
+}
+
 void EnemyPhysics::init() {
 	if (owner->hasComponent<EnemyMovement>()){
 		enemyMovement = &owner->getComponent<EnemyMovement>();
