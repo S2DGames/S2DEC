@@ -64,7 +64,7 @@ void loadWorld1(Game* game){
 	enemy.addComponent<Health>(2);
 
 	Entity& levelExit = game->createEntity("LevelExit");
-	enemy.addComponent<LevelExit>(game, sf::Vector2f{ 840.0f, 700.0f }, "resources/hacker.png");
+	levelExit.addComponent<LevelExit>(game, sf::Vector2f{840.0f, 700.0f}, "resources/hacker.png");
 }
 
 void loadWorld2(Game* game){

@@ -19,18 +19,32 @@ private:
 	b2PolygonShape rectangleShape;
 	b2RevoluteJointDef jointDef; 
 	b2Joint* joint;
+	b2RevoluteJoint* rJoint;
 
 	HackerPhysics* hackerPhysics;
 
-	sf::RectangleShape rs;
+	enum{Left = -1, Right = 1};
+
+	sf::Sprite sprite;
+	sf::Texture* idleTexture;
 
 	bool attacking = false;
 	float attackTime = 0.0f;
 	bool recharging = false;
 
+	int direction = 1;
+
+	sf::IntRect textureRect{0, 0, 0, 0};
+	float animationFrameTimeCount = 0.0f;
+
 public:
-	ComputerAttack(Game* game) : game(game){
+	ComputerAttack(Game* game) : game(game), idleTexture(game->loadTexture("resources/idleComputerAnimation.png", true)){
 		bodyDef.type = b2_dynamicBody;
+		sprite.setTexture(*idleTexture);
+		textureRect = {0, 0, 26, 36};
+		sprite.setTextureRect(textureRect);
+		sprite.setOrigin(26 / 2.0f, 36 / 2.0f);
+		sprite.setScale({2, 2});
 	}
 
 	~ComputerAttack(){
@@ -46,48 +60,100 @@ public:
 	void onStart() override{
 		bodyDef.position = {(hackerPhysics->getPosition().x + 10.0f) / SCALE, (hackerPhysics->getPosition().y - 10.0f) / SCALE};
 		body = game->CreateBody(&bodyDef);
-		rectangleShape.SetAsBox(25.0f / SCALE / 2.0f, 25.0f / SCALE / 2.0f);
+		body->SetUserData(this);
+		rectangleShape.SetAsBox(26.0f / SCALE, 36.0 / SCALE);
 		fixture = body->CreateFixture(&rectangleShape, 1.0f);
 		jointDef.bodyA = body;
 		jointDef.bodyB = hackerPhysics->getBody();
 		jointDef.collideConnected = false;
 		jointDef.localAnchorA.Set(10.0f / SCALE, -10.0f / SCALE);
 		jointDef.localAnchorB.Set(10.0f / SCALE, -30.0f / SCALE);
+		jointDef.enableLimit = true;
+		jointDef.lowerAngle = 90 * DEGTORAD;
+		jointDef.upperAngle = 270 * DEGTORAD;
+		jointDef.enableMotor = true;
+		jointDef.maxMotorTorque = 50;
+		jointDef.motorSpeed = 360 * DEGTORAD;
+
 		joint = game->CreateJoint(&jointDef);
-		rs.setSize({25, 25});
-		rs.setOrigin(25 / 2.0f, 25 / 2.0f);
-		rs.setPosition({body->GetPosition().x * SCALE, body->GetPosition().y * SCALE});
-		rs.setRotation(body->GetAngle() * RADTODEG);
+		rJoint = (b2RevoluteJoint*)joint;
+		
+		sprite.setPosition({body->GetPosition().x * SCALE, body->GetPosition().y * SCALE});
+		sprite.setRotation(body->GetAngle() * RADTODEG);
 	}
 
 	void update(sf::Time frametime) override{
-		rs.setPosition({body->GetPosition().x * SCALE, body->GetPosition().y * SCALE});
-		rs.setRotation(body->GetAngle() * RADTODEG);
+		sprite.setPosition({body->GetPosition().x * SCALE, body->GetPosition().y * SCALE});
+		sprite.setRotation(body->GetAngle() * RADTODEG);
 
 		if(game->getMouseState(sf::Mouse::Left) == KEY_PRESSED && !attacking){
-			//body->ApplyAngularImpulse(body->GetMass() / SCALE, true);
-			body->SetAngularVelocity(5);
-			attacking = true;
+			rJoint->SetMotorSpeed(-1080 * DEGTORAD * direction);
 		}
 
-		if(attacking){
-			attackTime += frametime.asSeconds();
-			if(recharging && attackTime >= 1){
-				attacking = false;
-				recharging = false;
-				attackTime = 0.0f;
-				body->SetAngularVelocity(0);
+		if(rJoint->GetJointAngle() <= rJoint->GetLowerLimit()){
+			rJoint->SetMotorSpeed(360 * DEGTORAD * direction);
+		}
+
+		if(game->getKeyState(sf::Keyboard::A)){
+			if(direction == 1){
+				left();
 			}
-			if(attackTime >= .5 && !recharging){
-				body->SetAngularVelocity(-5);
-				recharging = true;
+			direction = -1;
+		}
+
+		if(game->getKeyState(sf::Keyboard::D)){
+			if(direction == -1){
+				right();
 			}
+			direction = 1;
+		}
+
+		animationFrameTimeCount += frametime.asMilliseconds();
+		if(animationFrameTimeCount >= 16){
+			textureRect = {textureRect.left + 26, textureRect.top, textureRect.width, textureRect.height};
+			if(textureRect.left >= idleTexture->getSize().x){
+				textureRect.left = 0;
+			}
+			animationFrameTimeCount = 0.0f;
+			sprite.setTextureRect(textureRect);
 		}
 
 	}
 
+	void left(){
+		float currentSpeed = rJoint->GetMotorSpeed();
+		float currentAngle = rJoint->GetJointAngle();
+		game->DestroyJoint(joint);
+
+		jointDef.localAnchorA.Set(-10.0f / SCALE, -10.0f / SCALE);
+		jointDef.localAnchorB.Set(-10.0f / SCALE, -30.0f / SCALE);
+		jointDef.lowerAngle = 90 * DEGTORAD;
+		jointDef.upperAngle = 270 * DEGTORAD;
+		jointDef.maxMotorTorque = 50;
+		jointDef.motorSpeed = -currentSpeed;
+
+		joint = game->CreateJoint(&jointDef);
+		rJoint = (b2RevoluteJoint*)joint;
+	}
+
+	void right(){
+		float currentSpeed = rJoint->GetMotorSpeed();
+		float currentAngle = rJoint->GetJointAngle();
+		game->DestroyJoint(joint);
+
+		jointDef.localAnchorA.Set(10.0f / SCALE, -10.0f / SCALE);
+		jointDef.localAnchorB.Set(10.0f / SCALE, -30.0f / SCALE);
+		jointDef.lowerAngle = 90 * DEGTORAD;
+		jointDef.upperAngle = 270 * DEGTORAD;
+		jointDef.maxMotorTorque = 50;
+		jointDef.motorSpeed = -currentSpeed;
+
+		joint = game->CreateJoint(&jointDef);
+		rJoint = (b2RevoluteJoint*)joint;
+	}
+
 	void draw(sf::RenderTarget& target) override{
-		target.draw(rs);
+		target.draw(sprite);
 	}
 
 };

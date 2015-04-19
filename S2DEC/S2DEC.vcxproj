@@ -95,12 +95,18 @@
     <ClCompile Include="src\Entity.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Computer Hacker\Backbground.h" />
+    <ClInclude Include="Computer Hacker\Block.h" />
+    <ClInclude Include="Computer Hacker\ComputerAttack.h" />
     <ClInclude Include="Computer Hacker\EnemyImage.h" />
     <ClInclude Include="Computer Hacker\EnemyMovement.h" />
     <ClInclude Include="Computer Hacker\EnemyPhysics.h" />
     <ClInclude Include="Computer Hacker\Floor.h" />
     <ClInclude Include="Computer Hacker\HackerImage.h" />
     <ClInclude Include="Computer Hacker\HackerPhysics.h" />
+    <ClInclude Include="Computer Hacker\Health.h" />
+    <ClInclude Include="Computer Hacker\HealthBar.h" />
+    <ClInclude Include="Computer Hacker\LevelExit.h" />
     <ClInclude Include="src\CollisionListener.h" />
     <ClInclude Include="src\CompareEntityZ.h" />
     <ClInclude Include="src\Component.h" />

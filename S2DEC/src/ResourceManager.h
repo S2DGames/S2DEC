@@ -46,6 +46,20 @@ public:
 		return *t;
 	}
 
+	sf::Texture* loadTexture(string filename, bool pointer){
+		sf::Texture* managedTexture = managed(filename);
+		//If the texture is already loaded, return it
+		if(managedTexture != nullptr){
+			return managedTexture;
+		}
+		//Otherwise, load the texture and return it
+		sf::Texture* t = new sf::Texture;
+		//assert that the file exists.
+		assert(t->loadFromFile(filename));
+		manage(filename, t);
+		return t;
+	}
+
 	void unloadTexture(string filename){
 		_textures.erase(filename);
 		textures.erase(filename);
