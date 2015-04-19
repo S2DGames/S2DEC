@@ -4,6 +4,8 @@
 #include "Box2D/Dynamics/b2World.h"
 #include "Box2D/Collision/Shapes/b2PolygonShape.h"
 #include "Floor.h"
+#include "../Health.h"
+#include "EnemyPhysics.h"
 
 using namespace S2D;
 
@@ -78,8 +80,12 @@ public:
 	}
 
 	virtual void beginCollision(Component* collidedComponent, b2Contact* contact){
-		if(auto f = dynamic_cast<Floor*>(collidedComponent)){
+		if (auto f = dynamic_cast<Floor*>(collidedComponent)){
 			onGround = true;
+		}
+
+		if (auto f = dynamic_cast<EnemyPhysics*>(collidedComponent)){
+			owner->getComponent<Health>().damage(1);
 		}
 	}
 

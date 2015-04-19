@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Game.h"
-#include "HackerPhysics.h"
-
+//#include "HackerPhysics.h"
+class HackerPhysics;
 class EnemyPhysics;
 using namespace S2D;
 

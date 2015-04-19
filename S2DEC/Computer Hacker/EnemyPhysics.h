@@ -5,6 +5,7 @@
 #include "Component.h"
 #include "Game.h"
 
+class HackerPhysics;
 using namespace S2D;
 
 class EnemyPhysics : public Component{

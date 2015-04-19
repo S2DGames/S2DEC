@@ -1,5 +1,6 @@
 #include "EnemyMovement.h"
 #include "EnemyPhysics.h"
+#include "HackerPhysics.h"
 
 EnemyMovement::EnemyMovement(Game* game, HackerPhysics* player, Behavior behavier, sf::Vector2f spawn){
 	this->game = game;
