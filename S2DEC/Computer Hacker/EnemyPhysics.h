@@ -27,6 +27,11 @@ public:
 	void onStart() override;
 	void update(sf::Time frameTime) override;
 	void beginCollision(Component* component, b2Contact* contact) override;
+	void endCollision(Component* component, b2Contact* contact) override;
+	void jump();
+	float getVelocity(){
+		return enemyMovement->getVelocity(); 
+	}
 
 	sf::Vector2f getPosition();
 

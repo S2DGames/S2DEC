@@ -14,11 +14,16 @@ private:
 	EnemyPhysics* enemyPhysics{ nullptr };
 	sf::Sprite sprite;
 	sf::Texture texture;
+	sf::IntRect textureRect = { 0, 0, 49, 65 };
+	float animationFrameTimeCount = 0.0f;
+
 public:
 	EnemyImage(const string filename){
 		texture.loadFromFile(filename);
 		sprite.setTexture(texture);
-		sprite.setOrigin(texture.getSize().x / 2.0f, texture.getSize().y / 2.0f);
+		sprite.setTextureRect(textureRect);
+		sprite.setOrigin(49 / 2.0f, 65 / 2.0f);
+		sprite.setScale({ 1.25f, 1.25f });
 	}
 
 	void init() override{
@@ -33,6 +38,32 @@ public:
 	void update(sf::Time frameTime) override{
 		if (enemyPhysics != nullptr){
 			sprite.setPosition(enemyPhysics->getPosition().x, enemyPhysics->getPosition().y);
+			animationFrameTimeCount += frameTime.asMilliseconds();
+			if (enemyPhysics->getVelocity() != 0){
+				if (animationFrameTimeCount >= 16){
+					textureRect = { textureRect.left + 49, textureRect.top, textureRect.width, textureRect.height };
+					if (textureRect.left >= texture.getSize().x){
+						textureRect.left = 0;
+					}
+					animationFrameTimeCount = 0.0f;
+					sprite.setTextureRect(textureRect);
+				}
+			}
+			else{
+				animationFrameTimeCount = 0.0f;
+				textureRect = { 0, textureRect.top, textureRect.width, textureRect.height };
+				sprite.setTextureRect(textureRect);
+			}
+
+			if (enemyPhysics->getVelocity() < 0 && sprite.getScale().x < 0){
+				sprite.setScale({ -sprite.getScale().x, sprite.getScale().y });
+			}
+			if (enemyPhysics->getVelocity() > 0 && sprite.getScale().x > 0){
+				sprite.setScale({ -sprite.getScale().x, sprite.getScale().y });
+			}
+
+
+
 		}
 	}
 
