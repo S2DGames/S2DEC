@@ -52,8 +52,7 @@ void EnemyPhysics::beginCollision(Component* collidedComponent, b2Contact* conta
 
 	if (auto h = dynamic_cast<HackerPhysics*>(collidedComponent)){
 		if (onGround){
-			float impulse = body->GetMass() * -13.0f;
-			body->ApplyLinearImpulse({ 0, impulse }, body->GetWorldCenter(), true);
+			jump();
 		}	
 	}
 
@@ -61,5 +60,26 @@ void EnemyPhysics::beginCollision(Component* collidedComponent, b2Contact* conta
 		if(owner->hasComponent<Health>()){
 			owner->getComponent<Health>().damage(1);
 		}
+	}
+}
+
+void EnemyPhysics::endCollision(Component* collidedComponent, b2Contact* contact){
+	if (auto f = dynamic_cast<Floor*>(collidedComponent)){
+		int i = 0;
+		for (b2ContactEdge* ce = body->GetContactList(); ce; ce = ce->next){
+			Component* currentlyCollided = (Component*)ce->other->GetUserData();
+			i++;
+		}
+
+		if (i == 1){
+			onGround = false;
+		}
+	}
+}
+
+void EnemyPhysics::jump(){
+	if (onGround){
+		float impulse = body->GetMass() * -13.0f;
+		body->ApplyLinearImpulse({ 0, impulse }, body->GetWorldCenter(), true);
 	}
 }
