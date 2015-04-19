@@ -2,6 +2,7 @@
 
 #include "Component.h"
 #include "HackerPhysics.h"
+#include "ComputerAttack.h"
 
 using namespace S2D;
 
@@ -9,14 +10,24 @@ class HackerImage : public Component{
 private:
 	Game* game;
 	sf::Sprite sprite;
-	const sf::Texture& texture;
+	sf::Texture* texture;
 
 	HackerPhysics* physics{nullptr};
+	ComputerAttack* computer{nullptr};
+
+	sf::IntRect textureRect{0, 0, 0, 0};
+	float animationFrameTimeCount = 0.0f;
+
+	int direction = 1;
 
 public:
-	HackerImage(Game* game, string filename) : game(game), texture(game->loadTexture(filename)){
-		sprite.setTexture(texture);
-		sprite.setOrigin(texture.getSize().x / 2.0f, texture.getSize().y / 2.0f);
+	HackerImage(Game* game, string filename) : game(game), texture(game->loadTexture(filename, true)){
+		sprite.setTexture(*texture);
+		textureRect = {0, 0, 34, 56};
+		sprite.setTextureRect(textureRect);
+		sprite.setOrigin(textureRect.width / 2.0f, textureRect.height / 2.0f);
+		sprite.setScale({3, 3});
+		//34 56
 	}
 
 	void init() override{
@@ -25,9 +36,32 @@ public:
 		}
 	}
 
-	void update(sf::Time frameTime) override{
+	void onStart() override{
+		if(owner->hasComponent<ComputerAttack>()){
+			computer = &owner->getComponent<ComputerAttack>();
+		}
+	}
+
+	void update(sf::Time frametime) override{
 		if(physics != nullptr){
 			sprite.setPosition(physics->getPosition());
+		}
+
+		animationFrameTimeCount += frametime.asMilliseconds();
+		if(animationFrameTimeCount >= 16){
+			textureRect = {textureRect.left + 34, textureRect.top, textureRect.width, textureRect.height};
+			if(textureRect.left >= texture->getSize().x){
+				textureRect.left = 0;
+			}
+			animationFrameTimeCount = 0.0f;
+			sprite.setTextureRect(textureRect);
+		}
+		direction = computer->getDirection();
+		if(direction < 0 && sprite.getScale().x > 0){
+			sprite.setScale({-sprite.getScale().x, sprite.getScale().y});
+		}
+		if(direction > 0 && sprite.getScale().x < 0){
+			sprite.setScale({-sprite.getScale().x, sprite.getScale().y});
 		}
 	}
 

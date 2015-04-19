@@ -58,7 +58,7 @@ public:
 	}
 
 	void onStart() override{
-		bodyDef.position = {(hackerPhysics->getPosition().x + 10.0f) / SCALE, (hackerPhysics->getPosition().y - 10.0f) / SCALE};
+		bodyDef.position = {(hackerPhysics->getPosition().x - 90.0f) / SCALE, (hackerPhysics->getPosition().y - 20.0f) / SCALE};
 		body = game->CreateBody(&bodyDef);
 		body->SetUserData(this);
 		rectangleShape.SetAsBox(26.0f / SCALE, 36.0 / SCALE);
@@ -66,10 +66,10 @@ public:
 		jointDef.bodyA = body;
 		jointDef.bodyB = hackerPhysics->getBody();
 		jointDef.collideConnected = false;
-		jointDef.localAnchorA.Set(10.0f / SCALE, -10.0f / SCALE);
-		jointDef.localAnchorB.Set(10.0f / SCALE, -30.0f / SCALE);
+		jointDef.localAnchorA.Set(70.0f / SCALE, -10.0f / SCALE);
+		jointDef.localAnchorB.Set(-25.0f / SCALE, -50.0f / SCALE);
 		jointDef.enableLimit = true;
-		jointDef.lowerAngle = 90 * DEGTORAD;
+		jointDef.lowerAngle = 125 * DEGTORAD;
 		jointDef.upperAngle = 270 * DEGTORAD;
 		jointDef.enableMotor = true;
 		jointDef.maxMotorTorque = 50;
@@ -88,10 +88,15 @@ public:
 
 		if(game->getMouseState(sf::Mouse::Left) == KEY_PRESSED && !attacking){
 			rJoint->SetMotorSpeed(-1080 * DEGTORAD * direction);
+			attacking = true;
 		}
 
 		if(rJoint->GetJointAngle() <= rJoint->GetLowerLimit()){
 			rJoint->SetMotorSpeed(360 * DEGTORAD * direction);
+		}
+
+		if(rJoint->GetJointAngle() >= rJoint->GetUpperLimit() && attacking){
+			attacking = false;
 		}
 
 		if(game->getKeyState(sf::Keyboard::A)){
@@ -125,8 +130,8 @@ public:
 		float currentAngle = rJoint->GetJointAngle();
 		game->DestroyJoint(joint);
 
-		jointDef.localAnchorA.Set(-10.0f / SCALE, -10.0f / SCALE);
-		jointDef.localAnchorB.Set(-10.0f / SCALE, -30.0f / SCALE);
+		jointDef.localAnchorA.Set(-70.0f / SCALE, -10.0f / SCALE);
+		jointDef.localAnchorB.Set(-25.0f / SCALE, -50.0f / SCALE);
 		jointDef.lowerAngle = 90 * DEGTORAD;
 		jointDef.upperAngle = 270 * DEGTORAD;
 		jointDef.maxMotorTorque = 50;
@@ -141,9 +146,9 @@ public:
 		float currentAngle = rJoint->GetJointAngle();
 		game->DestroyJoint(joint);
 
-		jointDef.localAnchorA.Set(10.0f / SCALE, -10.0f / SCALE);
-		jointDef.localAnchorB.Set(10.0f / SCALE, -30.0f / SCALE);
-		jointDef.lowerAngle = 90 * DEGTORAD;
+		jointDef.localAnchorA.Set(70.0f / SCALE, -10.0f / SCALE);
+		jointDef.localAnchorB.Set(-25.0f / SCALE, -50.0f / SCALE);
+		jointDef.lowerAngle = 150 * DEGTORAD;
 		jointDef.upperAngle = 270 * DEGTORAD;
 		jointDef.maxMotorTorque = 50;
 		jointDef.motorSpeed = -currentSpeed;
@@ -154,6 +159,18 @@ public:
 
 	void draw(sf::RenderTarget& target) override{
 		target.draw(sprite);
+	}
+
+	int getDirection(){
+		return direction;
+	}
+
+	void beginCollision(Component* component, b2Contact* contact) override{
+		if(attacking){
+			if(rJoint->GetMotorSpeed() < 0){
+				rJoint->SetMotorSpeed(360 * DEGTORAD);
+			}
+		}
 	}
 
 };

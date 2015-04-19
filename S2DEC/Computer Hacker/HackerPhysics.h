@@ -28,7 +28,7 @@ public:
 	HackerPhysics(Game* game, sf::Vector2f position) : game(game){
 		bodyDef.type = b2_dynamicBody;
 		bodyDef.position = {position.x / SCALE, position.y / SCALE};
-		rectangleShape.SetAsBox(50.0f / SCALE / 2.0f, 75.0f / SCALE / 2.0f);
+		rectangleShape.SetAsBox(50.0f / SCALE / 2.0f, 106.0f / SCALE / 2.0f);
 		fixtureDef.shape = &rectangleShape;
 		fixtureDef.density = 10.0f;
 		fixtureDef.friction = 0.0f;
@@ -79,7 +79,7 @@ public:
 
 	}
 
-	virtual void beginCollision(Component* collidedComponent, b2Contact* contact){
+	void beginCollision(Component* collidedComponent, b2Contact* contact){
 		if (auto f = dynamic_cast<Floor*>(collidedComponent)){
 			onGround = true;
 		}
@@ -89,7 +89,7 @@ public:
 		}
 	}
 
-	virtual void endCollision(Component* collidedComponent, b2Contact* contact){
+	void endCollision(Component* collidedComponent, b2Contact* contact){
 		if(auto f = dynamic_cast<Floor*>(collidedComponent)){
 			int i = 0;
 			for(b2ContactEdge* ce = body->GetContactList(); ce; ce = ce->next){
