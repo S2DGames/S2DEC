@@ -13,7 +13,7 @@ namespace S2D{
 	/*!
 	 * An enumeration of the possibles states of the game engine.
 	 */
-	enum GameState{RUNNING = 0, CLOSING, PAUSED, LOADING, INITIALIZING};
+	enum GameState{RUNNING = 0, CLOSING, PAUSED, LOADING, INITIALIZING, CLOSED};
 
 	/*!
 	 * The max frame rate that the game will run at. NOT IMPLEMENTED
