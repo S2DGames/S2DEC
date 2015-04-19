@@ -23,10 +23,10 @@ using namespace S2D;
 void CollisionListener::BeginContact(b2Contact* contact){
 	Component* a = (Component*)contact->GetFixtureA()->GetBody()->GetUserData();
 	Component* b = (Component*)contact->GetFixtureB()->GetBody()->GetUserData();
-	if(a != nullptr){
+	if(a != nullptr && a->getOwner() != nullptr){
 		a->beginCollision(b, contact);
 	}
-	if(b != nullptr){
+	if(b != nullptr && b->getOwner() != nullptr){
 		b->beginCollision(a, contact);
 	}
 }
@@ -34,10 +34,10 @@ void CollisionListener::BeginContact(b2Contact* contact){
 void CollisionListener::EndContact(b2Contact* contact){
 	Component* a = (Component*)contact->GetFixtureA()->GetBody()->GetUserData();
 	Component* b = (Component*)contact->GetFixtureB()->GetBody()->GetUserData();
-	if(a != nullptr){
+	if(a != nullptr && a->getOwner() != nullptr){
 		a->endCollision(b, contact);
 	}
-	if(b != nullptr){
+	if(b != nullptr && b->getOwner() != nullptr){
 		b->endCollision(a, contact);
 	}
 }

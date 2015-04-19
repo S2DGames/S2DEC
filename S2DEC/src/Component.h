@@ -81,6 +81,10 @@ namespace S2D{
 		virtual ~Component(){
 
 		}
+
+		Entity* getOwner(){
+			return owner;
+		}
 	};
 
 }

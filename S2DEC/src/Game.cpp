@@ -44,6 +44,10 @@ int Game::play(){
 			break;
 		}
 
+		if(state == CLOSING){
+			state = CLOSED;
+		}
+
 		//update events
 		EventManager::checkEvents();
 
@@ -61,9 +65,6 @@ int Game::play(){
 		//draw objects in the scene
 		EntityManager::draw(*this);
 		sf::RenderWindow::display();
-		if(state == CLOSING){
-			state = CLOSED;
-		}
 		timeStep = clock.getElapsedTime().asSeconds();
 	}
 	return 0;
