@@ -30,7 +30,7 @@ public:
 		bodyDef.position = {position.x / SCALE, position.y / SCALE};
 		rectangleShape.SetAsBox(50.0f / SCALE / 2.0f, 75.0f / SCALE / 2.0f);
 		fixtureDef.shape = &rectangleShape;
-		fixtureDef.density = 1.0f;
+		fixtureDef.density = 10.0f;
 		fixtureDef.friction = 0.0f;
 	}
 
@@ -93,10 +93,11 @@ public:
 		if(auto f = dynamic_cast<Floor*>(collidedComponent)){
 			int i = 0;
 			for(b2ContactEdge* ce = body->GetContactList(); ce; ce = ce->next){
+				Component* currentlyCollided = (Component*)ce->other->GetUserData();
 				i++;
 			}
 
-			if(i == 0){
+			if(i == 1){
 				onGround = false;
 			}
 		}

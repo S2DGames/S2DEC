@@ -1,5 +1,6 @@
 #include "EnemyPhysics.h"
 #include "HackerPhysics.h"
+#include "ComputerAttack.h"
 
 EnemyPhysics::EnemyPhysics(Game* game){
 	this->game = game;
@@ -48,10 +49,17 @@ void EnemyPhysics::beginCollision(Component* collidedComponent, b2Contact* conta
 	if (auto f = dynamic_cast<Floor*>(collidedComponent)){
 		onGround = true;
 	}
-	if (auto f = dynamic_cast<HackerPhysics*>(collidedComponent)){
+
+	if (auto h = dynamic_cast<HackerPhysics*>(collidedComponent)){
 		if (onGround){
 			float impulse = body->GetMass() * -13.0f;
 			body->ApplyLinearImpulse({ 0, impulse }, body->GetWorldCenter(), true);
 		}	
+	}
+
+	if(auto c = dynamic_cast<ComputerAttack*>(collidedComponent)){
+		if(owner->hasComponent<Health>()){
+			owner->getComponent<Health>().damage(1);
+		}
 	}
 }

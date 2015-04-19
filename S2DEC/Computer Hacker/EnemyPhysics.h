@@ -6,6 +6,7 @@
 #include "Game.h"
 
 class HackerPhysics;
+class ComputerAttack;
 using namespace S2D;
 
 class EnemyPhysics : public Component{
