@@ -86,27 +86,40 @@ public:
 		sprite.setPosition({body->GetPosition().x * SCALE, body->GetPosition().y * SCALE});
 		sprite.setRotation(body->GetAngle() * RADTODEG);
 
-		if(game->getMouseState(sf::Mouse::Left) == KEY_PRESSED && !attacking){
-			rJoint->SetMotorSpeed(-1080 * DEGTORAD * direction);
+		if(game->getKeyState(sf::Keyboard::Z) == KEY_PRESSED && !attacking){
+			if(direction == 1){
+				rJoint->SetMotorSpeed(-1080 * DEGTORAD * direction);
+			} else{
+				rJoint->SetMotorSpeed(1080 * DEGTORAD);
+			}
 			attacking = true;
 		}
 
-		if(rJoint->GetJointAngle() <= rJoint->GetLowerLimit()){
+		if(direction == 1 && rJoint->GetJointAngle() <= rJoint->GetLowerLimit()){
 			rJoint->SetMotorSpeed(360 * DEGTORAD * direction);
 		}
 
-		if(rJoint->GetJointAngle() >= rJoint->GetUpperLimit() && attacking){
+		if(direction == -1 && rJoint->GetJointAngle() >= rJoint->GetUpperLimit()){
+			rJoint->SetMotorSpeed(-360 * DEGTORAD);
+
+		}
+
+		if(direction == 1 && rJoint->GetJointAngle() >= rJoint->GetUpperLimit() && attacking){
 			attacking = false;
 		}
 
-		if(game->getKeyState(sf::Keyboard::A)){
+		if(direction == -1 && rJoint->GetJointAngle() <= rJoint->GetLowerLimit() && attacking){
+			attacking = false;
+		}
+
+		if(game->getKeyState(sf::Keyboard::Left)){
 			if(direction == 1){
 				left();
 			}
 			direction = -1;
 		}
 
-		if(game->getKeyState(sf::Keyboard::D)){
+		if(game->getKeyState(sf::Keyboard::Right)){
 			if(direction == -1){
 				right();
 			}
@@ -131,7 +144,7 @@ public:
 		game->DestroyJoint(joint);
 
 		jointDef.localAnchorA.Set(-70.0f / SCALE, -10.0f / SCALE);
-		jointDef.localAnchorB.Set(-25.0f / SCALE, -50.0f / SCALE);
+		jointDef.localAnchorB.Set(25.0f / SCALE, -50.0f / SCALE);
 		jointDef.lowerAngle = 90 * DEGTORAD;
 		jointDef.upperAngle = 270 * DEGTORAD;
 		jointDef.maxMotorTorque = 50;
@@ -166,11 +179,7 @@ public:
 	}
 
 	void beginCollision(Component* component, b2Contact* contact) override{
-		if(attacking){
-			if(rJoint->GetMotorSpeed() < 0){
-				rJoint->SetMotorSpeed(360 * DEGTORAD);
-			}
-		}
+		rJoint->SetMotorSpeed(360 * DEGTORAD * direction);
 	}
 
 };

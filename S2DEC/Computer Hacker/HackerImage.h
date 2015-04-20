@@ -47,16 +47,23 @@ public:
 			sprite.setPosition(physics->getPosition());
 		}
 
-		animationFrameTimeCount += frametime.asMilliseconds();
-		if(animationFrameTimeCount >= 16){
-			textureRect = {textureRect.left + 34, textureRect.top, textureRect.width, textureRect.height};
-			if(textureRect.left >= texture->getSize().x){
-				textureRect.left = 0;
+		if(physics->getXVel() != 0.0f){
+			animationFrameTimeCount += frametime.asMilliseconds();
+			if(animationFrameTimeCount >= 16){
+				textureRect = {textureRect.left + 34, textureRect.top, textureRect.width, textureRect.height};
+				if(textureRect.left >= texture->getSize().x){
+					textureRect.left = 0;
+				}
+				animationFrameTimeCount = 0.0f;
+				sprite.setTextureRect(textureRect);
 			}
+			direction = computer->getDirection();
+		} else{
 			animationFrameTimeCount = 0.0f;
+			textureRect = {0, textureRect.top, textureRect.width, textureRect.height};
 			sprite.setTextureRect(textureRect);
 		}
-		direction = computer->getDirection();
+
 		if(direction < 0 && sprite.getScale().x > 0){
 			sprite.setScale({-sprite.getScale().x, sprite.getScale().y});
 		}

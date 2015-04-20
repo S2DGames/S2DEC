@@ -23,6 +23,7 @@ private:
 	float maxSpeed = 5.0f;
 
 	bool onGround{false};
+	vector<sf::Vector2f> floorPoints;
 
 public:
 	HackerPhysics(Game* game, sf::Vector2f position) : game(game){
@@ -60,11 +61,11 @@ public:
 
 		b2Vec2 speed{0, body->GetLinearVelocity().y};
 
-		if(game->getKeyState(sf::Keyboard::A)){
+		if(game->getKeyState(sf::Keyboard::Left)){
 			speed.x -= maxSpeed;
 		}
 
-		if(game->getKeyState(sf::Keyboard::D)){
+		if(game->getKeyState(sf::Keyboard::Right)){
 			speed.x += maxSpeed;
 		}
 
@@ -81,6 +82,7 @@ public:
 
 	void beginCollision(Component* collidedComponent, b2Contact* contact){
 		if (auto f = dynamic_cast<Floor*>(collidedComponent)){
+			
 			onGround = true;
 		}
 
@@ -113,5 +115,13 @@ public:
 
 	b2Body* getBody(){
 		return body;
+	}
+
+	float getXVel(){
+		return body->GetLinearVelocity().x;
+	}
+
+	void storeVertices(vector<sf::Vector2f> points){
+
 	}
 };
