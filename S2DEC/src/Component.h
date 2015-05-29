@@ -53,7 +53,7 @@ namespace S2D{
 
 		}
 
-		virtual void update(sf::Time frameTime){
+		virtual void update(float frameTime){
 
 		}
 

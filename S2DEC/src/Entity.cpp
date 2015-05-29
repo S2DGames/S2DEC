@@ -1,10 +1,11 @@
 #include "Entity.h"
+#include "EntityManager.h"
+
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
 
 using namespace S2D;
-
-Entity::Entity(string name) : name(name){
-
-}
 
 const string Entity::getName(){
 	return name;
@@ -16,7 +17,7 @@ void Entity::onStart(){
 	}
 }
 
-bool Entity::update(sf::Time frameTime){
+bool Entity::update(float frameTime){
 	iterating = true;
 	for(auto& component : components){
 		component->update(frameTime);
@@ -38,6 +39,7 @@ int Entity::getZ(){
 
 void Entity::setZ(int newZ){
 	z = newZ;
+	owner->zOrderModified();
 }
 
 const bool Entity::isAlive(){

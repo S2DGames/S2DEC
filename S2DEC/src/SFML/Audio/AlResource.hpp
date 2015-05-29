@@ -22,58 +22,49 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifndef SFML_GLYPH_HPP
-#define SFML_GLYPH_HPP
+#ifndef SFML_ALRESOURCE_HPP
+#define SFML_ALRESOURCE_HPP
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/Graphics/Export.hpp>
-#include <SFML/Graphics/Rect.hpp>
+#include <SFML/Audio/Export.hpp>
 
 
 namespace sf
 {
 ////////////////////////////////////////////////////////////
-/// \brief Structure describing a glyph
+/// \brief Base class for classes that require an OpenAL context
 ///
 ////////////////////////////////////////////////////////////
-class SFML_GRAPHICS_API Glyph
+class SFML_AUDIO_API AlResource
 {
-public:
+protected:
 
     ////////////////////////////////////////////////////////////
     /// \brief Default constructor
     ///
     ////////////////////////////////////////////////////////////
-    Glyph() : advance(0) {}
+    AlResource();
 
     ////////////////////////////////////////////////////////////
-    // Member data
+    /// \brief Destructor
+    ///
     ////////////////////////////////////////////////////////////
-    float     advance;     ///< Offset to move horizontally to the next character
-    FloatRect bounds;      ///< Bounding rectangle of the glyph, in coordinates relative to the baseline
-    IntRect   textureRect; ///< Texture coordinates of the glyph inside the font's texture
+    ~AlResource();
 };
 
 } // namespace sf
 
 
-#endif // SFML_GLYPH_HPP
-
+#endif // SFML_ALRESOURCE_HPP
 
 ////////////////////////////////////////////////////////////
-/// \class sf::Glyph
-/// \ingroup graphics
+/// \class sf::AlResource
+/// \ingroup audio
 ///
-/// A glyph is the visual representation of a character.
-///
-/// The sf::Glyph structure provides the information needed
-/// to handle the glyph:
-/// \li its coordinates in the font's texture
-/// \li its bounding rectangle
-/// \li the offset to apply to get the starting position of the next glyph
-///
-/// \see sf::Font
+/// This class is for internal use only, it must be the base
+/// of every class that requires a valid OpenAL context in
+/// order to work.
 ///
 ////////////////////////////////////////////////////////////

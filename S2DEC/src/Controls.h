@@ -18,10 +18,9 @@
 // 3. This notice may not be removed or altered from any source distribution.
 #pragma once
 
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Event.hpp>
-#include <SFML/Window/Keyboard.hpp>
-#include <SFML/System/Clock.hpp>
 
 namespace S2D{
 
@@ -41,9 +40,9 @@ namespace S2D{
 	enum KeyState{
 		NOT_PRESSED  /*!< The key has not been pressed for at least 2 frames. */,
 		KEY_PRESSED  /*!< The key was just pressed. */,
-	KEY_HELD	 /*!< The key has been pressed for at least 2 frames. */,
-	KEY_RELEASED /*!< The key was just released. */,
-	NO_KEY		 /*!< Used by EventManager for mouse over events */
+		KEY_HELD	 /*!< The key has been pressed for at least 2 frames. */,
+		KEY_RELEASED /*!< The key was just released. */,
+		NO_KEY		 /*!< Used by EventManager for mouse over events */
 	};
 
 	/*!

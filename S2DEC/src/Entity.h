@@ -25,6 +25,8 @@ namespace S2D{
 		friend class EntityManager;
 		friend class CompareEntityZ;
 	private:
+		EntityManager* owner;
+
 		bitset<MAX_COMPONENTS> componentBitset;
 		string name;
 		bool alive{true};
@@ -38,7 +40,9 @@ namespace S2D{
 		bool iterating{false};
 		vector<Component*> queuedComponents;
 
-		Entity(string name);
+		Entity(string name, EntityManager* owner) : name(name), owner(owner){
+
+		}
 
 		void addQueuedComponents();
 
@@ -54,7 +58,7 @@ namespace S2D{
 		T& addComponent(args&&... componentArgs){
 			assert(!hasComponent<T>());
 
-			T* component(new T(forward<args>(componentArgs)...));
+			T* component = new T(forward<args>(componentArgs)...);
 			size_t componentID = getComponentTypeID<T>();
 			component->id = componentID;
 			component->setOwner(this);
@@ -65,7 +69,7 @@ namespace S2D{
 				componentBitset[componentID] = true;
 				component->init();
 			}else{
-				queuedComponents.emplace_back(component);
+				this->queuedComponents.emplace_back(component);
 			}
 			return *component;
 		}
@@ -78,7 +82,7 @@ namespace S2D{
 		}
 
 		void onStart();
-		bool update(sf::Time frameTime);
+		bool update(float frameTime);
 		void draw(sf::RenderTarget& target);
 		int getZ();
 		void setZ(int newZ);

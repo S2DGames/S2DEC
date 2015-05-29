@@ -30,7 +30,7 @@ namespace S2D{
 	*/
 	const int32 POSITION_ITERATIONS = 5;
 
-	class Game : public sf::RenderWindow, public b2World, public Controls, public EventManager, public EntityManager, public CollisionListener, public ResourceManager{
+	class Game : public sf::RenderWindow, public b2World, public Controls, /*public EventManager,*/ public EntityManager, public CollisionListener/*, public ResourceManager*/{
 	private:
 		/*!
 		* The amount of time between each step in the box2D world.
@@ -62,13 +62,15 @@ namespace S2D{
 		 * \param height The height of the window that will be created.
 		 * \param name The title of the window that will be created.
 		 */
-		Game(unsigned int width, unsigned int height, const string name);
+		Game(unsigned int width, unsigned int height, const char* name);
 
 		/*!
 		 * Initializes a game. This must be called before calling Game::play().
 		 * Creates SFML window with the specified width and height passed in the constructor.
 		 */
 		void init();
+
+		void setSize(const sf::Vector2u size);
 
 		/*!
 		 * The main loop of the engine. This is where objects are udpated, input is captured,

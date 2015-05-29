@@ -22,6 +22,7 @@ using namespace S2D;
 
 Controls::Controls(sf::RenderWindow* window) : window(window){
 	for(int i = 0; i < NUM_KEYS; i++){
+		
 		keyStates[i] = NOT_PRESSED;
 		prevKeyStates[i] = NOT_PRESSED;
 	}
@@ -40,25 +41,37 @@ void Controls::setWindow(sf::RenderWindow* window){
 }
 
 int Controls::keyPressed(sf::Event::KeyEvent key){
-	prevKeyStates[key.code] = keyStates[key.code];
-	if(keyStates[key.code] == KEY_HELD){
+	if(key.code >= 0){
+		prevKeyStates[key.code] = keyStates[key.code];
+		if(keyStates[key.code] == KEY_HELD){
+			return key.code;
+		} else if(keyStates[key.code] == KEY_PRESSED){
+			keyStates[key.code] = KEY_HELD;
+		} else{
+			keyStates[key.code] = KEY_PRESSED;
+		}
 		return key.code;
-	}else if(keyStates[key.code] == KEY_PRESSED){
-		keyStates[key.code] = KEY_HELD;
-	}else{
-		keyStates[key.code] = KEY_PRESSED;
+	} else{
+		//TODO: Manage key presses that are marked as UKNOWN(-1) by SFML
+		//ex. Caps Lock
+		return -2;
 	}
-	return key.code;
 }
 
 int Controls::keyReleased(sf::Event::KeyEvent key){
-	prevKeyStates[key.code] = keyStates[key.code];
-	if(keyStates[key.code] == KEY_PRESSED || keyStates[key.code] == KEY_HELD){
-		keyStates[key.code] = KEY_RELEASED;
-	}else{
-		keyStates[key.code] = NOT_PRESSED;
+	if(key.code >= 0){
+		prevKeyStates[key.code] = keyStates[key.code];
+		if(keyStates[key.code] == KEY_PRESSED || keyStates[key.code] == KEY_HELD){
+			keyStates[key.code] = KEY_RELEASED;
+		} else{
+			keyStates[key.code] = NOT_PRESSED;
+		}
+		return key.code;
+	} else{
+		//TODO: Manage key presses that are marked as UKNOWN(-1) by SFML
+		//ex. Caps Lock
+		return -2;
 	}
-	return key.code;
 }
 
 void Controls::buttonPressed(sf::Event::MouseButtonEvent mouseButton){

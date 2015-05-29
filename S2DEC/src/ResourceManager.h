@@ -23,7 +23,7 @@ private:
 		textures[filename] = move(uniqueTexturePtr);
 	}
 
-	sf::Texture* managed(string filename){
+	sf::Texture* getTexture(string filename){
 		auto it = _textures.find(filename);
 		if(it == _textures.end()){
 			return nullptr;
@@ -33,8 +33,8 @@ private:
 
 public:
 	const sf::Texture& loadTexture(string filename){
-		sf::Texture* managedTexture = managed(filename);
 		//If the texture is already loaded, return it
+		sf::Texture* managedTexture = getTexture(filename);
 		if(managedTexture != nullptr){
 			return *managedTexture;
 		}
@@ -47,15 +47,13 @@ public:
 	}
 
 	sf::Texture* loadTexture(string filename, bool pointer){
-		sf::Texture* managedTexture = managed(filename);
 		//If the texture is already loaded, return it
+		sf::Texture* managedTexture = getTexture(filename);
 		if(managedTexture != nullptr){
 			return managedTexture;
 		}
 		//Otherwise, load the texture and return it
 		sf::Texture* t = new sf::Texture;
-		//assert that the file exists.
-		assert(t->loadFromFile(filename));
 		manage(filename, t);
 		return t;
 	}

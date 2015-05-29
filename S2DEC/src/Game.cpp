@@ -3,26 +3,33 @@ using namespace S2D;
 
 sf::Vector2u Game::SCREEN_SIZE;
 
-Game::Game(unsigned int width, unsigned int height, const string name) :
+Game::Game(unsigned int width, unsigned int height, const char* name) :
 		sf::RenderWindow(),
 		b2World(b2Vec2(0.0, 0.0)),
-		Controls(this),
-		EventManager(this),
-		videoMode(width, height),
-		title(name){
+		Controls(this){
+		//EventManager(this){
+	title = name;
 	SCREEN_SIZE = {width, height};
+	videoMode.width = width;
+	videoMode.height = height;
 	b2World::SetContactListener(this);
 	state = INITIALIZING;
 
-	timeStep = 1.0f / (float)FRAMERATE;
+	timeStep = 0.0f;
 }
 
 void Game::init(){
 	settings.antialiasingLevel = 2;
 	sf::RenderWindow::create(videoMode, title, sf::Style::None, settings);
 	sf::RenderWindow::setVerticalSyncEnabled(true);
-	
-	//sf::RenderWindow::setFramerateLimit(FRAMERATE);
+}
+
+void Game::setSize(const sf::Vector2u size){
+	SCREEN_SIZE = size;
+	sf::RenderWindow::close();
+	videoMode.width = size.x;
+	videoMode.height = size.y;
+	init();
 }
 
 int Game::play(){
@@ -38,30 +45,30 @@ int Game::play(){
 	sf::Clock clock;
 	clock.restart();
 	while(state == RUNNING){
-		//capture and store input
+		timeStep = clock.getElapsedTime().asSeconds();
+		clock.restart();
+
+		//store input
 		if(Controls::updateControls() == CLOSE){
 			state = CLOSED;
 			return state;
 		}
 
 		//update events
-		EventManager::checkEvents();
+		//EventManager::checkEvents();
 
-		//update objects in the scene
 		//update physics
 		b2World::Step(timeStep, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 
 		//update components
-		EntityManager::update(clock);
+		EntityManager::update(timeStep);
 
-		//reset clock and screen
-		clock.restart();
+		//reset screen
 		sf::RenderWindow::clear();
 
-		//draw objects in the scene
+		//draw objects in the scene and display
 		EntityManager::draw(*this);
-		sf::RenderWindow::display();
-		timeStep = clock.getElapsedTime().asSeconds();
+		sf::RenderWindow::display();		
 	}
 
 	return 0;
@@ -80,5 +87,4 @@ void Game::endScene(){
 void Game::close(){
 	sf::RenderWindow::close();
 	EntityManager::destroyAll();
-	EntityManager::removeDeadEntities();
 }

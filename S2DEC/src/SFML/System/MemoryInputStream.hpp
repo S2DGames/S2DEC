@@ -22,133 +22,127 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifndef SFML_CIRCLESHAPE_HPP
-#define SFML_CIRCLESHAPE_HPP
+#ifndef SFML_MEMORYINPUTSTREAM_HPP
+#define SFML_MEMORYINPUTSTREAM_HPP
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/Graphics/Export.hpp>
-#include <SFML/Graphics/Shape.hpp>
+#include <SFML/Config.hpp>
+#include <SFML/System/InputStream.hpp>
+#include <SFML/System/Export.hpp>
+#include <cstdlib>
 
 
 namespace sf
 {
 ////////////////////////////////////////////////////////////
-/// \brief Specialized shape representing a circle
+/// \brief Implementation of input stream based on a memory chunk
 ///
 ////////////////////////////////////////////////////////////
-class SFML_GRAPHICS_API CircleShape : public Shape
+class SFML_SYSTEM_API MemoryInputStream : public InputStream
 {
 public:
 
     ////////////////////////////////////////////////////////////
     /// \brief Default constructor
     ///
-    /// \param radius     Radius of the circle
-    /// \param pointCount Number of points composing the circle
-    ///
     ////////////////////////////////////////////////////////////
-    explicit CircleShape(float radius = 0, std::size_t pointCount = 30);
+    MemoryInputStream();
 
     ////////////////////////////////////////////////////////////
-    /// \brief Set the radius of the circle
+    /// \brief Open the stream from its data
     ///
-    /// \param radius New radius of the circle
-    ///
-    /// \see getRadius
+    /// \param data        Pointer to the data in memory
+    /// \param sizeInBytes Size of the data, in bytes
     ///
     ////////////////////////////////////////////////////////////
-    void setRadius(float radius);
+    void open(const void* data, std::size_t sizeInBytes);
 
     ////////////////////////////////////////////////////////////
-    /// \brief Get the radius of the circle
+    /// \brief Read data from the stream
     ///
-    /// \return Radius of the circle
+    /// After reading, the stream's reading position must be
+    /// advanced by the amount of bytes read.
     ///
-    /// \see setRadius
+    /// \param data Buffer where to copy the read data
+    /// \param size Desired number of bytes to read
+    ///
+    /// \return The number of bytes actually read, or -1 on error
     ///
     ////////////////////////////////////////////////////////////
-    float getRadius() const;
+    virtual Int64 read(void* data, Int64 size);
 
     ////////////////////////////////////////////////////////////
-    /// \brief Set the number of points of the circle
+    /// \brief Change the current reading position
     ///
-    /// \param count New number of points of the circle
+    /// \param position The position to seek to, from the beginning
     ///
-    /// \see getPointCount
+    /// \return The position actually sought to, or -1 on error
     ///
     ////////////////////////////////////////////////////////////
-    void setPointCount(std::size_t count);
+    virtual Int64 seek(Int64 position);
 
     ////////////////////////////////////////////////////////////
-    /// \brief Get the number of points of the circle
+    /// \brief Get the current reading position in the stream
     ///
-    /// \return Number of points of the circle
-    ///
-    /// \see setPointCount
+    /// \return The current position, or -1 on error.
     ///
     ////////////////////////////////////////////////////////////
-    virtual std::size_t getPointCount() const;
+    virtual Int64 tell();
 
     ////////////////////////////////////////////////////////////
-    /// \brief Get a point of the circle
+    /// \brief Return the size of the stream
     ///
-    /// The returned point is in local coordinates, that is,
-    /// the shape's transforms (position, rotation, scale) are
-    /// not taken into account.
-    /// The result is undefined if \a index is out of the valid range.
-    ///
-    /// \param index Index of the point to get, in range [0 .. getPointCount() - 1]
-    ///
-    /// \return index-th point of the shape
+    /// \return The total number of bytes available in the stream, or -1 on error
     ///
     ////////////////////////////////////////////////////////////
-    virtual Vector2f getPoint(std::size_t index) const;
+    virtual Int64 getSize();
 
 private:
 
     ////////////////////////////////////////////////////////////
     // Member data
     ////////////////////////////////////////////////////////////
-    float       m_radius;     ///< Radius of the circle
-    std::size_t m_pointCount; ///< Number of points composing the circle
+    const char* m_data;   ///< Pointer to the data in memory
+    Int64       m_size;   ///< Total size of the data
+    Int64       m_offset; ///< Current reading position
 };
 
 } // namespace sf
 
 
-#endif // SFML_CIRCLESHAPE_HPP
+#endif // SFML_MEMORYINPUTSTREAM_HPP
 
 
 ////////////////////////////////////////////////////////////
-/// \class sf::CircleShape
-/// \ingroup graphics
+/// \class MemoryeInputStream
+/// \ingroup system
 ///
-/// This class inherits all the functions of sf::Transformable
-/// (position, rotation, scale, bounds, ...) as well as the
-/// functions of sf::Shape (outline, color, texture, ...).
+/// This class is a specialization of InputStream that
+/// reads from data in memory.
+///
+/// It wraps a memory chunk in the common InputStream interface
+/// and therefore allows to use generic classes or functions
+/// that accept such a stream, with content already loaded in memory.
+///
+/// In addition to the virtual functions inherited from
+/// InputStream, MemoryInputStream adds a function to
+/// specify the pointer and size of the data in memory.
+///
+/// SFML resource classes can usually be loaded directly from
+/// memory, so this class shouldn't be useful to you unless
+/// you create your own algorithms that operate on a InputStream.
 ///
 /// Usage example:
 /// \code
-/// sf::CircleShape circle;
-/// circle.setRadius(150);
-/// circle.setOutlineColor(sf::Color::Red);
-/// circle.setOutlineThickness(5);
-/// circle.setPosition(10, 20);
-/// ...
-/// window.draw(circle);
+/// void process(InputStream& stream);
+///
+/// MemoryStream stream;
+/// stream.open(thePtr, theSize);
+/// process(stream);
 /// \endcode
 ///
-/// Since the graphics card can't draw perfect circles, we have to
-/// fake them with multiple triangles connected to each other. The
-/// "points count" property of sf::CircleShape defines how many of these
-/// triangles to use, and therefore defines the quality of the circle.
-///
-/// The number of points can also be used for another purpose; with
-/// small numbers you can create any regular polygon shape:
-/// equilateral triangle, square, pentagon, hexagon, ...
-///
-/// \see sf::Shape, sf::RectangleShape, sf::ConvexShape
+/// InputStream, FileStream
 ///
 ////////////////////////////////////////////////////////////

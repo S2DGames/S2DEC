@@ -22,130 +22,112 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifndef SFML_CONTEXT_HPP
-#define SFML_CONTEXT_HPP
+#ifndef SFML_OUTPUTSOUNDFILE_HPP
+#define SFML_OUTPUTSOUNDFILE_HPP
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <SFML/Window/Export.hpp>
-#include <SFML/Window/GlResource.hpp>
-#include <SFML/Window/ContextSettings.hpp>
+#include <SFML/Audio/Export.hpp>
 #include <SFML/System/NonCopyable.hpp>
+#include <string>
 
 
 namespace sf
 {
-namespace priv
-{
-    class GlContext;
-}
-
-typedef void (*GlFunctionPointer)();
+class SoundFileWriter;
 
 ////////////////////////////////////////////////////////////
-/// \brief Class holding a valid drawing context
+/// \brief Provide write access to sound files
 ///
 ////////////////////////////////////////////////////////////
-class SFML_WINDOW_API Context : GlResource, NonCopyable
+class SFML_AUDIO_API OutputSoundFile : NonCopyable
 {
 public:
 
     ////////////////////////////////////////////////////////////
     /// \brief Default constructor
     ///
-    /// The constructor creates and activates the context
-    ///
     ////////////////////////////////////////////////////////////
-    Context();
+    OutputSoundFile();
 
     ////////////////////////////////////////////////////////////
     /// \brief Destructor
     ///
-    /// The destructor deactivates and destroys the context
+    /// Closes the file if it was still open.
     ///
     ////////////////////////////////////////////////////////////
-    ~Context();
+    ~OutputSoundFile();
 
     ////////////////////////////////////////////////////////////
-    /// \brief Activate or deactivate explicitly the context
+    /// \brief Open the sound file from the disk for writing
     ///
-    /// \param active True to activate, false to deactivate
+    /// The supported audio formats are: WAV, OGG/Vorbis, FLAC.
     ///
-    /// \return True on success, false on failure
+    /// \param filename     Path of the sound file to write
+    /// \param sampleRate   Sample rate of the sound
+    /// \param channelCount Number of channels in the sound
     ///
-    ////////////////////////////////////////////////////////////
-    bool setActive(bool active);
-
-public:
-    ////////////////////////////////////////////////////////////
-    /// \brief Get the address of an OpenGL function
-    ///
-    /// \param name Name of the function to get the address of
-    ///
-    /// \return Address of the OpenGL function, 0 on failure
+    /// \return True if the file was successfully opened
     ///
     ////////////////////////////////////////////////////////////
-    static GlFunctionPointer getFunction(const char* name);
+    bool openFromFile(const std::string& filename, unsigned int sampleRate, unsigned int channelCount);
 
     ////////////////////////////////////////////////////////////
-    /// \brief Construct a in-memory context
+    /// \brief Write audio samples to the file
     ///
-    /// This constructor is for internal use, you don't need
-    /// to bother with it.
-    ///
-    /// \param settings Creation parameters
-    /// \param width    Back buffer width
-    /// \param height   Back buffer height
+    /// \param samples     Pointer to the sample array to write
+    /// \param count       Number of samples to write
     ///
     ////////////////////////////////////////////////////////////
-    Context(const ContextSettings& settings, unsigned int width, unsigned int height);
+    void write(const Int16* samples, Uint64 count);
 
 private:
 
     ////////////////////////////////////////////////////////////
+    /// \brief Close the current file
+    ///
+    ////////////////////////////////////////////////////////////
+    void close();
+
+    ////////////////////////////////////////////////////////////
     // Member data
     ////////////////////////////////////////////////////////////
-    priv::GlContext* m_context; ///< Internal OpenGL context
+    SoundFileWriter* m_writer; ///< Writer that handles I/O on the file's format
 };
 
 } // namespace sf
 
 
-#endif // SFML_CONTEXT_HPP
+#endif // SFML_OUTPUTSOUNDFILE_HPP
+
 
 ////////////////////////////////////////////////////////////
-/// \class sf::Context
-/// \ingroup window
+/// \class sf::OutputSoundFile
+/// \ingroup audio
 ///
-/// If you need to make OpenGL calls without having an
-/// active window (like in a thread), you can use an
-/// instance of this class to get a valid context.
-///
-/// Having a valid context is necessary for *every* OpenGL call.
-///
-/// Note that a context is only active in its current thread,
-/// if you create a new thread it will have no valid context
-/// by default.
-///
-/// To use a sf::Context instance, just construct it and let it
-/// live as long as you need a valid context. No explicit activation
-/// is needed, all it has to do is to exist. Its destructor
-/// will take care of deactivating and freeing all the attached
-/// resources.
+/// This class encodes audio samples to a sound file. It is
+/// used internally by higher-level classes such as sf::SoundBuffer,
+/// but can also be useful if you want to create audio files from
+/// custom data sources, like generated audio samples.
 ///
 /// Usage example:
 /// \code
-/// void threadFunction(void*)
-/// {
-///    sf::Context context;
-///    // from now on, you have a valid context
+/// // Create a sound file, ogg/vorbis format, 44100 Hz, stereo
+/// sf::OutputSoundFile file;
+/// if (!file.openFromFile("music.ogg", 44100, 2))
+///     /* error */;
 ///
-///    // you can make OpenGL calls
-///    glClear(GL_DEPTH_BUFFER_BIT);
+/// while (...)
+/// {
+///     // Read or generate audio samples from your custom source
+///     std::vector<sf::Int16> samples = ...;
+///
+///     // Write them to the file
+///     file.write(samples.data(), samples.size());
 /// }
-/// // the context is automatically deactivated and destroyed
-/// // by the sf::Context destructor
 /// \endcode
+///
+/// \see sf::SoundFileWriter, sf::InputSoundFile
 ///
 ////////////////////////////////////////////////////////////
