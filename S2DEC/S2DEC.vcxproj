@@ -54,6 +54,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <BasicRuntimeChecks>UninitializedLocalUsageCheck</BasicRuntimeChecks>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -73,6 +74,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -84,9 +86,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Computer Hacker\EnemyMovement.cpp" />
-    <ClCompile Include="Computer Hacker\EnemyPhysics.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Pong.cpp" />
+    <ClCompile Include="Source.cpp" />
     <ClCompile Include="src\CollisionListener.cpp" />
     <ClCompile Include="src\CompareEntityZ.cpp" />
     <ClCompile Include="src\Controls.cpp" />
@@ -95,18 +97,18 @@
     <ClCompile Include="src\Entity.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Computer Hacker\Backbground.h" />
-    <ClInclude Include="Computer Hacker\Block.h" />
-    <ClInclude Include="Computer Hacker\ComputerAttack.h" />
-    <ClInclude Include="Computer Hacker\EnemyImage.h" />
-    <ClInclude Include="Computer Hacker\EnemyMovement.h" />
-    <ClInclude Include="Computer Hacker\EnemyPhysics.h" />
-    <ClInclude Include="Computer Hacker\Floor.h" />
-    <ClInclude Include="Computer Hacker\HackerImage.h" />
-    <ClInclude Include="Computer Hacker\HackerPhysics.h" />
-    <ClInclude Include="Computer Hacker\Health.h" />
-    <ClInclude Include="Computer Hacker\HealthBar.h" />
-    <ClInclude Include="Computer Hacker\LevelExit.h" />
+    <ClInclude Include="Ball.h" />
+    <ClInclude Include="Boundaries.h" />
+    <ClInclude Include="ComponentTemplate.h" />
+    <ClInclude Include="Food.h" />
+    <ClInclude Include="Middle.h" />
+    <ClInclude Include="Paddle.h" />
+    <ClInclude Include="Pong.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Score.h" />
+    <ClInclude Include="Segment.h" />
+    <ClInclude Include="Snake.h" />
+    <ClInclude Include="SnakeScene.h" />
     <ClInclude Include="src\CollisionListener.h" />
     <ClInclude Include="src\CompareEntityZ.h" />
     <ClInclude Include="src\Component.h" />
@@ -117,6 +119,9 @@
     <ClInclude Include="src\Entity.h" />
     <ClInclude Include="src\ResourceManager.h" />
     <ClInclude Include="src\Util.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="S2DEC.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
