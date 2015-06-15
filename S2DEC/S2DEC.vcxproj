@@ -86,9 +86,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Games\Pong\Pong.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Pong.cpp" />
-    <ClCompile Include="Source.cpp" />
     <ClCompile Include="src\CollisionListener.cpp" />
     <ClCompile Include="src\CompareEntityZ.cpp" />
     <ClCompile Include="src\Controls.cpp" />
@@ -97,18 +96,25 @@
     <ClCompile Include="src\Entity.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Ball.h" />
-    <ClInclude Include="Boundaries.h" />
     <ClInclude Include="ComponentTemplate.h" />
-    <ClInclude Include="Food.h" />
-    <ClInclude Include="Middle.h" />
-    <ClInclude Include="Paddle.h" />
-    <ClInclude Include="Pong.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="Score.h" />
-    <ClInclude Include="Segment.h" />
-    <ClInclude Include="Snake.h" />
-    <ClInclude Include="SnakeScene.h" />
+    <ClInclude Include="Games\Pong\Ball.h" />
+    <ClInclude Include="Games\Pong\Boundaries.h" />
+    <ClInclude Include="Games\Pong\Middle.h" />
+    <ClInclude Include="Games\Pong\Paddle.h" />
+    <ClInclude Include="Games\Pong\Pong.h" />
+    <ClInclude Include="Games\Pong\Score.h" />
+    <ClInclude Include="Games\Snake\Food.h" />
+    <ClInclude Include="Games\Snake\Segment.h" />
+    <ClInclude Include="Games\Snake\Snake.h" />
+    <ClInclude Include="Games\Snake\SnakeScene.h" />
+    <ClInclude Include="Games\SpaceInvaders\Alien.h" />
+    <ClInclude Include="Games\SpaceInvaders\AlienCoordinator.h" />
+    <ClInclude Include="Games\SpaceInvaders\Bullet.h" />
+    <ClInclude Include="Games\SpaceInvaders\Gun.h" />
+    <ClInclude Include="Games\SpaceInvaders\Ship.h" />
+    <ClInclude Include="Games\SpaceInvaders\SpaceInvaders.h" />
+    <ClInclude Include="Laser.h" />
+    <ClInclude Include="sf_b2.h" />
     <ClInclude Include="src\CollisionListener.h" />
     <ClInclude Include="src\CompareEntityZ.h" />
     <ClInclude Include="src\Component.h" />
@@ -119,9 +125,6 @@
     <ClInclude Include="src\Entity.h" />
     <ClInclude Include="src\ResourceManager.h" />
     <ClInclude Include="src\Util.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="S2DEC.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

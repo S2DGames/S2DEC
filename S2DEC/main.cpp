@@ -1,6 +1,7 @@
 #include "Game.h"
-#include "Pong.h"
-#include "SnakeScene.h"
+#include "Games/Pong/Pong.h"
+#include "Games/Snake/SnakeScene.h"
+#include "Games/SpaceInvaders/SpaceInvaders.h"
 
 using namespace S2D;
 
@@ -10,7 +11,8 @@ int main(){
 	game.init();
 
 	//loadPong(&game);
-	loadSnake(&game);
+	//loadSnake(&game);
+	//loadSpaceInvaders(&game);
 
 	game.play();
 	game.close();
