@@ -19,112 +19,71 @@
 
 /*USAGE
 
-InputEvent ie;
-
-//key events
-KeyEvent ke;
-ke.key = sf::Keyboard::W;
-ke.keyState = KEY_HELD;
-ie.keyEvents.push_back(ke);
-
-//mouse events
-MouseEvent me;
-me.button = sf::Mouse::Button::Left;
-me.buttonState = KEY_HELD;
-me.type = BUTTON;
-ie.mouseEvents.push_back(me);
-
-//To watch the event
-Game::watchEvent(ie, std::bind(&SomeClass::FunctionToCall, this));
-//"this" should be an instance of SomeClass
-//This will create an event that calls SomeClass::FunctionToCall when both the w key and
-//the left mouse button are held
+//To watch an event
+Game::watchEvent(std::bind(&ClassWithEventChecker::eventChecker,		 &classWithEventChecker),
+				 std::bind(&ClassWithCallbackFunction::callbackFunction, &classWithCallbackFunction));
 */
-
 #pragma once
 
-#include "Controls.h"
 #include "Entity.h"
 #include <functional>
+#include <map>
 
 using std::vector;
+using std::map;
 using std::function;
 using std::forward;
 
 namespace S2D{
 
-	enum MouseEventType{ BUTTON, POINTER_IN_AREA, BUTTON_IN_AREA };
-
-	struct KeyEvent{
-		sf::Keyboard::Key key;
-		KeyState keyState;
-
-		KeyEvent(sf::Keyboard::Key key, KeyState keyState){
-			this->key = key;
-			this->keyState = keyState;
-		}
-	};
-
-	struct MouseEvent{
-		sf::Mouse::Button button;
-		KeyState buttonState;
-		const sf::IntRect* area;
-		MouseEventType type;
-
-		MouseEvent(){
-			buttonState = NO_KEY;
-		}
-	};
-
-	class InputEvent{
-	private:
-		vector<KeyEvent> keyEvents;
-		vector<MouseEvent> mouseEvents;
-
-	public:
-		InputEvent(vector<KeyEvent> keyEvents);
-		InputEvent(vector<MouseEvent> mouseEvents);
-		InputEvent(vector<KeyEvent> keyEvents, vector<MouseEvent> mouseEvents);
-
-		const vector<KeyEvent>& getKeyEvents();
-		const vector<MouseEvent>& getMouseEvents();
-	};
-
 	class CallbackEvent{
+		friend class EventManager;
 	private:
-		Controls* controls;
-		InputEvent event;
-		function<void()> functionToCall;
+		function<bool()> eventChecker;
+		vector<function<void()>> callbacks;
 
-		bool checkKeyPressedEvents();
-		bool checkMouseEvents();
-		bool checkMouseOverEvents();
-		bool checkMousePressedEvents();
-
-	public:
-		CallbackEvent(Controls* controls, InputEvent event, function<void()> fn);
-
+		CallbackEvent(function<bool()> eventChecker, function<void()> callback);
 		void checkEvent();
+		void extend(function<void()> callback);
 	};
 
 	class EventManager{
 	private:
-		Controls* controls;
 		bool iterating;
-		vector<CallbackEvent> callbackEvents;
-		vector<CallbackEvent> queuedEvents;
+		map<Component*, vector<CallbackEvent>> callbackEvents;
+		map<Component*, vector<CallbackEvent>> queuedEvents;
 
 	public:
-		EventManager(Controls* controls);
+		EventManager();
 
-		template<class TYPE>
-		void watchEvent(InputEvent event, TYPE&& fn){
-			CallbackEvent callbackEvent(controls, event, forward<TYPE>(fn));
-			if(!iterating){
-				callbackEvents.push_back(callbackEvent);
+		template<class TYPE1, class TYPE2>
+		const void watchEvent(TYPE1&& eventChecker, TYPE2&& callback, Component* component){
+			auto mapIterator = callbackEvents.find(component);
+			CallbackEvent callbackEvent(forward<TYPE1>(eventChecker), forward<TYPE2>(callback));
+			if(mapIterator == callbackEvents.end()){
+				if(!iterating){
+					callbackEvents.insert({component, {callbackEvent}});
+				}else{
+					auto queuedMapIterator = queuedEvents.find(component);
+					if(queuedMapIterator == queuedEvents.end()){
+						queuedEvents.insert({component, {callbackEvent}});
+					}else{
+						queuedMapIterator->second.emplace_back(callbackEvent);
+					}
+				}
 			}else{
-				queuedEvents.push_back(callbackEvent);
+				mapIterator->second.emplace_back(callbackEvent);
 			}
+		}
+
+		template<class TYPE1>
+		const bool extendEvent(const string existingEventID, TYPE1&& callback){
+			auto event = callbackEvents.find(existingEventID);
+			if(event == callbackEvents.end()){
+				return false;
+			}
+			event->second.extend(forward<TYPE1>(callback));
+			return true;
 		}
 
 		void checkEvents();

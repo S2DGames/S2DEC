@@ -38,12 +38,14 @@ namespace S2D{
 	
 	class Component;
 	class EntityManager;
+	class Game;
 	
 	class Entity{
 		friend class EntityManager;
 		friend class CompareEntityZ;
 	private:
 		EntityManager* owner;
+		Game* game;
 
 		bitset<MAX_COMPONENTS> componentBitset;
 		string name;
@@ -58,9 +60,7 @@ namespace S2D{
 		bool iterating{false};
 		vector<Component*> queuedComponents;
 
-		Entity(string name, EntityManager* owner) : name(name), owner(owner){
-
-		}
+		Entity(string name, EntityManager* owner);
 
 		void addQueuedComponents();
 
@@ -80,6 +80,7 @@ namespace S2D{
 			size_t componentID = getComponentTypeID<T>();
 			component->id = componentID;
 			component->setOwner(this);
+			component->setGame(game);
 			if(!iterating){
 				unique_ptr<Component> uniqueComponentPtr{component};
 				components.emplace_back(move(uniqueComponentPtr));
@@ -105,8 +106,9 @@ namespace S2D{
 		int getZ();
 		void setZ(int newZ);
 
+		Game* getGame();
 		const string getName();
-		const bool isAlive();
+		bool isAlive();
 		void destroy();
 	};
 

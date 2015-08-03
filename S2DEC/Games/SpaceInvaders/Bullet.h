@@ -9,6 +9,7 @@
 #include "Util.h"
 #include "sf_b2.h"
 #include "Ship.h"
+#include "Alien.h"
 
 using std::cout;
 using std::endl;
@@ -39,7 +40,7 @@ public:
 	}
 
 	~Bullet(){
-		game->DestroyBody(body);
+ 		game->DestroyBody(body);
 	}
 
 	void init() override{
@@ -61,7 +62,7 @@ public:
 			owner->destroy();
 		}
 
-		movesfTob2(&image, body);
+		movesfTob2(image, body);
 	}
 
 	void draw(sf::RenderTarget& target) override{
@@ -73,7 +74,10 @@ public:
 	}
 
 	void beginCollision(Component* collidedComponent, b2Contact* contact) override{
-
+		if(auto alien = dynamic_cast<Alien*>(collidedComponent)){
+			owner->destroy();
+			//alien->getOwner()->destroy();
+		}
 	}
 
 	void endCollision(Component* collidedComponent, b2Contact* contact) override{

@@ -24,22 +24,22 @@ sf::Vector2u Game::SCREEN_SIZE;
 Game::Game(unsigned int width, unsigned int height, const char* name) :
 		sf::RenderWindow(),
 		b2World(b2Vec2(0.0, 0.0)),
-		Controls(this){
-		//EventManager(this){
+		Controls(this),
+		EntityManager(this){
+	state = INITIALIZING;
+	style = sf::Style::None;
 	title = name;
 	SCREEN_SIZE = {width, height};
 	videoMode.width = width;
 	videoMode.height = height;
+	videoMode.bitsPerPixel = 32;
 	b2World::SetContactListener(this);
-	state = INITIALIZING;
 
 	timeStep = 0.0f;
 }
 
 void Game::init(){
-	settings.antialiasingLevel = 2;
-	sf::RenderWindow::create(videoMode, title, sf::Style::None, settings);
-	sf::RenderWindow::setVerticalSyncEnabled(true);
+	sf::RenderWindow::create(videoMode, title, style, settings);
 }
 
 void Game::setSize(const sf::Vector2u size){
@@ -50,7 +50,21 @@ void Game::setSize(const sf::Vector2u size){
 	init();
 }
 
-int Game::play(){
+sf::Vector2u Game::getSize(){
+	return{videoMode.width, videoMode.height};
+}
+
+void Game::setFullScreen(){
+	if(sf::RenderWindow::isOpen()){
+		sf::RenderWindow::close();
+		style = sf::Style::Fullscreen;
+		init();
+	}else{
+		style = sf::Style::Fullscreen;
+	}
+}
+
+GameState Game::play(){
 	//Load all resources
 	state = LOADING;
 	//Create batched texture
@@ -63,22 +77,23 @@ int Game::play(){
 	sf::Clock clock;
 	clock.restart();
 	while(state == RUNNING){
+		//TODO: check for a pause signal
 		timeStep = clock.getElapsedTime().asSeconds();
 		clock.restart();
 
 		//store input
 		if(Controls::updateControls() == CLOSE){
-			state = CLOSED;
+			state = CLOSING;
 			return state;
 		}
 
 		//update events
-		//EventManager::checkEvents();
+		EventManager::checkEvents();
 
 		//update physics
 		b2World::Step(timeStep, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 
-		//update components
+		//update entities/components
 		EntityManager::update(timeStep);
 
 		//reset screen
@@ -86,10 +101,13 @@ int Game::play(){
 
 		//draw objects in the scene and display
 		EntityManager::draw(*this);
-		sf::RenderWindow::display();		
+		sf::RenderWindow::display();
 	}
 
-	return 0;
+	if(state == CLOSING){
+		return state;
+	}
+	return IDLE;
 }
 
 GameState Game::getState(){
@@ -98,13 +116,14 @@ GameState Game::getState(){
 
 void Game::endScene(){
 	state = CLOSING;
-	sf::Clock c;
 	EntityManager::destroyAll();
 }
 
 void Game::close(){
 	sf::RenderWindow::close();
 	EntityManager::destroyAll();
+	EntityManager::removeDeadEntities();
+	state = CLOSED;
 }
 
 sf::FloatRect Game::getCameraRect(){

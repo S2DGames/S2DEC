@@ -31,7 +31,15 @@ namespace S2D{
 	/*!
 	 * An enumeration of the possibles states of the game engine.
 	 */
-	enum GameState{RUNNING = 0, CLOSING, PAUSED, LOADING, INITIALIZING, CLOSED};
+	enum GameState{
+		RUNNING		/*!< The game is currently in the main loop.*/,
+		IDLE		/*!< The game is not in the main loop but the window is open and everything is initialized. */,
+		CLOSING		/*!< The x or escape has been pressed and the game will close soon.*/,
+		PAUSED		/*!< The game is in the main loop but is not running.*/,
+		LOADING		/*!< The components are currently being initialized.*/,
+		INITIALIZING/*!< The game is currently being initialized.*/,
+		CLOSED		/*!< The window has been closed and the components in the scene have been destroyed.*/
+	};
 
 	/*!
 	 * The max frame rate that the game will run at. NOT IMPLEMENTED
@@ -48,7 +56,7 @@ namespace S2D{
 	*/
 	const int32 POSITION_ITERATIONS = 5;
 
-	class Game : public sf::RenderWindow, public b2World, public Controls, /*public EventManager,*/ public EntityManager, public CollisionListener/*, public ResourceManager*/{
+	class Game : public sf::RenderWindow, public b2World, public Controls, public EventManager, public EntityManager, public CollisionListener/*, public ResourceManager*/{
 	private:
 		/*!
 		* The amount of time between each step in the box2D world.
@@ -64,6 +72,8 @@ namespace S2D{
 		 * The video mode that will be used to create the window with SFML. Contains window width, height, and bit depth.
 		 */
 		sf::VideoMode videoMode;
+
+		int style;
 
 		sf::ContextSettings settings;
 
@@ -90,11 +100,15 @@ namespace S2D{
 
 		void setSize(const sf::Vector2u size);
 
+		sf::Vector2u getSize();
+
+		void setFullScreen();
+
 		/*!
 		 * The main loop of the engine. This is where objects are udpated, input is captured,
 		 * and everything is rendered each frame.
 		 */
-		int play();
+		GameState play();
 
 		GameState getState();
 

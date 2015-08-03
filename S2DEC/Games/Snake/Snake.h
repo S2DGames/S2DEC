@@ -11,7 +11,6 @@ using std::vector;
 
 class Snake : public Component{
 private:
-	Game* game{nullptr};
 	Segment head;
 	vector<Segment*> segments;
 	float frameCount{0.0f};
@@ -21,7 +20,7 @@ private:
 	bool restart{false};
 	bool spawn{false};
 public:
-	Snake(Game* game, sf::Keyboard::Key controls[]) : game(game), head(game, controls, this){
+	Snake(sf::Keyboard::Key controls[]) : head(game, controls, this){
 		for(int i = 0; i < 4; i++){
 			this->controls[i] = controls[i];
 		}

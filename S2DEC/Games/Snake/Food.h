@@ -9,6 +9,7 @@
 #include "Component.h"
 #include "Game.h"
 #include "Util.h"
+#include "sf_b2.h"
 #include "Snake.h"
 
 using namespace S2D;
@@ -18,10 +19,9 @@ using std::chrono::system_clock;
 
 class Food : public Component{
 private:
-	Game* game{nullptr};
 	b2Body* body{nullptr};
-	b2BodyDef bodyDef{};
-	b2PolygonShape shape{};
+	b2BodyDef bodyDef;
+	b2PolygonShape shape;
 	b2Fixture* fixture{nullptr};
 	sf::RectangleShape image;
 
@@ -30,11 +30,10 @@ private:
 	bool respawn{true};
 
 public:
-	Food(Game* game) : game(game), rng(system_clock::now().time_since_epoch().count()){
+	Food() : rng(system_clock::now().time_since_epoch().count()){
 		bodyDef.type = b2_staticBody;
 		shape.SetAsBox(10.0f / SCALE / 2.0f, 10.0f / SCALE / 2.0f);
-		image.setSize({10.0f, 10.0f});
-		image.setOrigin(image.getSize().x / 2.0f, image.getSize().y / 2.0f);
+		setSizeAndCenter(image, {10.0f, 10.0f});
 	}
 
 	void spawn(){
@@ -42,7 +41,7 @@ public:
 		uniform_int_distribution<int> yDist(1, Game::SCREEN_SIZE.y / 12);
 		bodyDef.position = {((float)xDist(rng) * 12) / SCALE, ((float)yDist(rng) * 12) / SCALE};
 		init();
-		image.setPosition(bodyDef.position.x * SCALE, bodyDef.position.y * SCALE);
+		movesfTob2(image, body);
 	}
 
 	/**

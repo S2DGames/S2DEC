@@ -94,6 +94,7 @@
     <ClCompile Include="src\EventManager.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Entity.cpp" />
+    <ClCompile Include="src\sf_b2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ComponentTemplate.h" />
@@ -107,14 +108,6 @@
     <ClInclude Include="Games\Snake\Segment.h" />
     <ClInclude Include="Games\Snake\Snake.h" />
     <ClInclude Include="Games\Snake\SnakeScene.h" />
-    <ClInclude Include="Games\SpaceInvaders\Alien.h" />
-    <ClInclude Include="Games\SpaceInvaders\AlienCoordinator.h" />
-    <ClInclude Include="Games\SpaceInvaders\Bullet.h" />
-    <ClInclude Include="Games\SpaceInvaders\Gun.h" />
-    <ClInclude Include="Games\SpaceInvaders\Ship.h" />
-    <ClInclude Include="Games\SpaceInvaders\SpaceInvaders.h" />
-    <ClInclude Include="Laser.h" />
-    <ClInclude Include="sf_b2.h" />
     <ClInclude Include="src\CollisionListener.h" />
     <ClInclude Include="src\CompareEntityZ.h" />
     <ClInclude Include="src\Component.h" />
@@ -124,6 +117,7 @@
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\Entity.h" />
     <ClInclude Include="src\ResourceManager.h" />
+    <ClInclude Include="src\sf_b2.h" />
     <ClInclude Include="src\Util.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

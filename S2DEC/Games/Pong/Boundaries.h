@@ -9,7 +9,6 @@ using namespace S2D;
 
 class Boundaries : public Component{
 private:
-	Game* game{nullptr};
 	b2Body* body{nullptr};
 	b2BodyDef bodyDef;
 	b2FixtureDef fixtureDef;
@@ -21,7 +20,7 @@ private:
 	vector<sf::RectangleShape> rectangleShapes;
 
 public:
-	Boundaries(Game* game) : game(game){
+	Boundaries(){
 		bodyDef.type = b2_staticBody;
 	}
 

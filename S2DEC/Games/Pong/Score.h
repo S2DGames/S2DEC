@@ -11,7 +11,6 @@ enum Player{left, right};
 
 class Score : public Component{
 private:
-	Game* game{nullptr};
 	sf::Font font;
 	sf::Text leftText;
 	sf::Text rightText;
@@ -20,7 +19,7 @@ private:
 	int rightScore{0};
 	
 public:
-	Score(Game* game, sf::Vector2f leftStartingPosition, sf::Vector2f rightStartingPosition) : game(game){
+	Score(sf::Vector2f leftStartingPosition, sf::Vector2f rightStartingPosition){
 		font.loadFromFile("resources/pongFont.ttf");
 		leftText.setFont(font);
 		leftText.setCharacterSize(40);

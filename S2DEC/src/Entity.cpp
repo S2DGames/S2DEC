@@ -16,10 +16,14 @@
 //    and must not be misrepresented as being the original software.
 //
 // 3. This notice may not be removed or altered from any source distribution.
-#include "Entity.h"
+#include "Game.h"
 #include "EntityManager.h"
 
 using namespace S2D;
+
+Entity::Entity(string name, EntityManager* owner) : name(name), owner(owner){
+	game = owner->getGame();
+}
 
 const string Entity::getName(){
 	return name;
@@ -56,7 +60,11 @@ void Entity::setZ(int newZ){
 	owner->zOrderModified();
 }
 
-const bool Entity::isAlive(){
+Game* Entity::getGame(){
+	return game;
+}
+
+bool Entity::isAlive(){
 	return alive;
 }
 

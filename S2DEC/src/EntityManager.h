@@ -45,9 +45,10 @@ namespace S2D{
 		}
 
 		bool zOrderChanged;
+		Game* game;
 
 	public:
-		EntityManager() : zOrderChanged(false), iterating(false){
+		EntityManager(Game* game) : zOrderChanged(false), iterating(false), game(game){
 
 		}
 
@@ -104,21 +105,25 @@ namespace S2D{
 
 		void removeDeadEntities(){
 			entities.erase(
-				std::remove_if(std::begin(entities),
-				std::end(entities),
-				[](const std::unique_ptr<Entity>& entity){
+				remove_if(begin(entities),
+				end(entities),
+				[](const unique_ptr<Entity>& entity){
 					if(!entity->isAlive()){
 						cout << entity->getName() << " destroyed" << endl;
 						return true;
 					}
 					return false;
 				}),
-				std::end(entities)
+				end(entities)
 			);
 		}
 
 		void zOrderModified(){
 			zOrderChanged = true;
+		}
+
+		Game* getGame(){
+			return game;
 		}
 	};
 

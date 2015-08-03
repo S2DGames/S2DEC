@@ -1,4 +1,6 @@
 #pragma once
+#include <random>
+#include <chrono>
 #include "Box2D/Dynamics/b2World.h"
 #include "Box2D/Collision/Shapes/b2CircleShape.h"
 #include "SFML/Graphics/CircleShape.hpp"
@@ -8,11 +10,14 @@
 #include "Boundaries.h"
 #include "Score.h"
 
+using std::default_random_engine;
+using std::uniform_int_distribution;
+using std::chrono::system_clock;
+using std::bind;
 using namespace S2D;
 
 class Ball : public Component{
 private:
-	Game* game{nullptr};
 	b2Body* body{nullptr};
 	b2BodyDef bodyDef;
 	b2CircleShape shape;
@@ -29,9 +34,11 @@ private:
 
 	bool respawnBall;
 
+	default_random_engine rng;
+
 public:
 	//pass in the Score component and both Paddle components to do game logic later on
-	Ball(Game* game, sf::Vector2f startingPosition, Score* score, Paddle* leftPaddle, Paddle* rightPaddle) : game(game), score(score), leftPaddle(leftPaddle), rightPaddle(rightPaddle){
+	Ball(sf::Vector2f startingPosition, Score* score, Paddle* leftPaddle, Paddle* rightPaddle) : score(score), leftPaddle(leftPaddle), rightPaddle(rightPaddle), rng(system_clock::now().time_since_epoch().count()){
 		//Set up box2d stuff
 		bodyDef.type = b2_dynamicBody;
 		bodyDef.position = {startingPosition.x / SCALE, startingPosition.y / SCALE};
@@ -41,6 +48,7 @@ public:
 		image.setRadius(10.0f);
 		image.setOrigin(image.getRadius() / 2.0f, image.getRadius() / 2.0f);
 		image.setPosition(startingPosition);
+		setSizeAndCenter(image, 10.0f);
 	}
 
 	~Ball(){
@@ -61,7 +69,18 @@ public:
 		fixture->SetRestitution(1.0f);
 
 		//set the initial velocity
-		body->SetLinearVelocity({4.0f, 1.0f});
+		uniform_int_distribution<int> dist(0, 1);
+		float direction = (float)dist(rng);
+		float xVel;
+		float yVel;
+		if(direction == 0){
+			xVel = -4;
+		}else{
+			xVel = 4;
+		}
+		uniform_int_distribution<int> yDist(-2, 2);
+		yVel = (float)yDist(rng);
+		body->SetLinearVelocity({xVel, yVel});
 
 		owner->setZ(0);
 	}
@@ -98,7 +117,7 @@ public:
 			float angle = normalizedYIntersect * 60.0f * DEGTORAD;
 			b2Vec2 velocity;
 			//calculate the velocity based on the angle
-			if(image.getPosition().x > game->getSize().x / 2.0f){
+			/*if(image.getPosition().x > game->getSize().x / 2.0f){
 				velocity.x = -speed * cos(angle);
 				velocity.y = speed * -sin(angle);
 				printf("Right paddle hit\n");
@@ -106,6 +125,13 @@ public:
 				velocity.x = speed * cos(angle);
 				velocity.y = speed * -sin(angle);
 				printf("Left paddle hit\n");
+			}*/
+			if(paddle == leftPaddle){
+				velocity.x = speed * cos(angle);
+				velocity.y = speed * -sin(angle);
+			}else if(paddle == rightPaddle){
+				velocity.x = -speed * cos(angle);
+				velocity.y = speed * -sin(angle);
 			}
 			//set the velocity
 			body->SetLinearVelocity(velocity);

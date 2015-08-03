@@ -22,7 +22,7 @@ private:
 public:
 	Ship(Game* game) : game(game){
 		bodyDef.type = b2_dynamicBody;
-		bodyDef.position = {(game->getSize().x / 2.0f) / SCALE, (game->getSize().y - 20.0f) / SCALE};
+		bodyDef.position = {(game->getSize().x / 2.0f) / SCALE, (game->getSize().y - 50.0f) / SCALE};
 		shape.SetAsBox(10.0f / SCALE, 10.0f / SCALE);
 		image.setSize({20.0f, 20.0f});
 		image.setOrigin(image.getSize().x / 2.0f, image.getSize().y / 2.0f);

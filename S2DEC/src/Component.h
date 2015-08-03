@@ -25,7 +25,6 @@
 #include "SFML/System/Time.hpp"
 #include "SFML/Graphics/RenderTarget.hpp"
 #include "Box2D/Dynamics/Contacts/b2Contact.h"
-#include "Entity.h"
 #include "Util.h"
 
 using std::string;
@@ -49,6 +48,7 @@ namespace S2D{
 	}
 
 	class Entity;
+	class Game;
 
 	class Component{
 		friend class CollisionListener;
@@ -57,7 +57,8 @@ namespace S2D{
 		size_t id;
 
 	protected:
-		Entity* owner;
+		Entity* owner{nullptr};
+		Game* game{nullptr};
 
 		Component(){
 
@@ -93,6 +94,10 @@ namespace S2D{
 
 		void setOwner(Entity* owner){
 			this->owner = owner;
+		}
+
+		void setGame(Game* game){
+			this->game = game;
 		}
 
 	public:
