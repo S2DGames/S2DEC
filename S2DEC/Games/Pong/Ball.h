@@ -36,6 +36,8 @@ private:
 
 	default_random_engine rng;
 
+	std::shared_ptr<ltbl::LightShape> lightShape;
+
 public:
 	//pass in the Score component and both Paddle components to do game logic later on
 	Ball(sf::Vector2f startingPosition, Score* score, Paddle* leftPaddle, Paddle* rightPaddle) : score(score), leftPaddle(leftPaddle), rightPaddle(rightPaddle), rng(system_clock::now().time_since_epoch().count()){
@@ -56,6 +58,12 @@ public:
 	}
 
 	void init() override{
+		lightShape = std::make_shared<ltbl::LightShape>();
+		lightShape->_shape.setPointCount(image.getPointCount());
+		for(int i = 0; i < lightShape->_shape.getPointCount(); i++){
+			lightShape->_shape.setPoint(i, image.getPoint(i));
+		}
+		lightShape->_shape.setPosition(image.getPosition());
 		//create the body and set user data
 		//setting the user data makes it so the beginCollision OF THIS COMPONENT is called
 		//when this body collides with something
@@ -86,6 +94,7 @@ public:
 	}
 
 	void update(float frameTime) override{
+		//see line 136 why we need to respawn the ball in the update function
 		if(respawnBall){
 			//to move the ball instantaniously, we have to destroy the body, then set the new position
 			game->DestroyBody(body);
@@ -97,6 +106,7 @@ public:
 
 		//update the position of the image every frame
 		image.setPosition({body->GetPosition().x * SCALE, body->GetPosition().y * SCALE});
+		lightShape->_shape.setPosition(image.getPosition());
 	}
 
 	void draw(sf::RenderTarget& target) override{
@@ -117,21 +127,11 @@ public:
 			float angle = normalizedYIntersect * 60.0f * DEGTORAD;
 			b2Vec2 velocity;
 			//calculate the velocity based on the angle
-			/*if(image.getPosition().x > game->getSize().x / 2.0f){
-				velocity.x = -speed * cos(angle);
-				velocity.y = speed * -sin(angle);
-				printf("Right paddle hit\n");
-			}else{
-				velocity.x = speed * cos(angle);
-				velocity.y = speed * -sin(angle);
-				printf("Left paddle hit\n");
-			}*/
+			velocity.y = speed * -sin(angle);
 			if(paddle == leftPaddle){
 				velocity.x = speed * cos(angle);
-				velocity.y = speed * -sin(angle);
 			}else if(paddle == rightPaddle){
 				velocity.x = -speed * cos(angle);
-				velocity.y = speed * -sin(angle);
 			}
 			//set the velocity
 			body->SetLinearVelocity(velocity);

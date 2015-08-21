@@ -27,6 +27,7 @@ public:
 	}
 
 	void init() override{
+		head = Segment(game, controls, this);
 		head.init();
 		head.getBody()->SetUserData(this);
 		owner->setZ(1);

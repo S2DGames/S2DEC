@@ -25,6 +25,7 @@
 #include "EntityManager.h"
 #include "CollisionListener.h"
 #include "ResourceManager.h"
+#include "LTBL2\ltbl\lighting\LightSystem.h"
 
 namespace S2D{
 
@@ -56,7 +57,7 @@ namespace S2D{
 	*/
 	const int32 POSITION_ITERATIONS = 5;
 
-	class Game : public sf::RenderWindow, public b2World, public Controls, public EventManager, public EntityManager, public CollisionListener/*, public ResourceManager*/{
+	class Game : public sf::RenderWindow, public b2World, public Controls, public EventManager, public EntityManager, public CollisionListener, public ltbl::LightSystem/*, public ResourceManager*/{
 	private:
 		/*!
 		* The amount of time between each step in the box2D world.
@@ -82,6 +83,18 @@ namespace S2D{
 		 */
 		string title;
 
+		bool lightSystemEnabled = false;
+
+		sf::Shader unshadowShader;
+		sf::Shader lightOverShapeShader;
+		sf::Texture penumbraTexture;
+		sf::Texture pointLightTexture;
+		sf::Texture directionLightTexture;
+		sf::Sprite lightSprite;
+
+		sf::Texture background;
+		sf::Sprite backgroundSprite;
+
 	public:
 		/*!
 		 * Constructor
@@ -90,7 +103,7 @@ namespace S2D{
 		 * \param height The height of the window that will be created.
 		 * \param name The title of the window that will be created.
 		 */
-		Game(unsigned int width, unsigned int height, const char* name);
+		Game(unsigned int width, unsigned int height, const char* name, bool lighting = false);
 
 		/*!
 		 * Initializes a game. This must be called before calling Game::play().
@@ -117,6 +130,10 @@ namespace S2D{
 		void close();
 
 		sf::FloatRect getCameraRect();
+
+		sf::Texture& getDefaultPointLightTexture();
+
+		sf::Texture& getDefaultDirectionLightTexture();
 
 		static sf::Vector2u SCREEN_SIZE;
 	};

@@ -1,6 +1,6 @@
 #pragma once
 #include "Component.h"
-#include "Game.h"
+#include "sf_b2.h"
 
 using namespace S2D;
 
@@ -13,13 +13,16 @@ public:
 		//set the size of the rectangle
 		image.setSize(size);
 		
-		//To do this we use the setOrigin function and pass in half the width and half the height of the image.
-		image.setOrigin({image.getSize().x / 2.0f, image.getSize().y / 2.0f});
+		//Set the position of the rectangle
+		//SFML uses the top left as the origin point by default just so you know.
+		//I like to use the center so there is a simple function in sf_b2.h to set the center of
+		//many SFML drawables.
+		setCenter(image);
 		image.setPosition(position);
 	}
 
 	void onStart() override{
-		//draw it behind everything with a z greater than -1
+		//draw it behind everything that has a z greater than -1
 		owner->setZ(-1);
 	}
 

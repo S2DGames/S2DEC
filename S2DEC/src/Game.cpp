@@ -21,11 +21,12 @@ using namespace S2D;
 
 sf::Vector2u Game::SCREEN_SIZE;
 
-Game::Game(unsigned int width, unsigned int height, const char* name) :
+Game::Game(unsigned int width, unsigned int height, const char* name, bool lighting) :
 		sf::RenderWindow(),
 		b2World(b2Vec2(0.0, 0.0)),
 		Controls(this),
-		EntityManager(this){
+		EntityManager(this),
+		lightSystemEnabled(lighting){
 	state = INITIALIZING;
 	style = sf::Style::None;
 	title = name;
@@ -40,6 +41,46 @@ Game::Game(unsigned int width, unsigned int height, const char* name) :
 
 void Game::init(){
 	sf::RenderWindow::create(videoMode, title, style, settings);
+	if(lightSystemEnabled){
+		unshadowShader.loadFromFile("resources/LTBL2/unshadowShader.vert", "resources/LTBL2/unshadowShader.frag");
+		lightOverShapeShader.loadFromFile("resources/LTBL2/lightOverShapeShader.vert", "resources/LTBL2/lightOverShapeShader.frag");
+		penumbraTexture.loadFromFile("resources/LTBL2/penumbraTexture.png");
+		penumbraTexture.setSmooth(true);
+		ltbl::LightSystem::create(sf::FloatRect(-1000.0f, -1000.0f, 1000.0f, 1000.0f), sf::RenderWindow::getSize(), penumbraTexture, unshadowShader, lightOverShapeShader);
+		pointLightTexture.loadFromFile("resources/LTBL2/pointLightTexture.png");
+		pointLightTexture.setSmooth(true);
+		directionLightTexture.loadFromFile("resources/LTBL2/directionLightTexture.png");
+		directionLightTexture.setSmooth(true);
+		/*light->_emissionSprite.setTexture(pointLightTexture);
+		light->_emissionSprite.setOrigin(pointLightTexture.getSize().x / 2.0f, pointLightTexture.getSize().y / 2.0f);
+		light->_emissionSprite.setColor(sf::Color::White);
+		light->_emissionSprite.setPosition(100, 100);
+		light->_emissionSprite.scale(5, 5);
+		light->_localCastCenter = sf::Vector2f(0.0f, 0.0f); // This is where the shadows emanate from relative to the sprite
+
+		ls.addLight(light);
+
+		lightShape = std::make_shared<ltbl::LightShape>();
+		sf::RectangleShape shape({10, 10});
+		lightShape->_shape.setPointCount(4);
+		for(int i = 0; i < 4; i++){
+			lightShape->_shape.setPoint(i, shape.getPoint(i));
+		}
+		lightShape->_shape.setPosition(200, 200);
+		ls.addShape(lightShape);
+
+		std::shared_ptr<ltbl::LightDirectionEmission> light2 = std::make_shared<ltbl::LightDirectionEmission>();
+
+		directionLightTexture.loadFromFile("resources/LTBL2/directionLightTexture.png");
+		directionLightTexture.setSmooth(true);
+		light2->_emissionSprite.setTexture(directionLightTexture);
+		light2->_castDirection = sf::Vector2f(1.0f, 10.0f);
+		*/
+		//ls.addLight(light2);
+
+		background.loadFromFile("resources/background.png");
+		backgroundSprite.setTexture(background);
+	}
 }
 
 void Game::setSize(const sf::Vector2u size){
@@ -99,8 +140,15 @@ GameState Game::play(){
 		//reset screen
 		sf::RenderWindow::clear();
 
+		//draw background
+		sf::RenderWindow::draw(backgroundSprite);
+
 		//draw objects in the scene and display
 		EntityManager::draw(*this);
+		//light->_emissionSprite.setPosition(Controls::getMousePos().x, Controls::getMousePos().y);
+		ltbl::LightSystem::render(sf::RenderWindow::getView(), unshadowShader, lightOverShapeShader);
+		lightSprite.setTexture(ltbl::LightSystem::getLightingTexture());
+		sf::RenderWindow::draw(lightSprite, sf::BlendAdd);
 		sf::RenderWindow::display();
 	}
 

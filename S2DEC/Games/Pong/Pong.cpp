@@ -33,11 +33,12 @@ void loadPong(Game* game){
 	Entity& ball = game->createEntity("Ball 1");
 	ball.addComponent<Ball>(sf::Vector2f{game->getSize().x / 2.0f, 60 + (game->getSize().y / 2.0f)}, &scoreComponent, &l, &r);
 
-	//Entity& ball2 = game->createEntity("Ball 2");
-	//ball2.addComponent<Ball>(sf::Vector2f{game->getSize().x / 2.0f, 50 + (game->getSize().y / 2.0f)}, &scoreComponent, &l, &r);
+	Entity& ball2 = game->createEntity("Ball 2");
+	ball2.addComponent<Ball>(sf::Vector2f{game->getSize().x / 2.0f, 50 + (game->getSize().y / 2.0f)}, &scoreComponent, &l, &r);
 
-	//Entity& ball3 = game->createEntity("Ball 3");
-	//ball3.addComponent<Ball>(sf::Vector2f{game->getSize().x / 2.0f, 70 + (game->getSize().y / 2.0f)}, &scoreComponent, &l, &r);
+	Entity& ball3 = game->createEntity("Ball 3");
+	ball3.addComponent<Ball>(sf::Vector2f{game->getSize().x / 2.0f, 70 + (game->getSize().y / 2.0f)}, &scoreComponent, &l, &r);
 
-
+	Entity& entity = game->createEntity("SampleComponent");
+	//entity.addComponent<SampleComponent>(sf::Vector2f{10.0f, 10.0f});
 }
