@@ -1,0 +1,14 @@
+make a simple pokemon style town
+//make a house in paint in 30 seconds
+make a person in paint in 10 seconds
+//4 houses in a grid
+make a person that can path around the houses given a random point
+make a time of day system
+make people go in a house during night and come out in the day
+make people have their own house
+make the rooves of house be disableable
+make a room for a house in paint in 5 seconds (door on top and left sides in the center)
+put a room in each corner of the house so the door faces the hallway and the hall makes a plus
+make the person in that house path through the house correctly
+assign specific rooms for bed, bath, play, kitchen
+make person go in bedroom at night, then bath and kitchen in morning, then other stuff

@@ -1,0 +1,250 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Games">
+      <UniqueIdentifier>{8dd68658-aa96-426d-a60e-9c1be0f31afd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Games\Simulator">
+      <UniqueIdentifier>{ad183dcc-3c5a-4687-9cf7-6510d33b619a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LTBL">
+      <UniqueIdentifier>{34b1bc28-fbdd-456b-a60f-b4dbbbf22766}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Games\Pong">
+      <UniqueIdentifier>{6367ec62-778b-4b8d-88c9-822378fbe65a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Games\Snake">
+      <UniqueIdentifier>{e739de96-37e7-4b8f-b1fc-fc4e45aa42ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Games\LAN">
+      <UniqueIdentifier>{1c6411bd-5914-4ed4-97c8-51f57c215462}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Games\Grow">
+      <UniqueIdentifier>{0b6ce279-9a57-4b78-b6ed-917b27a350f8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\CollisionListener.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CompareEntityZ.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Controls.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Entity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\EventManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sf_b2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Games\Simulator\Dstar.cpp">
+      <Filter>Games\Simulator</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LTBL2\ltbl\Math.cpp">
+      <Filter>LTBL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LTBL2\ltbl\lighting\LightDirectionEmission.cpp">
+      <Filter>LTBL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LTBL2\ltbl\lighting\LightPointEmission.cpp">
+      <Filter>LTBL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LTBL2\ltbl\lighting\LightShape.cpp">
+      <Filter>LTBL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LTBL2\ltbl\lighting\LightSystem.cpp">
+      <Filter>LTBL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LTBL2\ltbl\quadtree\DynamicQuadtree.cpp">
+      <Filter>LTBL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LTBL2\ltbl\quadtree\Quadtree.cpp">
+      <Filter>LTBL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LTBL2\ltbl\quadtree\QuadtreeNode.cpp">
+      <Filter>LTBL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LTBL2\ltbl\quadtree\QuadtreeOccupant.cpp">
+      <Filter>LTBL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LTBL2\ltbl\quadtree\StaticQuadtree.cpp">
+      <Filter>LTBL</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Games\Pong\Pong.cpp">
+      <Filter>Games\Pong</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\CollisionListener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CompareEntityZ.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Component.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Controls.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Entity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\EntityManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\EventManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ResourceManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sf_b2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\Simulator\AI.h">
+      <Filter>Games\Simulator</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\Simulator\Dstar.h">
+      <Filter>Games\Simulator</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\Simulator\House.h">
+      <Filter>Games\Simulator</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\Simulator\NPC.h">
+      <Filter>Games\Simulator</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\Simulator\Pathfinding.h">
+      <Filter>Games\Simulator</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\Simulator\Sim.h">
+      <Filter>Games\Simulator</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\Simulator\Simulator.h">
+      <Filter>Games\Simulator</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LTBL2\ltbl\Math.h">
+      <Filter>LTBL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LTBL2\ltbl\lighting\LightDirectionEmission.h">
+      <Filter>LTBL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LTBL2\ltbl\lighting\LightPointEmission.h">
+      <Filter>LTBL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LTBL2\ltbl\lighting\LightShape.h">
+      <Filter>LTBL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LTBL2\ltbl\lighting\LightSystem.h">
+      <Filter>LTBL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LTBL2\ltbl\quadtree\DynamicQuadtree.h">
+      <Filter>LTBL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LTBL2\ltbl\quadtree\Quadtree.h">
+      <Filter>LTBL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LTBL2\ltbl\quadtree\QuadtreeNode.h">
+      <Filter>LTBL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LTBL2\ltbl\quadtree\QuadtreeOccupant.h">
+      <Filter>LTBL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LTBL2\ltbl\quadtree\StaticQuadtree.h">
+      <Filter>LTBL</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentTemplate.h" />
+    <ClInclude Include="Games\Pong\Ball.h">
+      <Filter>Games\Pong</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\Pong\Boundaries.h">
+      <Filter>Games\Pong</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\Pong\Middle.h">
+      <Filter>Games\Pong</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\Pong\Paddle.h">
+      <Filter>Games\Pong</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\Pong\Pong.h">
+      <Filter>Games\Pong</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\Pong\SampleComponent.h">
+      <Filter>Games\Pong</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\Pong\Score.h">
+      <Filter>Games\Pong</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\Snake\Food.h">
+      <Filter>Games\Snake</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\Snake\Segment.h">
+      <Filter>Games\Snake</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\Snake\Snake.h">
+      <Filter>Games\Snake</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\Snake\SnakeScene.h">
+      <Filter>Games\Snake</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\LAN\TeamObjective.h">
+      <Filter>Games\LAN</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\LAN\Player.h">
+      <Filter>Games\LAN</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\LAN\Utility.h">
+      <Filter>Games\LAN</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\LAN\Doors.h">
+      <Filter>Games\LAN</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\LAN\Level.h">
+      <Filter>Games\LAN</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\Grow\Screen.h">
+      <Filter>Games\Grow</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\Grow\Grow.h">
+      <Filter>Games\Grow</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AnimatedSprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Games\Simulator\planning.txt">
+      <Filter>Games\Simulator</Filter>
+    </Text>
+  </ItemGroup>
+</Project>
