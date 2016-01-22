@@ -56,6 +56,7 @@ void Game::init(){
 		directionLightTexture.setSmooth(true);
 
 		globalLightSprite.setOrigin(getSize().x / 2.0f, getSize().y / 2.0f);
+		globalLightSprite.setPosition(getView().getCenter());
 	}
 
 	/*gridTexture.create(videoMode.width, videoMode.height);

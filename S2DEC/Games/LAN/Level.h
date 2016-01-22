@@ -26,6 +26,7 @@ private:
 	sf::Sprite image;
 	sf::Texture texture;
 
+	vector<shared_ptr<ltbl::LightShape>> lightShapes;
 	vector<unique_ptr<wall>> walls;
 	vector<array<int, 4>> map = {
 		{0, 0, 1280, 6},
@@ -99,12 +100,24 @@ public:
 			w->fixtureDef.filter.maskBits = PLAYER;
 			w->fixture = w->body->CreateFixture(&w->fixtureDef);
 			movesfTob2(w->image, w->body);
+
+			shared_ptr<ltbl::LightShape> lightShape = std::make_shared<ltbl::LightShape>();
+			lightShape->_shape.setPointCount(w->image.getPointCount());
+			for(int i = 0; i < lightShape->_shape.getPointCount(); i++){
+				lightShape->_shape.setPoint(i, w->image.getPoint(i));
+			}
+			lightShape->_shape.setPosition(w->image.getPosition());
+			lightShape->_renderLightOverShape = false;
+
 			walls.emplace_back(move(w));
 		}
 	}
 
 	void onStart() override{
 		image.setPosition(game->getView().getCenter());
+		for(auto& lightShape : lightShapes){
+			game->addShape(lightShape);
+		}
 	}
 
 	void draw(sf::RenderTarget& target) override{
