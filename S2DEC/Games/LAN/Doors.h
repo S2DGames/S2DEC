@@ -8,9 +8,12 @@
 #include "Util.h"
 #include "sf_b2.h"
 #include "Utility.h"
+#include "LTBL2/ltbl/lighting/LightShape.h"
 
 using std::unique_ptr;
 using std::move;
+using std::shared_ptr;
+using std::make_shared;
 using namespace S2D;
 
 enum OpenDirection{UP, DOWN, LEFT, RIGHT};
@@ -43,6 +46,8 @@ private:
 
 	const int cycle = 90;
 	int frameCount = 90;
+
+	shared_ptr<ltbl::LightShape> lightShape;
 
 public:
 	Door(Game* game, array<int, 4> a, OpenDirection direction){
@@ -118,9 +123,22 @@ public:
 		}
 	}
 
-	void init(){
+	void init() override{
 		owner->setZ(-1);
 		registerLocalEvent(Door::checkKey, Door::open);
+
+		lightShape = std::make_shared<ltbl::LightShape>();
+		lightShape->_shape.setPointCount(image.getPointCount());
+		for(int i = 0; i < lightShape->_shape.getPointCount(); i++){
+			lightShape->_shape.setPoint(i, image.getPoint(i));
+		}
+		lightShape->_shape.setOrigin(image.getOrigin());
+		lightShape->_shape.setPosition(image.getPosition());
+		lightShape->_renderLightOverShape = true;
+	}
+
+	void onStart() override{
+		game->addShape(lightShape);
 	}
 
 	bool checkKey(){
@@ -296,9 +314,10 @@ public:
 					break;
 			}
 		}
+		movesfTob2(lightShape->_shape, body);
 	}
 
-	void draw(sf::RenderTarget& target) {
+	void draw(sf::RenderTarget& target) override{
 		target.draw(image);
 		//target.draw(areaImage);
 		//if(direction == OpenDirection::RIGHT){

@@ -32,8 +32,8 @@ private:
 	 unordered_set<Door*> openableDoors;
 
 	 //shared_ptr<ltbl::LightShape> lightShape;
-	 //shared_ptr<ltbl::LightPointEmission> light;
-	 shared_ptr<ltbl::LightDirectionEmission> light;
+	 shared_ptr<ltbl::LightPointEmission> light;
+	 //shared_ptr<ltbl::LightDirectionEmission> light;
 	 sf::Texture lightTexture;
 
 	 AnimatedSprite test;
@@ -71,6 +71,7 @@ public:
 
 		//view = game->getView();
 		//view.setSize(350, 196);
+		//view.setSize(640, 360);
 
 		//lightShape = std::make_shared<ltbl::LightShape>();
 		//lightShape->_shape.setPointCount(image.getPointCount());
@@ -80,15 +81,15 @@ public:
 		//lightShape->_shape.setPosition(image.getPosition());
 		//lightShape->_renderLightOverShape = true;
 
-		/*light = std::make_shared<ltbl::LightPointEmission>();
-		light->_emissionSprite.setOrigin(image.getPosition());
+		light = std::make_shared<ltbl::LightPointEmission>();
+		light->_emissionSprite.setOrigin(image.getPosition().x + image.getSize().x / 4.0f, image.getPosition().y + image.getSize().y / 4.0f);
 		lightTexture.loadFromFile("resources/LTBL2/pointLightTexture.png");
 		lightTexture.setSmooth(true);
 		light->_emissionSprite.setTexture(lightTexture);
 		light->_emissionSprite.setColor(sf::Color::White);
 		light->_emissionSprite.setPosition(image.getPosition());
 		light->_localCastCenter = sf::Vector2f(0.0f, 0.0f);
-		light->_emissionSprite.scale(4.0f, 4.0f);*/
+		light->_emissionSprite.scale(8.0f, 8.0f);
 
 		test.load("Games/LAN/TestAnimation.png", sf::IntRect{0, 0, 10, 10}, 0, 0, 0, 0, 6);
 		test.setAnimationSpeed(0.1f);
@@ -98,13 +99,13 @@ public:
 	}
 
 	void onStart() override{
-		std::shared_ptr<ltbl::LightDirectionEmission> light = std::make_shared<ltbl::LightDirectionEmission>();
-		lightTexture.loadFromFile("resources/LTBL2/directionLightTexture.png");
-		lightTexture.setSmooth(true);
-		light->_emissionSprite.setTexture(lightTexture);
+		//std::shared_ptr<ltbl::LightDirectionEmission> light = std::make_shared<ltbl::LightDirectionEmission>();
+		//lightTexture.loadFromFile("resources/LTBL2/penumbraTexture.png");
+		//lightTexture.setSmooth(true);
+		//light->_emissionSprite.setTexture(lightTexture);
 		//light->_emissionSprite.setColor(sf::Color::White);
-		light->_emissionSprite.setPosition(image.getPosition());
-		light->_castDirection = sf::Vector2f(0.0f, 0.0f);
+		//light->_emissionSprite.setPosition(image.getPosition());
+		//light->_castDirection = sf::Vector2f(0.0f, 0.0f);
 		game->addLight(light);
 	}
 
@@ -167,7 +168,7 @@ public:
 		//game->setView(view);
 
 		//lightShape->_shape.setPosition(image.getPosition());
-		//light->_emissionSprite.setPosition(image.getPosition());
+		light->_emissionSprite.setPosition(image.getPosition());
 		test.update(frameTime);
 	}
 

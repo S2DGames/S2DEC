@@ -106,9 +106,11 @@ public:
 			for(int i = 0; i < lightShape->_shape.getPointCount(); i++){
 				lightShape->_shape.setPoint(i, w->image.getPoint(i));
 			}
+			lightShape->_shape.setOrigin(w->image.getOrigin());
 			lightShape->_shape.setPosition(w->image.getPosition());
 			lightShape->_renderLightOverShape = false;
 
+			lightShapes.emplace_back(lightShape);
 			walls.emplace_back(move(w));
 		}
 	}
@@ -121,6 +123,7 @@ public:
 	}
 
 	void draw(sf::RenderTarget& target) override{
+		
 		//target.draw(image);
 		for(auto& w : walls){
 			target.draw(w->image);
