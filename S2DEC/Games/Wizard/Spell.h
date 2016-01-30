@@ -14,9 +14,9 @@ using namespace S2D;
 class Spell : public Component {
 protected:
 	sf::Vector2f startPos;
+	sf::RectangleShape image;
 
 private:
-	sf::RectangleShape image;
 
 	b2Body* body{ nullptr };
 	b2BodyDef bodyDef;
