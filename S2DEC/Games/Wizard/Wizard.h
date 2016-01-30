@@ -47,13 +47,14 @@ public:
 	* Called when the Game starts.
 	*/
 	void onStart() override {
-
+		
 	}
 
 	/**
 	* Called once every frame.
 	*/
 	void update(float frameTime) override {
+		game->getKeysPressed();
 		movesfTob2(image, body);
 	}
 
