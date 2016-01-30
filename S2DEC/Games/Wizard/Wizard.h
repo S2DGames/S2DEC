@@ -8,6 +8,7 @@
 #include "sf_b2.h"
 #include "Spell.h"
 #include "WizardUtility.h"
+#include "Fireball.h"
 
 using namespace S2D;
 
@@ -86,7 +87,7 @@ public:
 
 		if (game->getMouseState(sf::Mouse::Left) == KEY_PRESSED && canFire) {
 			Entity& spell = game->createEntity("Spell");
-			spell.addComponent<Spell>(sf::Vector2f{ image.getPosition().x, image.getPosition().y }, sf::Vector2f{ (float)game->getMousePos().x, (float)game->getMousePos().y }, spellType);
+			spell.addComponent<Fireball>(sf::Vector2f{ image.getPosition().x, image.getPosition().y }, sf::Vector2f{ (float)game->getMousePos().x, (float)game->getMousePos().y });
 			canFire = false;
 		}
 	}

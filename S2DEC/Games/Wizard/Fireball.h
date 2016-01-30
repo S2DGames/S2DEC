@@ -6,41 +6,27 @@ using namespace S2D;
 
 class Fireball : public Spell {
 private:
-	sf::CircleShape image;
+	sf::CircleShape explosion;
 
-	b2Body* body{ nullptr };
-	b2BodyDef bodyDef;
-	b2CircleShape shape;
-	b2Fixture* fixture{ nullptr };
 public:
 	Fireball(sf::Vector2f position, sf::Vector2f endPosition): Spell(position, endPosition, SpellType::Fire ) {
 
 	}
 
 
-	void init() override {
-		bodyDef.type = b2_dynamicBody;
-
-		shape.m_radius = sfTob2(image.getRadius());
-		body = game->CreateBody(&bodyDef);
-		body->SetUserData(this);
-		body->SetFixedRotation(true);
-		fixture = body->CreateFixture(&shape, 1.0f);
-		fixture->SetFriction(0.0f);
-		fixture->SetRestitution(1.0f);
-		movesfTob2(image, body);
-	}
-
 	void update(float frameTime) override {
-
+		Spell::update(frameTime);
 	}
 
-	virtual void draw(sf::RenderTarget& target) override {
-		target.draw(image);
+	void draw(sf::RenderTarget& target) override {
+		target.draw(explosion);
+		Spell::draw(target);
 	}
 
 	void createExplosion() {
-		image.getPosition();
+		explosion.setRadius(20.0f);
+		explosion.setPosition(Spell::image.getPosition());
+		explosion.setOrigin(explosion.getRadius(), explosion.getRadius());
 	}
 
 	void beginCollision(Component* collidedComponent, b2Contact* contact) override {
