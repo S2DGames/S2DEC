@@ -29,16 +29,17 @@ public:
 	}
 
 	void init() override {
-	bodyDef.type = b2_dynamicBody;
+		bodyDef.type = b2_dynamicBody;
 
-	shape.m_radius = sfTob2(image.getRadius());
-	body = game->CreateBody(&bodyDef);
-	body->SetUserData(this);
-	body->SetFixedRotation(true);
-	fixture = body->CreateFixture(&shape, 1.0f);
-	fixture->SetFriction(0.0f);
-	fixture->SetRestitution(1.0f);
-	movesfTob2(image, body);
+		shape.m_radius = sfTob2(image.getRadius());
+		body = game->CreateBody(&bodyDef);
+		body->SetUserData(this);
+		body->SetFixedRotation(true);
+		fixture = body->CreateFixture(&shape, 1.0f);
+		fixture->SetFriction(0.0f);
+		fixture->SetRestitution(1.0f);
+		fixture->SetSensor(true);
+		movesfTob2(image, body);
 	}
 
 	void update(float frameTime) override {

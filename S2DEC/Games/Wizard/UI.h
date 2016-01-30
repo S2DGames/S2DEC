@@ -113,22 +113,24 @@ public:
 			}
 		}
 
-		for (auto key : game->getKeysPressed()) {
-			for (auto control : controls) {
-				if (key == control) {
-					float radians = currentDegree * DEGTORAD;
-					float x = (80.0f * cos(radians)) + 640;
-					float y = (80.0f * sin(radians)) + 360;
-					sf::CircleShape shape{ 10 };
-					shape.setOrigin({ shape.getRadius(), shape.getRadius() });
-					shape.setFillColor(sf::Color{ 90, 10, 125, 100 });
-					shape.setPosition({ x, y });
-					currentDegree += 45.0f;
-					selectedGlyphs.emplace_back(shape);
-					spellCount++;
-					if (spellCount > 8) {
-						spellCount = 0;
-						selectedGlyphs.clear();
+		if (spellCount < 8) {
+			for (auto key : game->getKeysPressed()) {
+				for (auto control : controls) {
+					if (key == control) {
+						float radians = currentDegree * DEGTORAD;
+						float x = (80.0f * cos(radians)) + 640;
+						float y = (80.0f * sin(radians)) + 360;
+						sf::CircleShape shape{ 10 };
+						shape.setOrigin({ shape.getRadius(), shape.getRadius() });
+						shape.setFillColor(sf::Color{ 90, 10, 125, 100 });
+						shape.setPosition({ x, y });
+						currentDegree += 45.0f;
+						selectedGlyphs.emplace_back(shape);
+						spellCount++;
+						if (spellCount > 8) {
+							spellCount = 0;
+							selectedGlyphs.clear();
+						}
 					}
 				}
 			}
