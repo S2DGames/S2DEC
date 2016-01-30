@@ -94,9 +94,23 @@ public:
 
 	virtual void update(float frameTime) override {
 		movesfTob2(image, body);
-		//destroy if offscreen
 		if (destroySpell && isAlive && spellType != SpellType::Water) {
 			DestroySpell();
+			body = nullptr;
+		}
+		//destroy if offscreen
+		if (image.getPosition().x > (game->getSize().x + image.getSize().x) || image.getPosition().x < (-image.getSize().x)) {
+			if (body != nullptr) {
+				game->DestroyBody(body);
+			}
+			owner->destroy();
+		}
+
+		if (image.getPosition().y >(game->getSize().y + image.getSize().y) || image.getPosition().y < (-image.getSize().y)) {
+			if (body != nullptr) {
+				game->DestroyBody(body);
+			}
+			owner->destroy();
 		}
 	}
 
