@@ -203,6 +203,7 @@
     <ClInclude Include="Games\Wizard\LightningBolt.h" />
     <ClInclude Include="Games\Wizard\Spell.h" />
     <ClInclude Include="Games\Wizard\Tower.h" />
+    <ClInclude Include="Games\Wizard\UI.h" />
     <ClInclude Include="Games\Wizard\WaterBlast.h" />
     <ClInclude Include="Games\Wizard\Wizard.h" />
     <ClInclude Include="Games\Wizard\WizardUtility.h" />
