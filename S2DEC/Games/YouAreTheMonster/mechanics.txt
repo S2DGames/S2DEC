@@ -1,0 +1,10 @@
+Game mechanics
+
+	Burn down trees
+		
+	
+	too much fire reduces oxygen
+		oxygen meter
+			(its like a health bar that recharges when you aren't in fire)
+		
+	
