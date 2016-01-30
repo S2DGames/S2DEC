@@ -36,6 +36,15 @@ public:
 		bodyDef.position = { sfTob2(startPos) };
 		this->endPosition = endPosition;
 		spellType = type;
+		if (type == SpellType::Fire) {
+			image.setFillColor(sf::Color::Red);
+		}
+		else if (type == SpellType::Water) {
+			image.setFillColor(sf::Color::Blue);
+		} 
+		else if (type == SpellType::Lightning) {
+			image.setFillColor(sf::Color::Yellow);
+		}
 	}
 
 	virtual void init() override {

@@ -271,10 +271,10 @@
     <ClInclude Include="Games\Wizard\Fireball.h">
       <Filter>Games\Wizard</Filter>
     </ClInclude>
-    <ClInclude Include="Games\Wizard\LightingBolt.h">
+    <ClInclude Include="Games\Wizard\WaterBlast.h">
       <Filter>Games\Wizard</Filter>
     </ClInclude>
-    <ClInclude Include="Games\Wizard\WaterBlast.h">
+    <ClInclude Include="Games\Wizard\LightningBolt.h">
       <Filter>Games\Wizard</Filter>
     </ClInclude>
     <ClInclude Include="Games\Wizard\UI.h">

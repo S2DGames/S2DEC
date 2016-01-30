@@ -9,6 +9,8 @@
 #include "Spell.h"
 #include "WizardUtility.h"
 #include "Fireball.h"
+#include "WaterBlast.h"
+#include "LightningBolt.h"
 
 using namespace S2D;
 
@@ -27,7 +29,7 @@ private:
 
 	vector<sf::Keyboard::Key> fireBall{ sf::Keyboard::Up, sf::Keyboard::Up, sf::Keyboard::Down, sf::Keyboard::Down, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Left, sf::Keyboard::Right };
 	vector<sf::Keyboard::Key> waterBlast{ sf::Keyboard::Left, sf::Keyboard::Up, sf::Keyboard::Right, sf::Keyboard::Down, sf::Keyboard::Left, sf::Keyboard::Up, sf::Keyboard::Right, sf::Keyboard::Down };
-	vector<sf::Keyboard::Key> LightningBolt{ sf::Keyboard::Up, sf::Keyboard::Up, sf::Keyboard::Up, sf::Keyboard::Down, sf::Keyboard::Down, sf::Keyboard::Down, sf::Keyboard::Left, sf::Keyboard::Right };
+	vector<sf::Keyboard::Key> lightningBolt{ sf::Keyboard::Up, sf::Keyboard::Up, sf::Keyboard::Up, sf::Keyboard::Down, sf::Keyboard::Down, sf::Keyboard::Down, sf::Keyboard::Left, sf::Keyboard::Right };
 
 public:
 	Wizard(sf::Vector2f position) {
@@ -53,18 +55,10 @@ public:
 		//movesfTob2(image, body);
 	}
 
-	//change
-
-	/**
-	* Called when the Game starts.
-	*/
 	void onStart() override {
 
 	}
 
-	/**
-	* Called once every frame.
-	*/
 	void update(float frameTime) override {
 
 		for (auto key : game->getKeysPressed()) {
@@ -87,32 +81,27 @@ public:
 
 		if (game->getMouseState(sf::Mouse::Left) == KEY_PRESSED && canFire) {
 			Entity& spell = game->createEntity("Spell");
-			spell.addComponent<Fireball>(sf::Vector2f{ image.getPosition().x, image.getPosition().y }, sf::Vector2f{ (float)game->getMousePos().x, (float)game->getMousePos().y });
+			if (spellType == SpellType::Fire) {
+				spell.addComponent<Fireball>(sf::Vector2f{ image.getPosition().x, image.getPosition().y }, sf::Vector2f{ (float)game->getMousePos().x, (float)game->getMousePos().y });
+			}
+			else if (spellType == SpellType::Water) {
+				spell.addComponent<WaterBlast>(sf::Vector2f{ image.getPosition().x, image.getPosition().y }, sf::Vector2f{ (float)game->getMousePos().x, (float)game->getMousePos().y });
+			}
+			else if (spellType == SpellType::Lightning) {
+				spell.addComponent<LightningBolt>(sf::Vector2f{ image.getPosition().x, image.getPosition().y }, sf::Vector2f{ (float)game->getMousePos().x, (float)game->getMousePos().y });
+			}
 			canFire = false;
 		}
 	}
 
-	/**
-	* Called once every frame.
-	*/
 	void draw(sf::RenderTarget& target) override {
 		target.draw(image);
 	}
 
-	/**
-	* Called if a physics body connected with this component collides with another physics body.
-	* To connect a Box2d body to this component use b2Body::SetUserDate(this); inside the init or onStart function.
-	* Do not delete or add physics objects in the scope of this function.
-	*/
 	void beginCollision(Component* collidedComponent, b2Contact* contact) override {
 
 	}
 
-	/**
-	* Called if a physics body connected with this component collides with another physics body.
-	* To connect a Box2d body to this component use b2Body::SetUserDate(this); inside the init or onStart function.
-	* Do not delete or add physics objects in the scope of this function.
-	*/
 	void endCollision(Component* collidedComponent, b2Contact* contact) override {
 
 	}
@@ -121,28 +110,41 @@ public:
 		int matchCount = 0;
 		SpellType spellType;
 		//TODO make the selection of spells unique
+		//TODO make this area NOT a horrific mess of code, embarassing generations of programmers
 		for (int index = 0; index < 8; index++) {
 			if (keyPresses[index] == fireBall[index]) {
 				matchCount++;
-				spellType = SpellType::Fire;
 			}
-			else if (keyPresses[index] == waterBlast[index]) {
-				matchCount++;
-				spellType = SpellType::Water;
-			}
-			else if (keyPresses[index] == LightningBolt[index]) {
-				matchCount++;
-				spellType = SpellType::Lightning;
-			}
-
 		}
 		if (matchCount == 8) {
-			return spellType;
+			return SpellType::Fire;
 		}
 		else {
-			spellType = SpellType::None;
-			return spellType;
+			matchCount = 0;
 		}
+		for (int index = 0; index < 8; index++) {
+			if (keyPresses[index] == waterBlast[index]) {
+				matchCount++;
+			}
+		}
+		if (matchCount == 8) {
+			return SpellType::Water;
+		}
+		else {
+			matchCount = 0;
+		}
+		for (int index = 0; index < 8; index++) {
+			if (keyPresses[index] == lightningBolt[index]) {
+				matchCount++;
+			}
+		}
+		if (matchCount = 8) {
+			return SpellType::Lightning;
+		}
+		else {
+			matchCount == 0;
+		}
+		return SpellType::None;
 	}
 
 	vector<sf::Keyboard::Key> getKeyPresses() {
