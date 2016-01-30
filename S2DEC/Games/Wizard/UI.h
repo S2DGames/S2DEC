@@ -2,6 +2,7 @@
 
 #include "SFML/Graphics/RenderTarget.hpp"
 #include "SFML/Graphics/CircleShape.hpp"
+#include "SFML/Graphics/RectangleShape.hpp"
 #include "Component.h"
 #include "Game.h"
 #include "Util.h"
@@ -16,15 +17,25 @@ private:
 	vector<sf::CircleShape> glyphs;
 	vector<sf::CircleShape> selectedGlyphs;
 
+	sf::RectangleShape healthBar;
+	sf::RectangleShape healthBarOutline;
+
 	float currentDegree = 0.0f;
 	int spellCount = 0;
 
 public:
 	UI(vector<sf::Keyboard::Key> controls) : controls(controls) {
-
+		healthBar.setSize({ 200.0f, 10.0f });
+		healthBar.setOrigin(healthBar.getSize().x / 2.0f, healthBar.getSize().y / 2.0f);
+		healthBar.setFillColor(sf::Color::Red);
+		healthBarOutline.setSize({ 204.0f, 14.0f });
+		healthBarOutline.setOrigin(healthBarOutline.getSize().x / 2.0f, healthBarOutline.getSize().y / 2.0f);
+		healthBarOutline.setFillColor(sf::Color::Black);
 	}
 
 	void init() override {
+		healthBar.setPosition(game->getSize().x / 2.0f, 15.0f);
+		healthBarOutline.setPosition(game->getSize().x / 2.0f, 15.0f);
 		sf::CircleShape shape1{ 10 };
 		shape1.setOrigin({ shape1.getRadius(), shape1.getRadius() });
 		shape1.setFillColor(sf::Color::Blue);
@@ -80,6 +91,10 @@ public:
 	}
 
 	void update(float frameTime) override {
+
+		healthBar.setSize({ 20.0f * owner->getComponent<Tower>().getHealth(), healthBar.getSize().y });
+		healthBar.setOrigin(healthBar.getSize().x / 2.0f, healthBar.getSize().y / 2.0f);
+		healthBar.setPosition(game->getSize().x / 2.0f, 15.0f);
 
 		for (sf::Keyboard::Key key : game->getKeysHeld()) {
 			if (key == controls[0]) {
@@ -149,6 +164,9 @@ public:
 		for (auto glyph : selectedGlyphs) {
 			target.draw(glyph);
 		}
+
+		target.draw(healthBarOutline);
+		target.draw(healthBar);
 	}
 
 	void beginCollision(Component* collidedComponent, b2Contact* contact) override {

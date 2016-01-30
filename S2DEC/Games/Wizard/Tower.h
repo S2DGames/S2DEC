@@ -62,4 +62,8 @@ public:
 	void draw(sf::RenderTarget& target) override {
 		target.draw(image);
 	}
+
+	int getHealth() {
+		return health;
+	}
 };
