@@ -6,6 +6,7 @@
 #include "Game.h"
 #include "Util.h"
 #include "sf_b2.h"
+#include "Spell.h"
 
 using namespace S2D;
 
@@ -18,29 +19,31 @@ private:
 	b2PolygonShape shape;
 	b2Fixture* fixture{ nullptr };
 
+	bool canFire = false;
 	vector<sf::Keyboard::Key> playerKeyPresses;
+	vector<sf::Keyboard::Key> fireBall{sf::Keyboard::Up, sf::Keyboard::Up, sf::Keyboard::Down, sf::Keyboard::Down, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Left, sf::Keyboard::Right };
 public:
 	Wizard(sf::Vector2f position) {
 		image.setSize(sf::Vector2f(20.0f, 20.0f));
 		image.setPosition(position);
 		image.setOrigin((image.getSize().x) / 2.0f, (image.getSize().y) / 2.0f);
-		bodyDef.position = { sfTob2(position) };
+		//bodyDef.position = { sfTob2(position) };
 	}
 
 	/**
 	* Called when this component is added to an Entity.
 	*/
 	void init() override {
-		bodyDef.type = b2_dynamicBody;
+		//bodyDef.type = b2_dynamicBody;
 
-		shape.SetAsBox(sfTob2(image.getSize().x / 2.0f), sfTob2(image.getSize().y / 2.0f));
-		body = game->CreateBody(&bodyDef);
-		body->SetUserData(this);
-		body->SetFixedRotation(true);
-		fixture = body->CreateFixture(&shape, 1.0f);
-		fixture->SetFriction(0.0f);
-		fixture->SetRestitution(1.0f);
-		movesfTob2(image, body);
+		//shape.SetAsBox(sfTob2(image.getSize().x / 2.0f), sfTob2(image.getSize().y / 2.0f));
+		//body = game->CreateBody(&bodyDef);
+		//body->SetUserData(this);
+		//body->SetFixedRotation(true);
+		//fixture = body->CreateFixture(&shape, 1.0f);
+		//fixture->SetFriction(0.0f);
+		//fixture->SetRestitution(1.0f);
+		//movesfTob2(image, body);
 	}
 
 	//change
@@ -62,14 +65,31 @@ public:
 		else {
 			body->SetLinearVelocity({ 0.0f,0.0f });
 		}*/
-		
-		if (checkForSpellCombo(playerKeyPresses)) {
-			body->SetLinearVelocity({ 10.0f, 0.0f });
+
+		for (auto key : game->getKeysPressed()) {
+			if (playerKeyPresses.size() < 8) {
+				playerKeyPresses.emplace_back(key);
+			}
 		}
-		
-		movesfTob2(image, body); // Moves the image to where the physics body is. So move the physics body only
-		game->getKeysPressed();
-		movesfTob2(image, body);
+
+		if (playerKeyPresses.size() == 8) {
+			if(checkForSpellCombo(playerKeyPresses)) {
+				cout << "MATCH";
+				canFire = true;
+			}
+			playerKeyPresses.clear();
+		}
+
+		if ((game->getKeyState(sf::Keyboard::LControl) == KEY_PRESSED)) {
+			playerKeyPresses.clear();
+		}
+
+		if (game->getMouseState(sf::Mouse::Left) == KEY_PRESSED && canFire) {
+			Entity& spell = game->createEntity("Spell");
+			spell.addComponent<Spell>(sf::Vector2f{ image.getPosition().x, image.getPosition().y }, sf::Vector2f{ (float)game->getMousePos().x, (float)game->getMousePos().y });
+			canFire = false;
+		}
+		//movesfTob2(image, body);
 	}
 
 	/**
@@ -98,11 +118,17 @@ public:
 	}
 
 	bool checkForSpellCombo(vector<sf::Keyboard::Key> keyPresses) {
-		for (auto key : keyPresses) {
-			if (key == sf::Keyboard::Up) {
-				return true;
+		int matchCount = 0;
+		for (int index = 0; index < 8; index++) {
+			if (keyPresses[index] == fireBall[index]) {
+				matchCount++;
 			}
 		}
-		return false;
+		if (matchCount == 8) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 };
