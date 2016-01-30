@@ -6,30 +6,73 @@
 #include "Game.h"
 #include "Util.h"
 #include "sf_b2.h"
+#include "Wizard.h"
 
 using namespace S2D;
 
 class UI : public Component {
 private:
+	vector<sf::Keyboard::Key> controls;
 	vector<sf::CircleShape> glyphs;
+	vector<sf::CircleShape> selectedGlyphs;
+
+	float currentDegree = 0.0f;
+	int spellCount = 0;
 
 public:
-	UI() {
-		sf::CircleShape shape1{ 10 };
-		shape1.setOrigin({ shape1.getRadius(), shape1.getRadius() });
-		shape1.setFillColor(sf::Color{ 100, 200, 40, 150 });
-		shape1.setPosition({ game->getSize().x / 2.0f, game->getSize().y - 40.0f });
+	UI(vector<sf::Keyboard::Key> controls) : controls(controls) {
 
-		sf::CircleShape shape2{ 10 };
-		shape2.setOrigin({ shape1.getRadius(), shape1.getRadius() });
-		shape2.setFillColor(sf::Color{ 200, 100, 40, 150 });
-		shape2.setPosition({ game->getSize().x / 2.0f, game->getSize().y + 40.0f });
-
-		glyphs.emplace_back(shape1);
 	}
 
 	void init() override {
-		
+		sf::CircleShape shape1{ 10 };
+		shape1.setOrigin({ shape1.getRadius(), shape1.getRadius() });
+		shape1.setFillColor(sf::Color::Blue);
+		shape1.setPosition({ game->getSize().x / 2.0f, (game->getSize().y / 2.0f) - 40.0f });
+
+		sf::CircleShape shape2{ 10 };
+		shape2.setOrigin({ shape2.getRadius(), shape2.getRadius() });
+		shape2.setFillColor(sf::Color::Blue);
+		shape2.setPosition({ game->getSize().x / 2.0f, (game->getSize().y / 2.0f) + 40.0f });
+
+		float radians = -30.0f * DEGTORAD;
+		float x = (40.0f * cos(radians)) + 640;
+		float y = (40.0f * sin(radians)) + 360;
+		sf::CircleShape shape3{ 10 };
+		shape3.setOrigin({ shape3.getRadius(), shape3.getRadius() });
+		shape3.setFillColor(sf::Color::Blue);
+		shape3.setPosition({ x, y });
+
+		radians = 30.0f * DEGTORAD;
+		x = (40.0f * cos(radians)) + 640;
+		y = (40.0f * sin(radians)) + 360;
+		sf::CircleShape shape4{ 10 };
+		shape4.setOrigin({ shape4.getRadius(), shape4.getRadius() });
+		shape4.setFillColor(sf::Color::Blue);
+		shape4.setPosition({ x, y });
+
+		radians = 150.0f * DEGTORAD;
+		x = (40.0f * cos(radians)) + 640;
+		y = (40.0f * sin(radians)) + 360;
+		sf::CircleShape shape5{ 10 };
+		shape5.setOrigin({ shape5.getRadius(), shape5.getRadius() });
+		shape5.setFillColor(sf::Color::Blue);
+		shape5.setPosition({ x, y });
+
+		radians = 210.0f * DEGTORAD;
+		x = (40.0f * cos(radians)) + 640;
+		y = (40.0f * sin(radians)) + 360;
+		sf::CircleShape shape6{ 10 };
+		shape6.setOrigin({ shape6.getRadius(), shape6.getRadius() });
+		shape6.setFillColor(sf::Color::Blue);
+		shape6.setPosition({ x, y });
+
+		glyphs.emplace_back(shape1);
+		glyphs.emplace_back(shape2);
+		glyphs.emplace_back(shape3);
+		glyphs.emplace_back(shape4);
+		glyphs.emplace_back(shape5);
+		glyphs.emplace_back(shape6);
 	}
 
 	void onStart() override {
@@ -37,11 +80,70 @@ public:
 	}
 
 	void update(float frameTime) override {
-		
+
+		for (sf::Keyboard::Key key : game->getKeysHeld()) {
+			if (key == controls[0]) {
+				glyphs[0].setFillColor(sf::Color::Yellow);
+			}else if (key == controls[1]) {
+				glyphs[1].setFillColor(sf::Color::Yellow);
+			}else if (key == controls[2]) {
+				glyphs[2].setFillColor(sf::Color::Yellow);
+			}else if (key == controls[3]) {
+				glyphs[3].setFillColor(sf::Color::Yellow);
+			}else if (key == controls[4]) {
+				glyphs[4].setFillColor(sf::Color::Yellow);
+			}else if (key == controls[5]) {
+				glyphs[5].setFillColor(sf::Color::Yellow);
+			}
+		}
+
+		for (sf::Keyboard::Key key : game->getKeysReleased()) {
+			if (key == controls[0]) {
+				glyphs[0].setFillColor(sf::Color::Blue);
+			}else if (key == controls[1]) {
+				glyphs[1].setFillColor(sf::Color::Blue);
+			}else if (key == controls[2]) {
+				glyphs[2].setFillColor(sf::Color::Blue);
+			}else if (key == controls[3]) {
+				glyphs[3].setFillColor(sf::Color::Blue);
+			}else if (key == controls[4]) {
+				glyphs[4].setFillColor(sf::Color::Blue);
+			}else if (key == controls[5]) {
+				glyphs[5].setFillColor(sf::Color::Blue);
+			}
+		}
+
+		for (auto key : game->getKeysPressed()) {
+			for (auto control : controls) {
+				if (key == control) {
+					float radians = currentDegree * DEGTORAD;
+					float x = (80.0f * cos(radians)) + 640;
+					float y = (80.0f * sin(radians)) + 360;
+					sf::CircleShape shape{ 10 };
+					shape.setOrigin({ shape.getRadius(), shape.getRadius() });
+					shape.setFillColor(sf::Color{ 90, 10, 125, 100 });
+					shape.setPosition({ x, y });
+					currentDegree += 45.0f;
+					selectedGlyphs.emplace_back(shape);
+					spellCount++;
+					if (spellCount > 8) {
+						spellCount = 0;
+						selectedGlyphs.clear();
+					}
+				}
+			}
+		}
+
+		if (game->getMouseState(sf::Mouse::Left) == KEY_PRESSED) {
+			selectedGlyphs.clear();
+		}
 	}
 
 	void draw(sf::RenderTarget& target) override {
 		for (auto glyph : glyphs) {
+			target.draw(glyph);
+		}
+		for (auto glyph : selectedGlyphs) {
 			target.draw(glyph);
 		}
 	}

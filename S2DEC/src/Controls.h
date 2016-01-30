@@ -209,6 +209,10 @@ namespace S2D{
 
 		vector<sf::Keyboard::Key> getKeysPressed();
 
+		vector<sf::Keyboard::Key> getKeysHeld();
+
+		vector<sf::Keyboard::Key> getKeysReleased();
+
 		void setKey(sf::Keyboard::Key, KeyState);
 
 	};

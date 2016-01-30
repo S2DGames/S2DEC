@@ -84,6 +84,26 @@ vector<sf::Keyboard::Key> Controls::getKeysPressed() {
 	return keysPressed;
 }
 
+vector<sf::Keyboard::Key> Controls::getKeysHeld() {
+	vector<sf::Keyboard::Key> keysHeld;
+	for (int i = 0; i < NUM_KEYS; i++) {
+		if (keyStates[i] == KEY_HELD) {
+			keysHeld.emplace_back((sf::Keyboard::Key)i);
+		}
+	}
+	return keysHeld;
+}
+
+vector<sf::Keyboard::Key> Controls::getKeysReleased() {
+	vector<sf::Keyboard::Key> keysReleased;
+	for (int i = 0; i < NUM_KEYS; i++) {
+		if (keyStates[i] == KEY_RELEASED) {
+			keysReleased.emplace_back((sf::Keyboard::Key)i);
+		}
+	}
+	return keysReleased;
+}
+
 void Controls::buttonPressed(sf::Event::MouseButtonEvent mouseButton){
 	if(mouseButton.button == sf::Mouse::Left){
 		prevMouseStates[LEFT] = mouseStates[LEFT];

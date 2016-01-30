@@ -144,4 +144,8 @@ public:
 			return spellType;
 		}
 	}
+
+	vector<sf::Keyboard::Key> getKeyPresses() {
+		return playerKeyPresses;
+	}
 };
