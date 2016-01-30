@@ -22,6 +22,10 @@
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Event.hpp>
 
+#include<vector>
+
+using std::vector;
+
 namespace S2D{
 
 	/*!
@@ -202,6 +206,8 @@ namespace S2D{
 		* \return The previous mouse position in the window.
 		*/
 		sf::Vector2i getPrevMousePos();
+
+		vector<sf::Keyboard::Key> getKeysPressed();
 
 		void setKey(sf::Keyboard::Key, KeyState);
 
