@@ -146,4 +146,8 @@ public:
 		}
 		return SpellType::None;
 	}
+
+	vector<sf::Keyboard::Key> getKeyPresses() {
+		return playerKeyPresses;
+	}
 };
