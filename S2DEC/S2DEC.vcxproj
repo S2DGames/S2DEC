@@ -200,6 +200,7 @@
     <ClInclude Include="Games\Wizard\EnemySpawner.h" />
     <ClInclude Include="Games\Wizard\Spell.h" />
     <ClInclude Include="Games\Wizard\Wizard.h" />
+    <ClInclude Include="Games\Wizard\WizardUtility.h" />
     <ClInclude Include="Games\Wizard\WizBiz.h" />
     <ClInclude Include="src\AnimatedSprite.h" />
     <ClInclude Include="src\CollisionListener.h" />
