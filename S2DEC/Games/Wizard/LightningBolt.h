@@ -4,12 +4,12 @@
 
 using namespace S2D;
 
-class WaterBlast : public Spell {
+class LightningBolt : public Spell {
 private:
 	sf::CircleShape explosion;
 
 public:
-	WaterBlast(sf::Vector2f position, sf::Vector2f endPosition) : Spell(position, endPosition, SpellType::Water) {
+	LightningBolt(sf::Vector2f position, sf::Vector2f endPosition) : Spell(position, endPosition, SpellType::Lightning) {
 
 	}
 
