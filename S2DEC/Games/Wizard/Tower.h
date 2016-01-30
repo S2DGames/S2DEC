@@ -43,7 +43,7 @@ public:
 
 	void update(float frameTime) override {
 		if (health <= 0) {
-			cout << "You are dead, not big surprise" << endl;
+			
 		}
 	}
 
