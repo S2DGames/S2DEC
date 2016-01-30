@@ -16,10 +16,10 @@ protected:
 	sf::Vector2f startPos;
 	sf::RectangleShape image;
 	bool destroySpell = false;
+	b2Body* body{ nullptr };
 
 private:
 	bool isAlive = true;
-	b2Body* body{ nullptr };
 	b2BodyDef bodyDef;
 	b2PolygonShape shape;
 	b2Fixture* fixture{ nullptr };
@@ -45,6 +45,16 @@ public:
 		else if (type == SpellType::Lightning) {
 			image.setFillColor(sf::Color::Yellow);
 		}
+
+		
+		float angle = atan2(endPosition.y - image.getPosition().y, endPosition.x - image.getPosition().x);
+		angle = angle * RADTODEG;
+		if (angle < 0){
+			angle = 360 - (-angle);
+		}
+		image.setRotation(angle);
+
+
 	}
 
 	virtual void init() override {
@@ -77,13 +87,15 @@ public:
 
 		float step = speed / hDistance;
 		b2Vec2 velocity = { step * xDistance, step * yDistance };
-		body->SetLinearVelocity(velocity);
+		if (spellType != SpellType::Lightning) {
+			body->SetLinearVelocity(velocity);
+		}
 	}
 
 	virtual void update(float frameTime) override {
 		movesfTob2(image, body);
 		//destroy if offscreen
-		if (destroySpell && isAlive) {
+		if (destroySpell && isAlive && spellType != SpellType::Water) {
 			DestroySpell();
 		}
 	}

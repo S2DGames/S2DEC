@@ -7,10 +7,10 @@ using namespace S2D;
 class LightningBolt : public Spell {
 private:
 	sf::CircleShape explosion;
-
 public:
-	LightningBolt(sf::Vector2f position, sf::Vector2f endPosition) : Spell(position, endPosition, SpellType::Lightning) {
-
+	LightningBolt(sf::Vector2f position, sf::Vector2f endPosition) : Spell(endPosition, endPosition, SpellType::Lightning) {
+		explosion.setFillColor(sf::Color::Yellow);
+		createExplosion();
 	}
 
 
@@ -32,15 +32,12 @@ public:
 	}
 
 	void createExplosion() {
-		explosion.setRadius(40.0f);
+		explosion.setRadius(20.0f);
 		explosion.setPosition(Spell::image.getPosition());
 		explosion.setOrigin(explosion.getRadius(), explosion.getRadius());
 	}
 
 	void beginCollision(Component* collidedComponent, b2Contact* contact) override {
-		if (auto enemy = dynamic_cast<Enemy*>(collidedComponent)) {
-			createExplosion();
-		}
 	}
 
 	void endCollision(Component* collidedComponent, b2Contact* contact) override {

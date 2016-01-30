@@ -10,7 +10,7 @@ private:
 
 public:
 	Fireball(sf::Vector2f position, sf::Vector2f endPosition): Spell(position, endPosition, SpellType::Fire ) {
-
+		explosion.setFillColor(sf::Color::Red);
 	}
 
 
@@ -32,7 +32,7 @@ public:
 	}
 
 	void createExplosion() {
-		explosion.setRadius(40.0f);
+		explosion.setRadius(50.0f);
 		explosion.setPosition(Spell::image.getPosition());
 		explosion.setOrigin(explosion.getRadius(), explosion.getRadius());
 	}

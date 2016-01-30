@@ -138,11 +138,11 @@ public:
 				matchCount++;
 			}
 		}
-		if (matchCount = 8) {
+		if (matchCount == 8) {
 			return SpellType::Lightning;
 		}
 		else {
-			matchCount == 0;
+			matchCount = 0;
 		}
 		return SpellType::None;
 	}
