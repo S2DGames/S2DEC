@@ -13,15 +13,19 @@ using namespace S2D;
 class Tower : public Component {
 private:
 	sf::CircleShape image;
+	sf::CircleShape explosion;
 
 	b2Body* body{ nullptr };
 	b2BodyDef bodyDef;
 	b2CircleShape shape;
 	b2Fixture* fixture{ nullptr };
 
-	int health = 10;
+	sf::Vector2f position;
+
+	int health = 1;
 public:
 	Tower(sf::Vector2f position) {
+		this->position = position;
 		image.setRadius(25.0f);
 		image.setPosition(position);
 		image.setOrigin(image.getRadius(), image.getRadius());
@@ -43,8 +47,18 @@ public:
 	}
 
 	void update(float frameTime) override {
-		if (health <= 0) {
-			
+		if (health == 0) {
+			createExplosion();
+		}
+		if (explosion.getRadius() >= 0) {
+			explosion.setRadius(explosion.getRadius() - .1f);
+			explosion.setOrigin(explosion.getRadius(), explosion.getRadius());
+		}
+		if (explosion.getRadius()<1 && explosion.getRadius() > 0) {
+			if (body != nullptr) {
+				game->DestroyBody(body);
+			}
+			owner->destroy();
 		}
 	}
 
@@ -55,11 +69,18 @@ public:
 		}
 	}
 
+	void createExplosion() {
+		explosion.setRadius(100.0f);
+		explosion.setPosition(position);
+		explosion.setOrigin(explosion.getRadius(), explosion.getRadius());
+	}
+
 	void endCollision(Component* collidedComponent, b2Contact* contact) override {
 
 	}
 
 	void draw(sf::RenderTarget& target) override {
 		target.draw(image);
+		target.draw(explosion);
 	}
 };
