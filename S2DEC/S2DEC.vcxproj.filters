@@ -34,6 +34,9 @@
     <Filter Include="Games\Grow">
       <UniqueIdentifier>{0b6ce279-9a57-4b78-b6ed-917b27a350f8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Games\Wizard">
+      <UniqueIdentifier>{ef8940b3-d3da-4486-a09a-aecc4fb8fa77}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CollisionListener.cpp">
