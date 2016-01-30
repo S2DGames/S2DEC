@@ -121,4 +121,8 @@ public:
 	void endCollision(Component* collidedComponent, b2Contact* contact) override {
 
 	}
+
+	void setDestroy(bool flag) {
+		destroy = flag;
+	}
 };

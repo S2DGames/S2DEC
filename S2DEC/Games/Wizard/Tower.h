@@ -6,6 +6,7 @@
 #include "Game.h"
 #include "Util.h"
 #include "sf_b2.h"
+#include "Enemy.h"
 
 using namespace S2D;
 
@@ -18,6 +19,7 @@ private:
 	b2CircleShape shape;
 	b2Fixture* fixture{ nullptr };
 
+	int health = 10;
 public:
 	Tower(sf::Vector2f position) {
 		image.setRadius(25.0f);
@@ -40,11 +42,16 @@ public:
 	}
 
 	void update(float frameTime) override {
-
+		if (health <= 0) {
+			cout << "You are dead, not big surprise" << endl;
+		}
 	}
 
 	void beginCollision(Component* collidedComponent, b2Contact* contact) override {
-
+		if (auto enemy = dynamic_cast<Enemy*>(collidedComponent)) {
+			health--;
+			enemy->setDestroy(true);
+		}
 	}
 
 	void endCollision(Component* collidedComponent, b2Contact* contact) override {

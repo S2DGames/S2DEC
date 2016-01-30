@@ -2,6 +2,7 @@
 
 #include "SFML/Graphics/RenderTarget.hpp"
 #include "Box2D/Collision/Shapes/b2PolygonShape.h"
+#include "Box2D/Collision/Shapes/b2CircleShape.h"
 #include "Component.h"
 #include "Game.h"
 #include "Util.h"
@@ -11,6 +12,9 @@
 using namespace S2D;
 
 class Spell : public Component {
+protected:
+	sf::Vector2f startPos;
+
 private:
 	sf::RectangleShape image;
 
@@ -25,15 +29,16 @@ private:
 
 public:
 	Spell(sf::Vector2f position, sf::Vector2f endPosition, SpellType type) {
+		startPos = position;
 		image.setSize(sf::Vector2f(20.0f, 20.0f));
-		image.setPosition(position);
+		image.setPosition(startPos);
 		image.setOrigin((image.getSize().x) / 2.0f, (image.getSize().y) / 2.0f);
-		bodyDef.position = { sfTob2(position) };
+		bodyDef.position = { sfTob2(startPos) };
 		this->endPosition = endPosition;
 		spellType = type;
 	}
 
-	void init() override {
+	virtual void init() override {
 		bodyDef.type = b2_dynamicBody;
 
 		shape.SetAsBox(sfTob2(image.getSize().x / 2.0f), sfTob2(image.getSize().y / 2.0f));
@@ -57,7 +62,7 @@ public:
 		//TODO calculate velocity for the X and Y to reach destination based on the spell
 	}
 
-	void update(float frameTime) override {
+	virtual void update(float frameTime) override {
 		if (image.getPosition().x > (endPosition.x - 5) && image.getPosition().x < (endPosition.x + 5) &&
 			image.getPosition().y >(endPosition.y - 5) && image.getPosition().y < (endPosition.y + 5) &&
 			spellType != SpellType::Lightning) {
@@ -67,15 +72,15 @@ public:
 		movesfTob2(image, body);
 	}
 
-	void draw(sf::RenderTarget& target) override {
+	virtual void draw(sf::RenderTarget& target) override {
 		target.draw(image);
 	}
 
-	void beginCollision(Component* collidedComponent, b2Contact* contact) override {
+	virtual void beginCollision(Component* collidedComponent, b2Contact* contact) override {
 
 	}
 
-	void endCollision(Component* collidedComponent, b2Contact* contact) override {
+	virtual void endCollision(Component* collidedComponent, b2Contact* contact) override {
 
 	}
 };
