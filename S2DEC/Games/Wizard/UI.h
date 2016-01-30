@@ -135,6 +135,7 @@ public:
 		}
 
 		if (game->getMouseState(sf::Mouse::Left) == KEY_PRESSED) {
+			spellCount = 0;
 			selectedGlyphs.clear();
 		}
 	}
