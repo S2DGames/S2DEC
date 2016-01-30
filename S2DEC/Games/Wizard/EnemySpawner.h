@@ -18,6 +18,8 @@ private:
 	std::uniform_int_distribution<int> xDist;
 	std::uniform_int_distribution<int> yDist;
 	std::uniform_int_distribution<int> fromDist;
+
+	float totalFrameTime = 0.0f;
 	
 public:
 	EnemySpawner() {
@@ -46,8 +48,11 @@ public:
 	* Called once every frame.
 	*/
 	void update(float frameTime) override {
-		if (game->getMouseState(sf::Mouse::Left) == KEY_PRESSED) {
+		totalFrameTime += frameTime;
+
+		if (totalFrameTime > 2.0f) {
 			spawnEnemy();
+			totalFrameTime = 0.0f;
 		}
 	}
 

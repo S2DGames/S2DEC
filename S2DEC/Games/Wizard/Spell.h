@@ -24,7 +24,6 @@ private:
 	b2PolygonShape shape;
 	b2Fixture* fixture{ nullptr };
 	sf::Vector2f endPosition;
-
 	
 	SpellType spellType;
 
@@ -51,16 +50,25 @@ public:
 		fixture->SetRestitution(1.0f);
 		movesfTob2(image, body);
 
+		float speed = 1.5f;
+
 		if (spellType == SpellType::Fire) {
-			body->SetLinearVelocity({ sfTob2(endPosition.x - image.getPosition().x), sfTob2(endPosition.y - image.getPosition().y) });
+			speed = 1.5f;
 		}
 		else if (spellType == SpellType::Water) {
-			body->SetLinearVelocity({ sfTob2(endPosition.x - image.getPosition().x) * 2.0f, sfTob2(endPosition.y - image.getPosition().y) * 2.0f });
+			speed = 1.5f;
 		}
 		else if (spellType == SpellType::Lightning) {
-			body->SetLinearVelocity({ sfTob2(endPosition.x - image.getPosition().x) * 2.0f, sfTob2(endPosition.y - image.getPosition().y) * 2.0f });
+			speed = 1.5f;
 		}
-		//TODO calculate velocity for the X and Y to reach destination based on the spell
+
+		float xDistance = sfTob2(endPosition.x - image.getPosition().x);
+		float yDistance = sfTob2(endPosition.y - image.getPosition().y);
+		float hDistance = sqrt(pow(xDistance, 2.0f) + pow(yDistance, 2.0f));
+
+		float step = speed / hDistance;
+		b2Vec2 velocity = { step * xDistance, step * yDistance };
+		body->SetLinearVelocity(velocity);
 	}
 
 	virtual void update(float frameTime) override {
