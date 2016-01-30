@@ -109,6 +109,7 @@ public:
 	*/
 	void beginCollision(Component* collidedComponent, b2Contact* contact) override {
 		if (auto spell = dynamic_cast<Spell*>(collidedComponent)) {
+			spell->setDestroySpell(true);
 			destroy = true;
 		}
 	}

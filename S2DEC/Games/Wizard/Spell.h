@@ -15,9 +15,10 @@ class Spell : public Component {
 protected:
 	sf::Vector2f startPos;
 	sf::RectangleShape image;
+	bool destroySpell = false;
 
 private:
-
+	bool isAlive = true;
 	b2Body* body{ nullptr };
 	b2BodyDef bodyDef;
 	b2PolygonShape shape;
@@ -63,17 +64,17 @@ public:
 	}
 
 	virtual void update(float frameTime) override {
-		if (image.getPosition().x > (endPosition.x - 5) && image.getPosition().x < (endPosition.x + 5) &&
-			image.getPosition().y >(endPosition.y - 5) && image.getPosition().y < (endPosition.y + 5) &&
-			spellType != SpellType::Lightning) {
-			game->DestroyBody(body);
-			this->owner->destroy();
-		}
 		movesfTob2(image, body);
+		//destroy if offscreen
+		if (destroySpell && isAlive) {
+			DestroySpell();
+		}
 	}
 
 	virtual void draw(sf::RenderTarget& target) override {
-		target.draw(image);
+		if (isAlive) {
+			target.draw(image);
+		}
 	}
 
 	virtual void beginCollision(Component* collidedComponent, b2Contact* contact) override {
@@ -82,5 +83,15 @@ public:
 
 	virtual void endCollision(Component* collidedComponent, b2Contact* contact) override {
 
+	}
+
+	void DestroySpell() {
+		game->DestroyBody(body);
+		//this->owner->destroy();
+		isAlive = false;
+	}
+
+	void setDestroySpell(bool flag) {
+		destroySpell = flag;
 	}
 };

@@ -16,6 +16,14 @@ public:
 
 	void update(float frameTime) override {
 		Spell::update(frameTime);
+		if (explosion.getRadius() >= 0) {
+			explosion.setRadius(explosion.getRadius() - .1f);
+			explosion.setOrigin(explosion.getRadius(), explosion.getRadius());
+		}
+		if(explosion.getRadius()<1 && explosion.getRadius() > 0) {
+			this->owner->destroy();
+		}
+
 	}
 
 	void draw(sf::RenderTarget& target) override {
@@ -24,7 +32,7 @@ public:
 	}
 
 	void createExplosion() {
-		explosion.setRadius(20.0f);
+		explosion.setRadius(40.0f);
 		explosion.setPosition(Spell::image.getPosition());
 		explosion.setOrigin(explosion.getRadius(), explosion.getRadius());
 	}
