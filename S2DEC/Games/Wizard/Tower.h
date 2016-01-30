@@ -23,6 +23,8 @@ private:
 	sf::Vector2f position;
 
 	int health = 1;
+	bool isGrowing = false;
+	bool drawTower = true;
 public:
 	Tower(sf::Vector2f position) {
 		this->position = position;
@@ -50,15 +52,26 @@ public:
 		if (health == 0) {
 			createExplosion();
 		}
-		if (explosion.getRadius() >= 0) {
-			explosion.setRadius(explosion.getRadius() - .1f);
-			explosion.setOrigin(explosion.getRadius(), explosion.getRadius());
-		}
-		if (explosion.getRadius()<1 && explosion.getRadius() > 0) {
-			if (body != nullptr) {
-				game->DestroyBody(body);
+		if (isGrowing) {
+			if (explosion.getRadius() < 100.0f) {
+				explosion.setRadius(explosion.getRadius() + .5f);
+				explosion.setOrigin(explosion.getRadius(), explosion.getRadius());
 			}
-			owner->destroy();
+			else {
+				isGrowing = false;
+			}
+		}
+		else {
+			if (explosion.getRadius() >= 0) {
+				explosion.setRadius(explosion.getRadius() - .1f);
+				explosion.setOrigin(explosion.getRadius(), explosion.getRadius());
+			}
+			if (explosion.getRadius() < 1 && explosion.getRadius() > 0) {
+				if (body != nullptr) {
+					game->DestroyBody(body);
+				}
+				owner->destroy();
+			}
 		}
 	}
 
@@ -70,7 +83,9 @@ public:
 	}
 
 	void createExplosion() {
-		explosion.setRadius(100.0f);
+		isGrowing = true;
+		drawTower = false;
+		explosion.setRadius(10.0f);
 		explosion.setPosition(position);
 		explosion.setOrigin(explosion.getRadius(), explosion.getRadius());
 	}
@@ -80,7 +95,9 @@ public:
 	}
 
 	void draw(sf::RenderTarget& target) override {
-		target.draw(image);
+		if (drawTower) {
+			target.draw(image);
+		}
 		target.draw(explosion);
 	}
 };
