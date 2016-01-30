@@ -93,7 +93,9 @@ public:
 	}
 
 	virtual void update(float frameTime) override {
-		movesfTob2(image, body);
+		if (isAlive) {
+			movesfTob2(image, body);
+		}
 		if (destroySpell && isAlive && spellType != SpellType::Water) {
 			DestroySpell();
 			body = nullptr;
