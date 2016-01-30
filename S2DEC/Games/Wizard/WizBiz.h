@@ -2,6 +2,7 @@
 
 #include "Game.h"
 #include "Wizard.h"
+#include "Enemy.h"
 
 using namespace S2D;
 

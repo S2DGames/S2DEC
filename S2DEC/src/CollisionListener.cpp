@@ -17,8 +17,12 @@
 //
 // 3. This notice may not be removed or altered from any source distribution.
 #include "CollisionListener.h"
+#include <iostream>
 
 using namespace S2D;
+
+using std::cout;
+using std::endl;
 
 void CollisionListener::BeginContact(b2Contact* contact){
 	Component* a = (Component*)contact->GetFixtureA()->GetBody()->GetUserData();
@@ -35,9 +39,17 @@ void CollisionListener::EndContact(b2Contact* contact){
 	Component* a = (Component*)contact->GetFixtureA()->GetBody()->GetUserData();
 	Component* b = (Component*)contact->GetFixtureB()->GetBody()->GetUserData();
 	if(a != nullptr && a->getOwner() != nullptr){
-		a->endCollision(b, contact);
+		try {
+			a->endCollision(b, contact);
+		}catch (std::exception e) {
+			cout << "Exception" << endl;
+		}
 	}
 	if(b != nullptr && b->getOwner() != nullptr){
-		b->endCollision(a, contact);
+		try {
+			b->endCollision(a, contact);
+		}catch (std::exception e) {
+			cout << "Exception" << endl;
+		}
 	}
 }

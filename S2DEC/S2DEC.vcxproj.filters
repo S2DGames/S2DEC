@@ -250,6 +250,12 @@
     <ClInclude Include="Games\Wizard\WizBiz.h">
       <Filter>Games\Wizard</Filter>
     </ClInclude>
+    <ClInclude Include="Games\Wizard\Enemy.h">
+      <Filter>Games\Wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\Wizard\EnemySpawner.h">
+      <Filter>Games\Wizard</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Games\Simulator\planning.txt">
