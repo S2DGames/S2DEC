@@ -168,12 +168,12 @@ GameState Game::play(){
 		gridPosition = newGrid;*/
 
 		//draw objects in the scene and display
-		sf::RectangleShape white;
-		white.setSize({(float)getSize().x, (float)getSize().y});
-		white.setFillColor(sf::Color::White);
-		white.setOrigin(white.getSize().x / 2.0f, white.getSize().y / 2.0f);
-		white.setPosition(getViewPosition(ViewPositionCoordinateType::CENTER));
-		sf::RenderWindow::draw(white);
+		//sf::RectangleShape white;
+		//white.setSize({(float)getSize().x, (float)getSize().y});
+		//white.setFillColor(sf::Color::White);
+		//white.setOrigin(white.getSize().x / 2.0f, white.getSize().y / 2.0f);
+		//white.setPosition(getViewPosition(ViewPositionCoordinateType::CENTER));
+		//sf::RenderWindow::draw(white);
 		EntityManager::draw(*this);
 		
 		if(lightSystemEnabled){

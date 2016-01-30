@@ -2,15 +2,16 @@
 //#include "Games/Pong/Pong.h"
 //#include "Games/Snake/SnakeScene.h"
 //#include "Games/Simulator/Simulator.h"
-#include "Games/LAN/TeamObjective.h"
+//#include "Games/LAN/TeamObjective.h"
 //#include "Games/Grow/Grow.h"
+#include "Games/Wizard/WizBiz.h"
 
 using namespace S2D;
 
 int main(){
 
 	//set resolution and title in the game constructor
-	Game game(1280, 720, "S2DEC", true);
+	Game game(1280, 720, "S2DEC", false);
 
 	//call functions to enable or disable certain settings such as fullscreen, vsync, fps limit, aa
 	//game.setFullScreen();
@@ -30,7 +31,7 @@ int main(){
 	//loadSimulator(&game);
 	//the window is created when init is called.
 	game.init();
-	game.setVerticalSyncEnabled(true);
+	//game.setVerticalSyncEnabled(true);
 
 	//The entry point to the main loop.
 	GameState gs = game.play();

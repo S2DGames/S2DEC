@@ -197,6 +197,7 @@
     <ClInclude Include="Games\Snake\Snake.h" />
     <ClInclude Include="Games\Snake\SnakeScene.h" />
     <ClInclude Include="Games\Wizard\Wizard.h" />
+    <ClInclude Include="Games\Wizard\WizBiz.h" />
     <ClInclude Include="src\AnimatedSprite.h" />
     <ClInclude Include="src\CollisionListener.h" />
     <ClInclude Include="src\CompareEntityZ.h" />
