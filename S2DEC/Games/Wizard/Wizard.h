@@ -62,7 +62,7 @@ public:
 		else {
 			body->SetLinearVelocity({ 0.0f,0.0f });
 		}*/
-
+		
 		if (checkForSpellCombo(playerKeyPresses)) {
 			body->SetLinearVelocity({ 10.0f, 0.0f });
 		}
