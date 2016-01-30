@@ -87,6 +87,11 @@ namespace S2D{
 		}
 
 		void checkEvents();
+
+		void removeEvent(Component* component) {
+			callbackEvents.erase(component);
+			queuedEvents.erase(component);
+		}
 	};
 
 }

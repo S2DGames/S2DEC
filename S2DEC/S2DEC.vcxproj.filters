@@ -97,6 +97,9 @@
     <ClCompile Include="Games\Pong\Pong.cpp">
       <Filter>Games\Pong</Filter>
     </ClCompile>
+    <ClCompile Include="Games\Wizard\Enemy.cpp">
+      <Filter>Games\Wizard</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CollisionListener.h">

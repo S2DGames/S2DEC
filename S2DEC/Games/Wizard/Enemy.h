@@ -18,18 +18,24 @@ private:
 	b2BodyDef bodyDef;
 	b2PolygonShape shape;
 	b2Fixture* fixture{ nullptr };
-
-	vector<sf::Keyboard::Key> playerKeyPresses;
-
 	b2Vec2 velocity;
 	sf::Vector2f endPosition;
 
+	void* spawner;
+	bool destroy = false;
+
 public:
-	Enemy(sf::Vector2f position, sf::Vector2f endPosition) : endPosition(endPosition){
+	Enemy(sf::Vector2f position, sf::Vector2f endPosition, void* spawner) : endPosition(endPosition){
+		this->spawner = spawner;
 		image.setSize(sf::Vector2f(20.0f, 20.0f));
 		image.setOrigin((image.getSize().x) / 2.0f, (image.getSize().y) / 2.0f);
 		image.setPosition(position);
 		bodyDef.position = { sfTob2(position) };
+	}
+
+	~Enemy() {
+		body->DestroyFixture(fixture);
+		game->DestroyBody(body);
 	}
 
 	/**
@@ -51,10 +57,12 @@ public:
 		float xDistance = sfTob2(endPosition.x - image.getPosition().x);
 		float yDistance = sfTob2(endPosition.y - image.getPosition().y);
 		float hDistance = sqrt(pow(xDistance, 2.0f) + pow(yDistance, 2.0f));
-		float speed = 0.5f;
+		float speed = 1.5f;
 		float step = speed / hDistance;
 		b2Vec2 velocity = { step * xDistance, step * yDistance };
 		body->SetLinearVelocity(velocity);
+
+		registerLocalEvent(Enemy::atEndPosition, Enemy::kill);
 	}
 
 	//change
@@ -70,9 +78,18 @@ public:
 	* Called once every frame.
 	*/
 	void update(float frameTime) override {
-
 		movesfTob2(image, body);
 	}
+
+	bool atEndPosition() {
+		if (image.getPosition().x > (endPosition.x - 5) && image.getPosition().x < (endPosition.x + 5) &&
+			image.getPosition().y >(endPosition.y - 5) && image.getPosition().y < (endPosition.y + 5)) {
+			return true;
+		}
+		return false;
+	}
+
+	void kill();
 
 	/**
 	* Called once every frame.

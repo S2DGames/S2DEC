@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClCompile Include="Games\Pong\Pong.cpp" />
     <ClCompile Include="Games\Simulator\Dstar.cpp" />
+    <ClCompile Include="Games\Wizard\Enemy.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\CollisionListener.cpp" />
     <ClCompile Include="src\CompareEntityZ.cpp" />

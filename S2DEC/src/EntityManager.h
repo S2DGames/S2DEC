@@ -22,6 +22,7 @@
 #include "Entity.h"
 #include "CompareEntityZ.h"
 #include "SFML/System/Clock.hpp"
+#include "EventManager.h"
 
 using std::cout;
 using std::endl;
@@ -46,9 +47,10 @@ namespace S2D{
 
 		bool zOrderChanged;
 		Game* game;
+		EventManager* eventManager;
 
 	public:
-		EntityManager(Game* game) : zOrderChanged(false), iterating(false), game(game){
+		EntityManager(Game* game, EventManager* eventManager) : zOrderChanged(false), iterating(false), game(game), eventManager(eventManager){
 
 		}
 
@@ -104,6 +106,15 @@ namespace S2D{
 		}
 
 		void removeDeadEntities(){
+			for (auto& entity : entities) {
+				if (!entity->alive) {
+					for (int componentIndex = 0; componentIndex < MAX_COMPONENTS; componentIndex++) {
+						if(entity->componentBitset[componentIndex]){
+							eventManager->removeEvent(entity->componentArray[componentIndex]);
+						}
+					}
+				}
+			}
 			entities.erase(
 				remove_if(begin(entities),
 				end(entities),

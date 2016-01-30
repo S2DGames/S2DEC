@@ -42,7 +42,12 @@ public:
 	*/
 	void update(float frameTime) override {
 		if (game->getMouseState(sf::Mouse::Left) == KEY_PRESSED) {
-			game->createEntity("Enemy").addComponent<Enemy>(sf::Vector2f{(float)game->getMousePos().x, (float)game->getMousePos().y }, sf::Vector2f{ game->getSize().x / 2.0f, game->getSize().y / 2.0f });
+			game->createEntity("Enemy").addComponent<Enemy>(sf::Vector2f{(float)game->getMousePos().x, (float)game->getMousePos().y }, sf::Vector2f{ game->getSize().x / 2.0f, game->getSize().y / 2.0f }, (void*)this);
+			enemyCount++;
 		}
+	}
+
+	void enemyDied() {
+		enemyCount--;
 	}
 };

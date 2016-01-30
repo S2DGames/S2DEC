@@ -25,7 +25,7 @@ Game::Game(unsigned int width, unsigned int height, const char* name, bool light
 		sf::RenderWindow(),
 		b2World(b2Vec2(0.0, 0.0)),
 		Controls(this),
-		EntityManager(this),
+		EntityManager(this, this),
 		lightSystemEnabled(lighting),
 		mt(rd()){
 	state = INITIALIZING;
