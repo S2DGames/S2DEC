@@ -265,6 +265,18 @@
     <ClInclude Include="Games\Wizard\WizardUtility.h">
       <Filter>Games\Wizard</Filter>
     </ClInclude>
+    <ClInclude Include="Games\Wizard\Tower.h">
+      <Filter>Games\Wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\Wizard\Fireball.h">
+      <Filter>Games\Wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\Wizard\LightingBolt.h">
+      <Filter>Games\Wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\Wizard\WaterBlast.h">
+      <Filter>Games\Wizard</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Games\Simulator\planning.txt">

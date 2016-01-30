@@ -51,12 +51,16 @@ public:
 		else if (spellType == SpellType::Water) {
 			body->SetLinearVelocity({ sfTob2(endPosition.x - image.getPosition().x) * 2.0f, sfTob2(endPosition.y - image.getPosition().y) * 2.0f });
 		}
+		else if (spellType == SpellType::Lightning) {
+			body->SetLinearVelocity({ sfTob2(endPosition.x - image.getPosition().x) * 2.0f, sfTob2(endPosition.y - image.getPosition().y) * 2.0f });
+		}
 		//TODO calculate velocity for the X and Y to reach destination based on the spell
 	}
 
 	void update(float frameTime) override {
 		if (image.getPosition().x > (endPosition.x - 5) && image.getPosition().x < (endPosition.x + 5) &&
-			image.getPosition().y >(endPosition.y - 5) && image.getPosition().y < (endPosition.y + 5)) {
+			image.getPosition().y >(endPosition.y - 5) && image.getPosition().y < (endPosition.y + 5) &&
+			spellType != SpellType::Lightning) {
 			game->DestroyBody(body);
 			this->owner->destroy();
 		}

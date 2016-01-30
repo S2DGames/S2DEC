@@ -199,7 +199,11 @@
     <ClInclude Include="Games\Snake\SnakeScene.h" />
     <ClInclude Include="Games\Wizard\Enemy.h" />
     <ClInclude Include="Games\Wizard\EnemySpawner.h" />
+    <ClInclude Include="Games\Wizard\Fireball.h" />
+    <ClInclude Include="Games\Wizard\LightingBolt.h" />
     <ClInclude Include="Games\Wizard\Spell.h" />
+    <ClInclude Include="Games\Wizard\Tower.h" />
+    <ClInclude Include="Games\Wizard\WaterBlast.h" />
     <ClInclude Include="Games\Wizard\Wizard.h" />
     <ClInclude Include="Games\Wizard\WizardUtility.h" />
     <ClInclude Include="Games\Wizard\WizBiz.h" />

@@ -23,8 +23,11 @@ private:
 	bool canFire = false;
 	SpellType spellType;
 	vector<sf::Keyboard::Key> playerKeyPresses;
+
 	vector<sf::Keyboard::Key> fireBall{ sf::Keyboard::Up, sf::Keyboard::Up, sf::Keyboard::Down, sf::Keyboard::Down, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Left, sf::Keyboard::Right };
 	vector<sf::Keyboard::Key> waterBlast{ sf::Keyboard::Left, sf::Keyboard::Up, sf::Keyboard::Right, sf::Keyboard::Down, sf::Keyboard::Left, sf::Keyboard::Up, sf::Keyboard::Right, sf::Keyboard::Down };
+	vector<sf::Keyboard::Key> LightningBolt{ sf::Keyboard::Up, sf::Keyboard::Up, sf::Keyboard::Up, sf::Keyboard::Down, sf::Keyboard::Down, sf::Keyboard::Down, sf::Keyboard::Left, sf::Keyboard::Right };
+
 public:
 	Wizard(sf::Vector2f position) {
 		image.setSize(sf::Vector2f(20.0f, 20.0f));
@@ -116,16 +119,19 @@ public:
 	SpellType checkForSpellCombo(vector<sf::Keyboard::Key> keyPresses) {
 		int matchCount = 0;
 		SpellType spellType;
-
+		//TODO make the selection of spells unique
 		for (int index = 0; index < 8; index++) {
 			if (keyPresses[index] == fireBall[index]) {
 				matchCount++;
 				spellType = SpellType::Fire;
 			}
-
 			else if (keyPresses[index] == waterBlast[index]) {
 				matchCount++;
 				spellType = SpellType::Water;
+			}
+			else if (keyPresses[index] == LightningBolt[index]) {
+				matchCount++;
+				spellType = SpellType::Lightning;
 			}
 
 		}
