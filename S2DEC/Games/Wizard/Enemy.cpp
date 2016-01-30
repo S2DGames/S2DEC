@@ -8,10 +8,5 @@ using std::endl;
 
 void Enemy::kill() {
 	((EnemySpawner*)spawner)->enemyDied();
-	try {
-		this->owner->destroy();
-	}
-	catch (std::exception e) {
-		//cout << ""
-	}
+	this->owner->destroy();
 }

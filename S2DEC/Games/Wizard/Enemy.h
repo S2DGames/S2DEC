@@ -7,6 +7,7 @@
 #include "Game.h"
 #include "Util.h"
 #include "sf_b2.h"
+#include "Spell.h"
 
 using namespace S2D;
 
@@ -78,6 +79,9 @@ public:
 	* Called once every frame.
 	*/
 	void update(float frameTime) override {
+		if (destroy) {
+			kill();
+		}
 		movesfTob2(image, body);
 	}
 
@@ -104,7 +108,9 @@ public:
 	* Do not delete or add physics objects in the scope of this function.
 	*/
 	void beginCollision(Component* collidedComponent, b2Contact* contact) override {
-
+		if (auto spell = dynamic_cast<Spell*>(collidedComponent)) {
+			destroy = true;
+		}
 	}
 
 	/**

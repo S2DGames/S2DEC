@@ -13,19 +13,24 @@ using namespace S2D;
 class EnemySpawner : public Component {
 private:
 	int maxEnemyCount = 1;
-
 	int enemyCount = 0;
+
+	std::uniform_int_distribution<int> xDist;
+	std::uniform_int_distribution<int> yDist;
+	std::uniform_int_distribution<int> fromDist;
 	
 public:
 	EnemySpawner() {
-		
+
 	}
 
 	/**
 	* Called when this component is added to an Entity.
 	*/
 	void init() override {
-		
+		xDist = std::uniform_int_distribution<int>(0, game->getSize().x);
+		yDist = std::uniform_int_distribution<int>(0, game->getSize().y);
+		fromDist = std::uniform_int_distribution<int>(1, 4);
 	}
 
 	//change
@@ -42,9 +47,31 @@ public:
 	*/
 	void update(float frameTime) override {
 		if (game->getMouseState(sf::Mouse::Left) == KEY_PRESSED) {
-			game->createEntity("Enemy").addComponent<Enemy>(sf::Vector2f{(float)game->getMousePos().x, (float)game->getMousePos().y }, sf::Vector2f{ game->getSize().x / 2.0f, game->getSize().y / 2.0f }, (void*)this);
-			enemyCount++;
+			spawnEnemy();
 		}
+	}
+
+	void spawnEnemy() {
+		sf::Vector2f startPosition{0.0f, 0.0f};
+		switch (game->getRandomInt(fromDist)) {
+		case 1:
+			//left;
+			startPosition.y = (float)game->getRandomInt(yDist);
+			break;
+		case 2:
+			startPosition.y = (float)game->getRandomInt(yDist);
+			startPosition.x = game->getSize().x;
+			break;
+		case 3:
+			startPosition.x = (float)game->getRandomInt(xDist);
+			break;
+		case 4:
+			startPosition.x = (float)game->getRandomInt(xDist);
+			startPosition.y = game->getSize().y;
+			break;
+		}
+		game->createEntity("Enemy").addComponent<Enemy>(startPosition, sf::Vector2f{ game->getSize().x / 2.0f, game->getSize().y / 2.0f }, (void*)this);
+		enemyCount++;
 	}
 
 	void enemyDied() {
