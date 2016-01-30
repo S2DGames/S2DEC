@@ -2,6 +2,7 @@
 
 #include "SFML/Graphics/RenderTarget.hpp"
 #include "Box2D/Collision/Shapes/b2PolygonShape.h"
+#include "Box2D/Common/b2Math.h"
 #include "Component.h"
 #include "Game.h"
 #include "Util.h"
@@ -21,11 +22,13 @@ private:
 	vector<sf::Keyboard::Key> playerKeyPresses;
 
 	b2Vec2 velocity;
+	sf::Vector2f endPosition;
+
 public:
-	Enemy(sf::Vector2f position) {
+	Enemy(sf::Vector2f position, sf::Vector2f endPosition) : endPosition(endPosition){
 		image.setSize(sf::Vector2f(20.0f, 20.0f));
-		image.setPosition(position);
 		image.setOrigin((image.getSize().x) / 2.0f, (image.getSize().y) / 2.0f);
+		image.setPosition(position);
 		bodyDef.position = { sfTob2(position) };
 	}
 
@@ -42,7 +45,16 @@ public:
 		fixture = body->CreateFixture(&shape, 1.0f);
 		fixture->SetFriction(0.0f);
 		fixture->SetRestitution(1.0f);
+		fixture->SetSensor(true);
 		movesfTob2(image, body);
+
+		float xDistance = sfTob2(endPosition.x - image.getPosition().x);
+		float yDistance = sfTob2(endPosition.y - image.getPosition().y);
+		float hDistance = sqrt(pow(xDistance, 2.0f) + pow(yDistance, 2.0f));
+		float speed = 0.5f;
+		float step = speed / hDistance;
+		b2Vec2 velocity = { step * xDistance, step * yDistance };
+		body->SetLinearVelocity(velocity);
 	}
 
 	//change
@@ -58,11 +70,6 @@ public:
 	* Called once every frame.
 	*/
 	void update(float frameTime) override {
-		body->SetLinearVelocity({2.0f, 0.0f});
-
-		if (image.getPosition().x > (game->getSize().x / 2.0f)) {
-			this->owner->destroy();
-		}
 
 		movesfTob2(image, body);
 	}
