@@ -6,6 +6,7 @@
 #include "Game.h"
 #include "Util.h"
 #include "sf_b2.h"
+#include "WizardUtility.h"
 
 using namespace S2D;
 
@@ -19,13 +20,17 @@ private:
 	b2Fixture* fixture{ nullptr };
 	sf::Vector2f endPosition;
 
+	
+	SpellType spellType;
+
 public:
-	Spell(sf::Vector2f position, sf::Vector2f endPosition) {
+	Spell(sf::Vector2f position, sf::Vector2f endPosition, SpellType type) {
 		image.setSize(sf::Vector2f(20.0f, 20.0f));
 		image.setPosition(position);
 		image.setOrigin((image.getSize().x) / 2.0f, (image.getSize().y) / 2.0f);
 		bodyDef.position = { sfTob2(position) };
 		this->endPosition = endPosition;
+		spellType = type;
 	}
 
 	void init() override {
@@ -40,13 +45,19 @@ public:
 		fixture->SetRestitution(1.0f);
 		movesfTob2(image, body);
 
-		body->SetLinearVelocity({ sfTob2(endPosition.x - image.getPosition().x), sfTob2(endPosition.y - image.getPosition().y) });
+		if (spellType == SpellType::Fire) {
+			body->SetLinearVelocity({ sfTob2(endPosition.x - image.getPosition().x), sfTob2(endPosition.y - image.getPosition().y) });
+		}
+		else if (spellType == SpellType::Water) {
+			body->SetLinearVelocity({ sfTob2(endPosition.x - image.getPosition().x) * 2.0f, sfTob2(endPosition.y - image.getPosition().y) * 2.0f });
+		}
 		//TODO calculate velocity for the X and Y to reach destination based on the spell
 	}
 
 	void update(float frameTime) override {
 		if (image.getPosition().x > (endPosition.x - 5) && image.getPosition().x < (endPosition.x + 5) &&
 			image.getPosition().y >(endPosition.y - 5) && image.getPosition().y < (endPosition.y + 5)) {
+			game->DestroyBody(body);
 			this->owner->destroy();
 		}
 		movesfTob2(image, body);

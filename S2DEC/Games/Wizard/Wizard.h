@@ -7,6 +7,7 @@
 #include "Util.h"
 #include "sf_b2.h"
 #include "Spell.h"
+#include "WizardUtility.h"
 
 using namespace S2D;
 
@@ -20,8 +21,10 @@ private:
 	b2Fixture* fixture{ nullptr };
 
 	bool canFire = false;
+	SpellType spellType;
 	vector<sf::Keyboard::Key> playerKeyPresses;
-	vector<sf::Keyboard::Key> fireBall{sf::Keyboard::Up, sf::Keyboard::Up, sf::Keyboard::Down, sf::Keyboard::Down, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Left, sf::Keyboard::Right };
+	vector<sf::Keyboard::Key> fireBall{ sf::Keyboard::Up, sf::Keyboard::Up, sf::Keyboard::Down, sf::Keyboard::Down, sf::Keyboard::Left, sf::Keyboard::Right, sf::Keyboard::Left, sf::Keyboard::Right };
+	vector<sf::Keyboard::Key> waterBlast{ sf::Keyboard::Left, sf::Keyboard::Up, sf::Keyboard::Right, sf::Keyboard::Down, sf::Keyboard::Left, sf::Keyboard::Up, sf::Keyboard::Right, sf::Keyboard::Down };
 public:
 	Wizard(sf::Vector2f position) {
 		image.setSize(sf::Vector2f(20.0f, 20.0f));
@@ -59,12 +62,6 @@ public:
 	* Called once every frame.
 	*/
 	void update(float frameTime) override {
-		/*if (game->getKeyState(sf::Keyboard::A) == KEY_HELD){
-			body->SetLinearVelocity({ -1.0f,0.0f });
-		}
-		else {
-			body->SetLinearVelocity({ 0.0f,0.0f });
-		}*/
 
 		for (auto key : game->getKeysPressed()) {
 			if (playerKeyPresses.size() < 8) {
@@ -73,8 +70,8 @@ public:
 		}
 
 		if (playerKeyPresses.size() == 8) {
-			if(checkForSpellCombo(playerKeyPresses)) {
-				cout << "MATCH";
+			if((spellType = checkForSpellCombo(playerKeyPresses)) > SpellType::None) {
+				cout << (int)spellType << endl;
 				canFire = true;
 			}
 			playerKeyPresses.clear();
@@ -86,10 +83,9 @@ public:
 
 		if (game->getMouseState(sf::Mouse::Left) == KEY_PRESSED && canFire) {
 			Entity& spell = game->createEntity("Spell");
-			spell.addComponent<Spell>(sf::Vector2f{ image.getPosition().x, image.getPosition().y }, sf::Vector2f{ (float)game->getMousePos().x, (float)game->getMousePos().y });
+			spell.addComponent<Spell>(sf::Vector2f{ image.getPosition().x, image.getPosition().y }, sf::Vector2f{ (float)game->getMousePos().x, (float)game->getMousePos().y }, spellType);
 			canFire = false;
 		}
-		//movesfTob2(image, body);
 	}
 
 	/**
@@ -117,18 +113,28 @@ public:
 
 	}
 
-	bool checkForSpellCombo(vector<sf::Keyboard::Key> keyPresses) {
+	SpellType checkForSpellCombo(vector<sf::Keyboard::Key> keyPresses) {
 		int matchCount = 0;
+		SpellType spellType;
+
 		for (int index = 0; index < 8; index++) {
 			if (keyPresses[index] == fireBall[index]) {
 				matchCount++;
+				spellType = SpellType::Fire;
 			}
+
+			else if (keyPresses[index] == waterBlast[index]) {
+				matchCount++;
+				spellType = SpellType::Water;
+			}
+
 		}
 		if (matchCount == 8) {
-			return true;
+			return spellType;
 		}
 		else {
-			return false;
+			spellType = SpellType::None;
+			return spellType;
 		}
 	}
 };
