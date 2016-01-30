@@ -17,12 +17,14 @@ private:
 	b2BodyDef bodyDef;
 	b2PolygonShape shape;
 	b2Fixture* fixture{ nullptr };
+
+	vector<sf::Keyboard::Key> playerKeyPresses;
 public:
-	Wizard() {
+	Wizard(sf::Vector2f position) {
 		image.setSize(sf::Vector2f(20.0f, 20.0f));
-		image.setPosition(0.0f, 0.0f);
+		image.setPosition(position);
 		image.setOrigin((image.getSize().x) / 2.0f, (image.getSize().y) / 2.0f);
-		bodyDef.position = { 0.0f, 0.0f };
+		bodyDef.position = { sfTob2(position) };
 	}
 
 	/**
@@ -47,13 +49,25 @@ public:
 	* Called when the Game starts.
 	*/
 	void onStart() override {
-		
+
 	}
 
 	/**
 	* Called once every frame.
 	*/
 	void update(float frameTime) override {
+		/*if (game->getKeyState(sf::Keyboard::A) == KEY_HELD){
+			body->SetLinearVelocity({ -1.0f,0.0f });
+		}
+		else {
+			body->SetLinearVelocity({ 0.0f,0.0f });
+		}*/
+
+		if (checkForSpellCombo(playerKeyPresses)) {
+			body->SetLinearVelocity({ 10.0f, 0.0f });
+		}
+		
+		movesfTob2(image, body); // Moves the image to where the physics body is. So move the physics body only
 		game->getKeysPressed();
 		movesfTob2(image, body);
 	}
@@ -81,5 +95,14 @@ public:
 	*/
 	void endCollision(Component* collidedComponent, b2Contact* contact) override {
 
+	}
+
+	bool checkForSpellCombo(vector<sf::Keyboard::Key> keyPresses) {
+		for (auto key : keyPresses) {
+			if (key == sf::Keyboard::Up) {
+				return true;
+			}
+		}
+		return false;
 	}
 };

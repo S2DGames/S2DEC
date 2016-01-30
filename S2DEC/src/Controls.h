@@ -21,9 +21,6 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Event.hpp>
-#include <vector>
-
-using std::vector;
 
 namespace S2D{
 
@@ -177,8 +174,6 @@ namespace S2D{
 		* \param key The requested key.
 		*/
 		KeyState getPrevKeyState(int key);
-
-		vector<sf::Keyboard::Key> getKeysPressed();
 
 		/*!
 		* Gets the current state of a specific mouse button. Does not check if you are requesting a button beyond
