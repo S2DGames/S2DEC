@@ -196,6 +196,7 @@
     <ClInclude Include="Games\Snake\Segment.h" />
     <ClInclude Include="Games\Snake\Snake.h" />
     <ClInclude Include="Games\Snake\SnakeScene.h" />
+    <ClInclude Include="Games\Wizard\Spell.h" />
     <ClInclude Include="Games\Wizard\Wizard.h" />
     <ClInclude Include="Games\Wizard\WizBiz.h" />
     <ClInclude Include="src\AnimatedSprite.h" />
