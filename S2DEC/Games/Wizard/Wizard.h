@@ -79,18 +79,21 @@ public:
 			playerKeyPresses.clear();
 		}
 
-		if (game->getMouseState(sf::Mouse::Left) == KEY_PRESSED && canFire) {
-			Entity& spell = game->createEntity("Spell");
-			if (spellType == SpellType::Fire) {
-				spell.addComponent<Fireball>(sf::Vector2f{ image.getPosition().x, image.getPosition().y }, sf::Vector2f{ (float)game->getMousePos().x, (float)game->getMousePos().y });
+		if (game->getMouseState(sf::Mouse::Left) == KEY_PRESSED) {
+			if(canFire){
+				Entity& spell = game->createEntity("Spell");
+				if (spellType == SpellType::Fire) {
+					spell.addComponent<Fireball>(sf::Vector2f{ image.getPosition().x, image.getPosition().y }, sf::Vector2f{ (float)game->getMousePos().x, (float)game->getMousePos().y });
+				}
+				else if (spellType == SpellType::Water) {
+					spell.addComponent<WaterBlast>(sf::Vector2f{ image.getPosition().x, image.getPosition().y }, sf::Vector2f{ (float)game->getMousePos().x, (float)game->getMousePos().y });
+				}
+				else if (spellType == SpellType::Lightning) {
+					spell.addComponent<LightningBolt>(sf::Vector2f{ image.getPosition().x, image.getPosition().y }, sf::Vector2f{ (float)game->getMousePos().x, (float)game->getMousePos().y });
+				}
+				canFire = false;
 			}
-			else if (spellType == SpellType::Water) {
-				spell.addComponent<WaterBlast>(sf::Vector2f{ image.getPosition().x, image.getPosition().y }, sf::Vector2f{ (float)game->getMousePos().x, (float)game->getMousePos().y });
-			}
-			else if (spellType == SpellType::Lightning) {
-				spell.addComponent<LightningBolt>(sf::Vector2f{ image.getPosition().x, image.getPosition().y }, sf::Vector2f{ (float)game->getMousePos().x, (float)game->getMousePos().y });
-			}
-			canFire = false;
+			playerKeyPresses.clear();
 		}
 	}
 
