@@ -244,6 +244,9 @@
     <ClInclude Include="src\AnimatedSprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Games\Wizard\Wizard.h">
+      <Filter>Games\Wizard</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Games\Simulator\planning.txt">
