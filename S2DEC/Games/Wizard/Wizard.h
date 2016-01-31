@@ -68,7 +68,7 @@ public:
 		runeSounds.emplace_back("resources\\Tone 5.wav");
 		runeSounds.emplace_back("resources\\Tone 6.wav");
 		runeSounds.emplace_back("resources\\Fireball.wav");
-		runeSounds.emplace_back("resources\\WaterBlast.wav");
+		runeSounds.emplace_back("resources\\Water Wave.wav");
 		runeSounds.emplace_back("resources\\Lightening.wav");
 
 		music.setVolume(25.0f);
