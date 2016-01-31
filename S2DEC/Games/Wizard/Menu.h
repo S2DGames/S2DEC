@@ -2,6 +2,7 @@
 
 #include "SFML/Graphics/RenderTarget.hpp"
 #include "SFML/Graphics/Font.hpp"
+#include "SFML/Audio//Music.hpp"
 #include "Box2D/Collision/Shapes/b2PolygonShape.h"
 #include "Component.h"
 #include "Game.h"
@@ -15,6 +16,8 @@ class Menu : public Component {
 private:
 	sf::Sprite spellbookSprite;
 	sf::Texture spellbookTexture;
+
+	sf::Music music;
 
 	vector<sf::Keyboard::Key> controls;
 	vector<sf::CircleShape> glyphs;
@@ -52,6 +55,10 @@ public:
 	* Called when this component is added to an Entity.
 	*/
 	void init() override {
+		music.openFromFile("resources/menu.wav");
+		music.setVolume(25.0f);
+		music.play();
+
 		float glyphRadius = 75;
 		float circleRadius = 175;
 
@@ -210,7 +217,7 @@ public:
 			text.setString(easyString);
 		}
 		else if (spellType == SpellType::Hard) {
-			localDifficulty = 8;
+			localDifficulty = 6;
 			text.setString(hardString);
 		}
 		else if (spellType == SpellType::Developer) {
