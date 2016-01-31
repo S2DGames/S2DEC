@@ -14,6 +14,10 @@ using namespace S2D;
 
 class UI : public Component {
 private:
+	sf::Sprite spellbookSprite;
+	sf::Texture spellbookTexture;
+	sf::Text spellText;
+
 	vector<sf::Keyboard::Key> controls;
 	vector<sf::CircleShape> glyphs;
 	vector<sf::CircleShape> selectedGlyphs;
@@ -31,8 +35,22 @@ private:
 	sf::Font font;
 	sf::Text text;
 
+	bool showSpellbook = false;
+	string easyString = "          EASY\n\nStart:                     Q W E A S D\nFire:                        W W S S\nLightning:           Q E W W\nWater:                     A Q E D\nEnd:                          E W Q D S A";
+	string hardString = "HARD\n";
+	string developerString = "DEVELOPER\n";
+
 public:
 	UI(vector<sf::Keyboard::Key> controls) : controls(controls) {
+		font.loadFromFile("resources/Font.ttf");
+		spellText.setFont(font);
+		spellText.setCharacterSize(18);
+		spellText.setString(easyString);
+		spellText.setPosition({ 30.0f, 490.0f });
+
+		spellbookTexture.loadFromFile("resources/spellbook.png");
+		spellbookSprite.setTexture(spellbookTexture);
+		spellbookSprite.setPosition({ 1.0f, 450.0f });
 		healthBar.setSize({ 200.0f, 10.0f });
 		healthBar.setOrigin(healthBar.getSize().x / 2.0f, healthBar.getSize().y / 2.0f);
 		healthBar.setFillColor(sf::Color::Red);
@@ -45,7 +63,6 @@ public:
 		lightTexture.loadFromFile("resources/LTBL2/pointLightTexture.png");
 		lightTexture.setSmooth(true);
 
-		font.loadFromFile("resources/Font.ttf");
 		text.setFont(font);
 		text.setPosition(10.0f, 20.0f);
 
@@ -149,6 +166,13 @@ public:
 		healthBar.setOrigin(healthBar.getSize().x / 2.0f, healthBar.getSize().y / 2.0f);
 		healthBar.setPosition(game->getSize().x / 2.0f, 15.0f);
 
+		if (game->getKeyState(sf::Keyboard::Tab) == KEY_HELD) {
+			showSpellbook = true;
+		}
+		else {
+			showSpellbook = false;
+		}
+
 		for (sf::Keyboard::Key key : game->getKeysHeld()) {
 			if (key == controls[0]) {
 				glyphs[0].setFillColor(sf::Color::Yellow);
@@ -225,6 +249,10 @@ public:
 	}
 
 	void draw(sf::RenderTarget& target) override {
+		if (showSpellbook) {
+			target.draw(spellbookSprite);
+			target.draw(spellText);
+		}
 		for (auto glyph : glyphs) {
 			target.draw(glyph);
 		}
