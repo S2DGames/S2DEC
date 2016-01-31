@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SFML/Graphics/RenderTarget.hpp"
+#include "SFML/Graphics/Font.hpp"
 #include "Box2D/Collision/Shapes/b2PolygonShape.h"
 #include "Component.h"
 #include "Game.h"
@@ -25,8 +26,20 @@ private:
 	vector<sf::Keyboard::Key> developer{ sf::Keyboard::E, sf::Keyboard::E, sf::Keyboard::E, sf::Keyboard::E, sf::Keyboard::E, sf::Keyboard::E };
 	int& localDifficulty;
 
+	sf::Font font;
+	sf::Text text;
+
 public:
-	Menu(vector<sf::Keyboard::Key> controls, int& difficulty) : controls(controls), localDifficulty(difficulty){
+	Menu(vector<sf::Keyboard::Key> controls, int& difficulty) : controls(controls), localDifficulty(difficulty) {
+		string easy = "EASY\nStart:           Q W E A S D\nFire:              W W S S\nLightning: Q E W W\nWater:           A Q E D\nEnd:                E W Q D S A";
+		string hard = "HARD\n";
+		string developer = "DEVELOPER\n";
+		font.loadFromFile("resources/Font.ttf");
+		text.setFont(font);
+		text.setCharacterSize(18);
+		text.setString(easy);
+		text.setPosition({10.0f, 500.0f});
+	
 
 	}
 
@@ -189,7 +202,7 @@ public:
 		}
 		else if (spellType == SpellType::Easy) {
 			localDifficulty = 4;
-		}
+	}
 		else if (spellType == SpellType::Hard) {
 			localDifficulty = 8;
 		}
@@ -205,6 +218,7 @@ public:
 		for (auto glyph : glyphs) {
 			target.draw(glyph);
 		}
+		target.draw(text);
 	}
 
 	SpellType checkForSpellCombo(vector<sf::Keyboard::Key> keyPresses) {
