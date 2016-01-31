@@ -1,11 +1,16 @@
 #pragma once
 
 #include "Spell.h"
+#include "SFML/Audio/Sound.hpp"
+#include "SFML/Audio/SoundBuffer.hpp"
 
 using namespace S2D;
 
 class Fireball : public Spell {
 private:
+	sf::Sound sound;
+	sf::SoundBuffer buffer;
+
 	sf::CircleShape explosion;
 	std::shared_ptr<ltbl::LightPointEmission> light;
 	sf::Texture lightTexture;
@@ -21,6 +26,8 @@ public:
 
 	void init() override {
 		Spell::init();
+		sound.setBuffer(buffer);
+		buffer.loadFromFile("resources\\Explosion.wav");
 		light = std::make_shared<ltbl::LightPointEmission>();
 		light->_emissionSprite.setTexture(lightTexture);
 		light->_emissionSprite.setColor(sf::Color::White);
@@ -34,7 +41,7 @@ public:
 			explosion.setRadius(explosion.getRadius() - .1f);
 			explosion.setOrigin(explosion.getRadius(), explosion.getRadius());
 		}
-		if(explosion.getRadius()<1 && explosion.getRadius() > 0) {
+		if(explosion.getRadius()<1) {
 			this->owner->destroy();
 		}
 
@@ -46,6 +53,7 @@ public:
 	}
 
 	void createExplosion() {
+		sound.play();
 		explosion.setRadius(50.0f);
 		explosion.setPosition(Spell::image.getPosition());
 		explosion.setOrigin(explosion.getRadius(), explosion.getRadius());
