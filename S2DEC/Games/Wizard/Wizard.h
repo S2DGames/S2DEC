@@ -124,16 +124,19 @@ public:
 				Entity& spell = game->createEntity("Spell");
 				if (spellType == SpellType::Fire) {
 					spellBuffer.loadFromFile(runeSounds[8]);
+					spellSound.setVolume(75.0f);
 					spellSound.play();
 					spell.addComponent<Fireball>(sf::Vector2f{ image.getPosition().x, image.getPosition().y }, sf::Vector2f{ (float)game->getMousePos().x, (float)game->getMousePos().y }, (void*)(&owner->getComponent<UI>()));
 				}
 				else if (spellType == SpellType::Water) {
 					spellBuffer.loadFromFile(runeSounds[9]);
+					spellSound.setVolume(25.0f);
 					spellSound.play();
 					spell.addComponent<WaterBlast>(sf::Vector2f{ image.getPosition().x, image.getPosition().y }, sf::Vector2f{ (float)game->getMousePos().x, (float)game->getMousePos().y }, (void*)(&owner->getComponent<UI>()));
 				}
 				else if (spellType == SpellType::Lightning) {
 					spellBuffer.loadFromFile(runeSounds[10]);
+					spellSound.setVolume(75.0f);
 					spellSound.play();
 					spell.addComponent<LightningBolt>(sf::Vector2f{ image.getPosition().x, image.getPosition().y }, sf::Vector2f{ (float)game->getMousePos().x, (float)game->getMousePos().y }, (void*)(&owner->getComponent<UI>()));
 				}
