@@ -286,20 +286,20 @@
     <ClInclude Include="Games\Wizard\UI.h">
       <Filter>Games\Wizard</Filter>
     </ClInclude>
-    <ClInclude Include="Games\Wizard\DisplacementBeast.h">
-      <Filter>Games\Wizard</Filter>
-    </ClInclude>
-    <ClInclude Include="Games\Wizard\FireEnemy.h">
-      <Filter>Games\Wizard</Filter>
-    </ClInclude>
-    <ClInclude Include="Games\Wizard\LightningEnemy.h">
-      <Filter>Games\Wizard</Filter>
-    </ClInclude>
-    <ClInclude Include="Games\Wizard\WaterEnemy.h">
-      <Filter>Games\Wizard</Filter>
-    </ClInclude>
     <ClInclude Include="Games\Wizard\Menu.h">
       <Filter>Games\Wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\Wizard\DisplacementBeast.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\Wizard\FireEnemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\Wizard\LightningEnemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\Wizard\WaterEnemy.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -326,6 +326,29 @@
     <Media Include="..\Release\resources\Water Wave.wav">
       <Filter>Games\Wizard\Pictures and Stuff</Filter>
     </Media>
+    <Media Include="..\Release\resources\Chime 1.wav">
+      <Filter>Games\Wizard</Filter>
+    </Media>
+    <Media Include="..\Release\resources\Chime 2.wav">
+      <Filter>Games\Wizard</Filter>
+    </Media>
+    <Media Include="..\Release\resources\Chime 3.wav">
+      <Filter>Games\Wizard</Filter>
+    </Media>
+    <Media Include="..\Release\resources\Chime 4.wav">
+      <Filter>Games\Wizard</Filter>
+    </Media>
+    <Media Include="..\Release\resources\Chime 5.wav">
+      <Filter>Games\Wizard</Filter>
+    </Media>
+    <Media Include="..\Release\resources\Chime 6.wav">
+      <Filter>Games\Wizard</Filter>
+    </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Release\resources\spellbook.png">
+      <Filter>Games\Wizard</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\spellbook.png">
