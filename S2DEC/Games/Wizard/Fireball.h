@@ -35,7 +35,7 @@ public:
 			explosion.setRadius(explosion.getRadius() - .1f);
 			explosion.setOrigin(explosion.getRadius(), explosion.getRadius());
 		}
-		if(explosion.getRadius()<1) {
+		if(explosion.getRadius()<1 && explosion.getRadius() > 0) {
 			this->owner->destroy();
 		}
 
