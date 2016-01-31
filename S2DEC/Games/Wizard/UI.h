@@ -54,6 +54,7 @@ public:
 		spellbookTexture.loadFromFile("resources/spellbook.png");
 		spellbookSprite.setTexture(spellbookTexture);
 		spellbookSprite.setPosition({ 1.0f, 450.0f });
+		spellbookSprite.setColor(sf::Color{ spellbookSprite.getColor().r, spellbookSprite.getColor().g, spellbookSprite.getColor().b, 100 });
 		healthBar.setSize({ 200.0f, 10.0f });
 		healthBar.setOrigin(healthBar.getSize().x / 2.0f, healthBar.getSize().y / 2.0f);
 		healthBar.setFillColor(sf::Color::Red);

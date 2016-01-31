@@ -210,7 +210,7 @@ public:
 			text.setString(easyString);
 		}
 		else if (spellType == SpellType::Hard) {
-			localDifficulty = 8;
+			localDifficulty = 6;
 			text.setString(hardString);
 		}
 		else if (spellType == SpellType::Developer) {
