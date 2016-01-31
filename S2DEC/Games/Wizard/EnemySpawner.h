@@ -19,6 +19,7 @@ private:
 	int maxEnemyCount = 1;
 	int enemyCount = 0;
 	int randomInt = 0;
+	int difficultyValue = 4;
 
 	std::uniform_int_distribution<int> xDist;
 	std::uniform_int_distribution<int> yDist;
@@ -28,8 +29,8 @@ private:
 	float totalFrameTime = 0.0f;
 	
 public:
-	EnemySpawner() {
-
+	EnemySpawner(int difficulty) {
+		difficultyValue = difficulty;
 	}
 
 	/**
@@ -57,7 +58,7 @@ public:
 	void update(float frameTime) override {
 		totalFrameTime += frameTime;
 
-		if (totalFrameTime > 2.0f) {
+		if (totalFrameTime > (4.0f / difficultyValue) + 1) {
 			spawnEnemy();
 			totalFrameTime = 0.0f;
 		}
