@@ -13,6 +13,9 @@ using namespace S2D;
 
 class Menu : public Component {
 private:
+	sf::Sprite spellbookSprite;
+	sf::Texture spellbookTexture;
+
 	vector<sf::Keyboard::Key> controls;
 	vector<sf::CircleShape> glyphs;
 	
@@ -28,19 +31,21 @@ private:
 
 	sf::Font font;
 	sf::Text text;
+	string easyString = "          EASY\n\nStart:                     Q W E A S D\nFire:                        W W S S\nLightning:           Q E W W\nWater:                     A Q E D\nEnd:                          E W Q D S A";
+	string hardString = "HARD\n";
+	string developerString = "DEVELOPER\n";
 
 public:
 	Menu(vector<sf::Keyboard::Key> controls, int& difficulty) : controls(controls), localDifficulty(difficulty) {
-		string easy = "EASY\nStart:           Q W E A S D\nFire:              W W S S\nLightning: Q E W W\nWater:           A Q E D\nEnd:                E W Q D S A";
-		string hard = "HARD\n";
-		string developer = "DEVELOPER\n";
 		font.loadFromFile("resources/Font.ttf");
 		text.setFont(font);
 		text.setCharacterSize(18);
-		text.setString(easy);
-		text.setPosition({10.0f, 500.0f});
-	
+		text.setString(easyString);
+		text.setPosition({30.0f, 490.0f});
 
+		spellbookTexture.loadFromFile("resources/spellbook.png");
+		spellbookSprite.setTexture(spellbookTexture);
+		spellbookSprite.setPosition({ 1.0f, 450.0f });
 	}
 
 	/**
@@ -202,12 +207,15 @@ public:
 		}
 		else if (spellType == SpellType::Easy) {
 			localDifficulty = 4;
-	}
+			text.setString(easyString);
+		}
 		else if (spellType == SpellType::Hard) {
 			localDifficulty = 8;
+			text.setString(hardString);
 		}
 		else if (spellType == SpellType::Developer) {
 			localDifficulty = 8;
+			text.setString(developerString);
 		}
 	}
 
@@ -215,6 +223,7 @@ public:
 	* Called once every frame.
 	*/
 	void draw(sf::RenderTarget& target) override {
+		target.draw(spellbookSprite);
 		for (auto glyph : glyphs) {
 			target.draw(glyph);
 		}

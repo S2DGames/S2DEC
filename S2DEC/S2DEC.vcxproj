@@ -243,11 +243,20 @@
   </ItemGroup>
   <ItemGroup>
     <Media Include="..\..\Casting Spell.wav" />
+    <Media Include="..\Release\resources\Chime 1.wav" />
+    <Media Include="..\Release\resources\Chime 2.wav" />
+    <Media Include="..\Release\resources\Chime 3.wav" />
+    <Media Include="..\Release\resources\Chime 4.wav" />
+    <Media Include="..\Release\resources\Chime 5.wav" />
+    <Media Include="..\Release\resources\Chime 6.wav" />
     <Media Include="..\Release\resources\Fireball.wav" />
     <Media Include="..\Release\resources\GL010_A_Hero_Rises_Full.wav" />
     <Media Include="..\Release\resources\Lightening.wav" />
     <Media Include="..\Release\resources\Water Wave.wav" />
     <Media Include="resources\mage string.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Release\resources\spellbook.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
