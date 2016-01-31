@@ -205,6 +205,7 @@
     <ClInclude Include="Games\Wizard\FireEnemy.h" />
     <ClInclude Include="Games\Wizard\LightningBolt.h" />
     <ClInclude Include="Games\Wizard\LightningEnemy.h" />
+    <ClInclude Include="Games\Wizard\Menu.h" />
     <ClInclude Include="Games\Wizard\Spell.h" />
     <ClInclude Include="Games\Wizard\Tower.h" />
     <ClInclude Include="Games\Wizard\UI.h" />

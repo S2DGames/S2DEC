@@ -185,9 +185,10 @@ GameState Game::play(){
 		sf::RenderWindow::display();
 	}
 
-	if(state == CLOSING){
-		return state;
+	if (state == CLOSING) {
+		return CLOSING;
 	}
+	state = IDLE;
 	return IDLE;
 }
 
@@ -196,7 +197,7 @@ GameState Game::getState(){
 }
 
 void Game::endScene(){
-	state = CLOSING;
+	state = SCENE_OVER;
 	EntityManager::destroyAll();
 }
 

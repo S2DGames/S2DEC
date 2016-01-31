@@ -15,6 +15,9 @@ namespace ltbl {
 		class QuadtreeNode* _pQuadtreeNode;
 		class Quadtree* _pQuadtree;
 
+		bool _isAwake;
+		bool _isTurnedOn;
+
 	public:
 		QuadtreeOccupant()
 			: _pQuadtreeNode(nullptr), _pQuadtree(nullptr)
@@ -22,6 +25,14 @@ namespace ltbl {
 
 		void quadtreeUpdate();
 		void quadtreeRemove();
+
+		bool isAwake();
+		void setAwake(bool);
+		void toggleAwake();
+
+		void setTurnedOn(bool);
+		bool isTurnedOn();
+		void toggleTurnedOn();
 
 		virtual sf::FloatRect getAABB() const = 0;
 

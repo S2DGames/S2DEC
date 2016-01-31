@@ -30,6 +30,8 @@ protected:
 	std::uniform_int_distribution<int> xDist;
 	std::uniform_int_distribution<int> yDist;
 
+	//std::shared_ptr<ltbl::LightShape> lightShape;
+
 public:
 	Enemy(sf::Vector2f position, sf::Vector2f endPosition, void* spawner) : endPosition(endPosition){
 		this->spawner = spawner;
@@ -42,6 +44,7 @@ public:
 	~Enemy() {
 		if (body != nullptr) {
 			game->DestroyBody(body);
+			//game->removeShape(lightShape);
 		}
 	}
 
@@ -78,6 +81,15 @@ public:
 
 
 		registerLocalEvent(Enemy::atEndPosition, Enemy::kill);
+
+		//lightShape = std::make_shared<ltbl::LightShape>();
+		//lightShape->_shape.setPointCount(image.getPointCount());
+		//for (int i = 0; i < lightShape->_shape.getPointCount(); i++) {
+		//	lightShape->_shape.setPoint(i, image.getPoint(i));
+		//}
+		//lightShape->_shape.setOrigin(image.getOrigin());
+		//lightShape->_shape.setPosition(image.getPosition());
+		//lightShape->_renderLightOverShape = false;
 	}
 
 	//change
@@ -99,6 +111,7 @@ public:
 		}
 		else {
 			movesfTob2(image, body);
+			//movesfTob2(lightShape->_shape, body);
 		}
 	}
 

@@ -144,7 +144,7 @@ public:
 	}
 
 	void draw(sf::RenderTarget& target) override {
-		//target.draw(image);
+		target.draw(image);
 	}
 
 	void beginCollision(Component* collidedComponent, b2Contact* contact) override {

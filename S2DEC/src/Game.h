@@ -44,7 +44,8 @@ namespace S2D{
 		PAUSED		/*!< The game is in the main loop but is not running.*/,
 		LOADING		/*!< The components are currently being initialized.*/,
 		INITIALIZING/*!< The game is currently being initialized.*/,
-		CLOSED		/*!< The window has been closed and the components in the scene have been destroyed.*/
+		CLOSED		/*!< The window has been closed and the components in the scene have been destroyed.*/,
+		SCENE_OVER
 	};
 
 	enum ViewPositionCoordinateType{
