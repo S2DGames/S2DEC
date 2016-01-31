@@ -1,6 +1,6 @@
+#pragma once
+
 #include "Spell.h"
-#include "WizardUtility.h"
-#include "Enemy.h"
 
 using namespace S2D;
 
@@ -52,9 +52,7 @@ public:
 	}
 
 	void beginCollision(Component* collidedComponent, b2Contact* contact) override {
-		if (auto enemy = dynamic_cast<Enemy*>(collidedComponent)) {
-			createExplosion();
-		}
+
 	}
 
 	void endCollision(Component* collidedComponent, b2Contact* contact) override {

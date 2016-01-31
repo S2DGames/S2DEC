@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Enemy.h"
 
 using namespace S2D;

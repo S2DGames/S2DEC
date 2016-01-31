@@ -1,6 +1,5 @@
+#pragma once
 #include "Spell.h"
-#include "WizardUtility.h"
-#include "Enemy.h"
 
 using namespace S2D;
 

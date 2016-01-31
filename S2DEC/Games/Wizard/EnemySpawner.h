@@ -8,6 +8,9 @@
 #include "sf_b2.h"
 #include "Enemy.h"
 #include "DisplacementBeast.h"
+#include "FireEnemy.h"
+#include "WaterEnemy.h"
+#include "LightningEnemy.h"
 
 using namespace S2D;
 
@@ -15,10 +18,12 @@ class EnemySpawner : public Component {
 private:
 	int maxEnemyCount = 1;
 	int enemyCount = 0;
+	int randomInt = 0;
 
 	std::uniform_int_distribution<int> xDist;
 	std::uniform_int_distribution<int> yDist;
 	std::uniform_int_distribution<int> fromDist;
+	std::uniform_int_distribution<int> enemyType;
 
 	float totalFrameTime = 0.0f;
 	
@@ -34,6 +39,7 @@ public:
 		xDist = std::uniform_int_distribution<int>(0, game->getSize().x);
 		yDist = std::uniform_int_distribution<int>(0, game->getSize().y);
 		fromDist = std::uniform_int_distribution<int>(1, 4);
+		enemyType = std::uniform_int_distribution<int>(1, 9);
 	}
 
 	//change
@@ -76,12 +82,25 @@ public:
 			startPosition.y = game->getSize().y;
 			break;
 		}
-		if (game->getRandomInt(fromDist) == 1) {
+		randomInt = game->getRandomInt(enemyType);
+		switch (randomInt) {
+		case 1:
+			game->createEntity("Enemy").addComponent<FireEnemy>(startPosition, sf::Vector2f{ game->getSize().x / 2.0f, game->getSize().y / 2.0f }, (void*)this);
+			break;
+		case 2:
+			game->createEntity("Enemy").addComponent<WaterEnemy>(startPosition, sf::Vector2f{ game->getSize().x / 2.0f, game->getSize().y / 2.0f }, (void*)this);
+			break;
+		case 3:
+			game->createEntity("Enemy").addComponent<LightningEnemy>(startPosition, sf::Vector2f{ game->getSize().x / 2.0f, game->getSize().y / 2.0f }, (void*)this);
+			break;
+		case 4:
 			game->createEntity("Enemy").addComponent<DisplacementBeast>(startPosition, sf::Vector2f{ game->getSize().x / 2.0f, game->getSize().y / 2.0f }, (void*)this);
-		}
-		else {
+			break;
+		default:
 			game->createEntity("Enemy").addComponent<Enemy>(startPosition, sf::Vector2f{ game->getSize().x / 2.0f, game->getSize().y / 2.0f }, (void*)this);
+			break;
 		}
+
 		enemyCount++;
 	}
 

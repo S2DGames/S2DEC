@@ -286,6 +286,15 @@
     <ClInclude Include="Games\Wizard\DisplacementBeast.h">
       <Filter>Games\Wizard</Filter>
     </ClInclude>
+    <ClInclude Include="Games\Wizard\FireEnemy.h">
+      <Filter>Games\Wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\Wizard\LightningEnemy.h">
+      <Filter>Games\Wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\Wizard\WaterEnemy.h">
+      <Filter>Games\Wizard</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Games\Simulator\planning.txt">

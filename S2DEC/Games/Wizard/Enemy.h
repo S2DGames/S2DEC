@@ -8,6 +8,9 @@
 #include "Util.h"
 #include "sf_b2.h"
 #include "Spell.h"
+#include "Fireball.h"
+#include "WaterBlast.h"
+#include "LightningBolt.h"
 
 using namespace S2D;
 
@@ -121,11 +124,18 @@ public:
 	* To connect a Box2d body to this component use b2Body::SetUserDate(this); inside the init or onStart function.
 	* Do not delete or add physics objects in the scope of this function.
 	*/
-	void beginCollision(Component* collidedComponent, b2Contact* contact) override {
+	virtual void beginCollision(Component* collidedComponent, b2Contact* contact) override {
 		if (auto spell = dynamic_cast<Spell*>(collidedComponent)) {
 			spell->setDestroySpell(true);
 			destroy = true;
 		}
+		if (auto spell = dynamic_cast<Fireball*>(collidedComponent)) {
+			spell->createExplosion();
+		}
+		if (auto spell = dynamic_cast<LightningBolt*>(collidedComponent)) {
+			spell->createExplosion();
+		}
+
 	}
 
 	/**
