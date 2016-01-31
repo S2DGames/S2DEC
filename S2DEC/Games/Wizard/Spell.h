@@ -94,6 +94,11 @@ public:
 		if (spellType != SpellType::Lightning) {
 			body->SetLinearVelocity(velocity);
 		}
+
+		//collistion fiter
+		b2Filter filter;
+		filter.groupIndex = -1;
+		fixture->SetFilterData(filter);
 	}
 
 	virtual void update(float frameTime) override {

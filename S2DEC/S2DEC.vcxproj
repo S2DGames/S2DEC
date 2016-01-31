@@ -256,7 +256,7 @@
     <Media Include="resources\mage string.wav" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\Release\resources\spellbook.png" />
+    <Image Include="..\..\spellbook.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
