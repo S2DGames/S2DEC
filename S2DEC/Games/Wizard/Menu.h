@@ -104,6 +104,11 @@ public:
 	* Called once every frame.
 	*/
 	void update(float frameTime) override {
+
+		if (game->getMouseState(sf::Mouse::Left) == KEY_PRESSED) {
+			playerKeyPresses.clear();
+		}
+
 		for (auto key : game->getKeysPressed()) {
 			if (playerKeyPresses.size() < 6) {
 				playerKeyPresses.emplace_back(key);
