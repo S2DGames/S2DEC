@@ -95,10 +95,21 @@ public:
 			game->createEntity("Enemy").addComponent<LightningEnemy>(startPosition, sf::Vector2f{ game->getSize().x / 2.0f, game->getSize().y / 2.0f }, (void*)this);
 			break;
 		case 4:
+			if (difficultyValue > 4) {
+				game->createEntity("Enemy").addComponent<DisplacementBeast>(startPosition, sf::Vector2f{ game->getSize().x / 2.0f, game->getSize().y / 2.0f }, (void*)this);
+			}
+			else {
+				game->createEntity("Enemy").addComponent<Enemy>(startPosition, sf::Vector2f{ game->getSize().x / 2.0f, game->getSize().y / 2.0f }, (void*)this);
+			}
 			game->createEntity("Enemy").addComponent<DisplacementBeast>(startPosition, sf::Vector2f{ game->getSize().x / 2.0f, game->getSize().y / 2.0f }, (void*)this);
 			break;
 		default:
-			game->createEntity("Enemy").addComponent<Enemy>(startPosition, sf::Vector2f{ game->getSize().x / 2.0f, game->getSize().y / 2.0f }, (void*)this);
+			if (difficultyValue == 8) {
+				game->createEntity("Enemy").addComponent<DisplacementBeast>(startPosition, sf::Vector2f{ game->getSize().x / 2.0f, game->getSize().y / 2.0f }, (void*)this);
+			}
+			else {
+				game->createEntity("Enemy").addComponent<Enemy>(startPosition, sf::Vector2f{ game->getSize().x / 2.0f, game->getSize().y / 2.0f }, (void*)this);
+			}
 			break;
 		}
 

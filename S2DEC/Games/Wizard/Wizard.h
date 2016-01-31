@@ -99,13 +99,11 @@ public:
 		}
 
 		for (auto key : game->getKeysPressed()) {
-			if (key != sf::Keyboard::Tab) {
-				if (playerKeyPresses.size() < difficultyLength) {
-					playerKeyPresses.emplace_back(key);
-					buffer.loadFromFile(runeSounds[runeIndex]);
-					sound.play();
-					runeIndex++;
-				}
+			if (playerKeyPresses.size() < difficultyLength) {
+				playerKeyPresses.emplace_back(key);
+				buffer.loadFromFile(runeSounds[runeIndex]);
+				sound.play();
+				runeIndex++;
 			}
 		}
 
