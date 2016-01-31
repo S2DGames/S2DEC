@@ -242,6 +242,7 @@
     <Media Include="..\Release\resources\GL010_A_Hero_Rises_Full.wav" />
     <Media Include="..\Release\resources\Lightening.wav" />
     <Media Include="..\Release\resources\Water Wave.wav" />
+    <Media Include="resources\mage string.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

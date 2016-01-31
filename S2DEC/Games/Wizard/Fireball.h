@@ -7,13 +7,26 @@ using namespace S2D;
 class Fireball : public Spell {
 private:
 	sf::CircleShape explosion;
+	std::shared_ptr<ltbl::LightPointEmission> light;
+	sf::Texture lightTexture;
 
 public:
 	Fireball(sf::Vector2f position, sf::Vector2f endPosition, void* ui): Spell(position, endPosition, SpellType::Fire ) {
 		explosion.setFillColor(sf::Color::Red);
 		this->ui = ui;
+
+		lightTexture.loadFromFile("resources/LTBL2/pointLightTexture.png");
+		lightTexture.setSmooth(true);
 	}
 
+	void init() override {
+		Spell::init();
+		light = std::make_shared<ltbl::LightPointEmission>();
+		light->_emissionSprite.setTexture(lightTexture);
+		light->_emissionSprite.setColor(sf::Color::White);
+		//light->_emissionSprite.setPosition(shape1.getPosition().x - 30, shape1.getPosition().y - 30);
+		light->_localCastCenter = sf::Vector2f(0.0f, 0.0f);
+	}
 
 	void update(float frameTime) override {
 		Spell::update(frameTime);

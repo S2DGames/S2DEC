@@ -305,5 +305,8 @@
     <Media Include="..\Release\resources\Water Wave.wav">
       <Filter>Games\Wizard</Filter>
     </Media>
+    <Media Include="resources\mage string.wav">
+      <Filter>Games\Wizard</Filter>
+    </Media>
   </ItemGroup>
 </Project>
