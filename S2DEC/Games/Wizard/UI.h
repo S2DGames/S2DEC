@@ -8,7 +8,6 @@
 #include "Game.h"
 #include "Util.h"
 #include "sf_b2.h"
-#include "Wizard.h"
 #include "Tower.h"
 
 using namespace S2D;

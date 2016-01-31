@@ -8,9 +8,10 @@ class LightningBolt : public Spell {
 private:
 	sf::CircleShape explosion;
 public:
-	LightningBolt(sf::Vector2f position, sf::Vector2f endPosition) : Spell(endPosition, endPosition, SpellType::Lightning) {
+	LightningBolt(sf::Vector2f position, sf::Vector2f endPosition, void* ui) : Spell(endPosition, endPosition, SpellType::Lightning) {
 		explosion.setFillColor(sf::Color::Yellow);
 		createExplosion();
+		this->ui = ui;
 	}
 
 	void update(float frameTime) override {

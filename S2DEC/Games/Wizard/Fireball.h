@@ -9,8 +9,9 @@ private:
 	sf::CircleShape explosion;
 
 public:
-	Fireball(sf::Vector2f position, sf::Vector2f endPosition): Spell(position, endPosition, SpellType::Fire ) {
+	Fireball(sf::Vector2f position, sf::Vector2f endPosition, void* ui): Spell(position, endPosition, SpellType::Fire ) {
 		explosion.setFillColor(sf::Color::Red);
+		this->ui = ui;
 	}
 
 

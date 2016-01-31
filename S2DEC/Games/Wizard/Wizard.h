@@ -14,6 +14,7 @@
 #include "SFML/Audio/Sound.hpp"
 #include "SFML/Audio/SoundBuffer.hpp"
 #include "SFML/Audio//Music.hpp"
+#include "UI.h"
 
 using namespace S2D;
 
@@ -100,21 +101,21 @@ public:
 						cout << "ERROR: Cannot load sound";
 					}
 					sound.play();
-					spell.addComponent<Fireball>(sf::Vector2f{ image.getPosition().x, image.getPosition().y }, sf::Vector2f{ (float)game->getMousePos().x, (float)game->getMousePos().y });
+					spell.addComponent<Fireball>(sf::Vector2f{ image.getPosition().x, image.getPosition().y }, sf::Vector2f{ (float)game->getMousePos().x, (float)game->getMousePos().y }, (void*)(&owner->getComponent<UI>()));
 				}
 				else if (spellType == SpellType::Water) {
 					if (!buffer.loadFromFile("resources\\Water Wave.wav")) {
 						cout << "ERROR: Cannot load sound";
 					}
 					sound.play();
-					spell.addComponent<WaterBlast>(sf::Vector2f{ image.getPosition().x, image.getPosition().y }, sf::Vector2f{ (float)game->getMousePos().x, (float)game->getMousePos().y });
+					spell.addComponent<WaterBlast>(sf::Vector2f{ image.getPosition().x, image.getPosition().y }, sf::Vector2f{ (float)game->getMousePos().x, (float)game->getMousePos().y }, (void*)(&owner->getComponent<UI>()));
 				}
 				else if (spellType == SpellType::Lightning) {
 					if (!buffer.loadFromFile("resources\\Lightening.wav")) {
 						cout << "ERROR: Cannot load sound";
 					}
 					sound.play();
-					spell.addComponent<LightningBolt>(sf::Vector2f{ image.getPosition().x, image.getPosition().y }, sf::Vector2f{ (float)game->getMousePos().x, (float)game->getMousePos().y });
+					spell.addComponent<LightningBolt>(sf::Vector2f{ image.getPosition().x, image.getPosition().y }, sf::Vector2f{ (float)game->getMousePos().x, (float)game->getMousePos().y }, (void*)(&owner->getComponent<UI>()));
 				}
 				canFire = false;
 			}
