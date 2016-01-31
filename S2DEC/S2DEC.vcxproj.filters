@@ -283,6 +283,9 @@
     <ClInclude Include="Games\Wizard\UI.h">
       <Filter>Games\Wizard</Filter>
     </ClInclude>
+    <ClInclude Include="Games\Wizard\DisplacementBeast.h">
+      <Filter>Games\Wizard</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Games\Simulator\planning.txt">

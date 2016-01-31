@@ -198,6 +198,7 @@
     <ClInclude Include="Games\Snake\Segment.h" />
     <ClInclude Include="Games\Snake\Snake.h" />
     <ClInclude Include="Games\Snake\SnakeScene.h" />
+    <ClInclude Include="Games\Wizard\DisplacementBeast.h" />
     <ClInclude Include="Games\Wizard\Enemy.h" />
     <ClInclude Include="Games\Wizard\EnemySpawner.h" />
     <ClInclude Include="Games\Wizard\Fireball.h" />

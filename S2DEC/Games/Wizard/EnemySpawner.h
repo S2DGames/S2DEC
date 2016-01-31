@@ -7,6 +7,7 @@
 #include "Util.h"
 #include "sf_b2.h"
 #include "Enemy.h"
+#include "DisplacementBeast.h"
 
 using namespace S2D;
 
@@ -75,7 +76,12 @@ public:
 			startPosition.y = game->getSize().y;
 			break;
 		}
-		game->createEntity("Enemy").addComponent<Enemy>(startPosition, sf::Vector2f{ game->getSize().x / 2.0f, game->getSize().y / 2.0f }, (void*)this);
+		if (game->getRandomInt(fromDist) == 1) {
+			game->createEntity("Enemy").addComponent<DisplacementBeast>(startPosition, sf::Vector2f{ game->getSize().x / 2.0f, game->getSize().y / 2.0f }, (void*)this);
+		}
+		else {
+			game->createEntity("Enemy").addComponent<Enemy>(startPosition, sf::Vector2f{ game->getSize().x / 2.0f, game->getSize().y / 2.0f }, (void*)this);
+		}
 		enemyCount++;
 	}
 
