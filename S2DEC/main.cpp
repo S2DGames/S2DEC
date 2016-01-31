@@ -37,6 +37,11 @@ int main(){
 		game.init();
 		//game.setVerticalSyncEnabled(true);
 		gs = game.play();
+		if (gs != GameState::CLOSING) {
+			loadMenu(&game, difficulty);
+			game.init();
+			gs = game.play();
+		}
 	}
 
 	if(gs == CLOSING){

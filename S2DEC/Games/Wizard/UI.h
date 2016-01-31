@@ -40,15 +40,23 @@ private:
 
 	bool showSpellbook = false;
 	string easyString = "          EASY\n\nStart:                     Q W E A S D\nFire:                        W W S S\nLightning:           Q E W W\nWater:                     A Q E D\nEnd:                          E W Q D S A";
-	string hardString = "HARD\n";
-	string developerString = "DEVELOPER\n";
+	string hardString = "          HARD\n\nStart:                     Q W E A S D\nFire:                    W W S S A D\nLightning:       Q E W W S S\nWater:                 A Q E D A Q\nEnd:                          E W Q D S A";
+	string developerString = "     DEVELOPER\n\nStart:                     Q W E A S D\nFire:                W W S S A D A D\nLightning:   Q E W W S S A D\nWater:             A Q E D A Q E D\nEnd:                          E W Q D S A";
 
 public:
-	UI(vector<sf::Keyboard::Key> controls) : controls(controls) {
+	UI(vector<sf::Keyboard::Key> controls, int difficulty) : controls(controls) {
 		font.loadFromFile("resources/Font.ttf");
 		spellText.setFont(font);
 		spellText.setCharacterSize(18);
-		spellText.setString(easyString);
+		if (difficulty == 4) {
+			spellText.setString(easyString);
+		}
+		else if(difficulty == 6) {
+			spellText.setString(hardString);
+		}
+		else {
+			spellText.setString(developerString);
+		}
 		spellText.setPosition({ 30.0f, 490.0f });
 
 		spellbookTexture.loadFromFile("resources/spellbook.png");

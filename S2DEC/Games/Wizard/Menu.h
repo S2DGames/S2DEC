@@ -32,8 +32,8 @@ private:
 	sf::Font font;
 	sf::Text text;
 	string easyString = "          EASY\n\nStart:                     Q W E A S D\nFire:                        W W S S\nLightning:           Q E W W\nWater:                     A Q E D\nEnd:                          E W Q D S A";
-	string hardString = "HARD\n";
-	string developerString = "DEVELOPER\n";
+	string hardString = "          HARD\n\nStart:                     Q W E A S D\nFire:                    W W S S A D\nLightning:       Q E W W S S\nWater:                 A Q E D A Q\nEnd:                          E W Q D S A";
+	string developerString = "     DEVELOPER\n\nStart:                     Q W E A S D\nFire:                W W S S A D A D\nLightning:   Q E W W S S A D\nWater:             A Q E D A Q E D\nEnd:                          E W Q D S A";
 
 public:
 	Menu(vector<sf::Keyboard::Key> controls, int& difficulty) : controls(controls), localDifficulty(difficulty) {

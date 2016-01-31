@@ -22,7 +22,7 @@ void loadLevel1(Game* game, int& difficulty) {
 	wizard.addComponent<Wizard>(sf::Vector2f{ game->SCREEN_SIZE.x/2.0f, game->SCREEN_SIZE.y/2.0f }, difficulty);
 	wizard.addComponent<Tower>(sf::Vector2f{ game->SCREEN_SIZE.x / 2.0f, game->SCREEN_SIZE.y / 2.0f });
 	wizard.addComponent<EnemySpawner>();
-	wizard.addComponent<UI>(vector<sf::Keyboard::Key>{sf::Keyboard::W, sf::Keyboard::S, sf::Keyboard::E, sf::Keyboard::D, sf::Keyboard::A, sf::Keyboard::Q});
+	wizard.addComponent<UI>(vector<sf::Keyboard::Key>{sf::Keyboard::W, sf::Keyboard::S, sf::Keyboard::E, sf::Keyboard::D, sf::Keyboard::A, sf::Keyboard::Q}, difficulty);
 
 	wizard.setZ(10);
 }
@@ -32,7 +32,7 @@ void loadLevel2(Game* game, int& difficulty) {
 	wizard.addComponent<Wizard>(sf::Vector2f{ game->SCREEN_SIZE.x / 2.0f, game->SCREEN_SIZE.y / 2.0f }, difficulty);
 	wizard.addComponent<Tower>(sf::Vector2f{ game->SCREEN_SIZE.x / 2.0f, game->SCREEN_SIZE.y / 2.0f });
 	wizard.addComponent<EnemySpawner>();
-	wizard.addComponent<UI>(vector<sf::Keyboard::Key>{sf::Keyboard::W, sf::Keyboard::S, sf::Keyboard::E, sf::Keyboard::D, sf::Keyboard::A, sf::Keyboard::Q});
+	wizard.addComponent<UI>(vector<sf::Keyboard::Key>{sf::Keyboard::W, sf::Keyboard::S, sf::Keyboard::E, sf::Keyboard::D, sf::Keyboard::A, sf::Keyboard::Q}, difficulty);
 
 	wizard.setZ(10);
 }
