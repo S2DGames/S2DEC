@@ -8,13 +8,15 @@
 #include "Util.h"
 #include "sf_b2.h"
 #include "Spell.h"
+#include "Fireball.h"
+#include "WaterBlast.h"
+#include "LightningBolt.h"
 
 using namespace S2D;
 
 class Enemy : public Component {
-private:
+protected:
 	sf::RectangleShape image;
-
 	b2Body* body{ nullptr };
 	b2BodyDef bodyDef;
 	b2PolygonShape shape;
@@ -24,7 +26,6 @@ private:
 
 	void* spawner;
 	bool destroy = false;
-	std::uniform_int_distribution<int> randomInt{ 0,10000 };
 
 	std::uniform_int_distribution<int> xDist;
 	std::uniform_int_distribution<int> yDist;
@@ -103,10 +104,8 @@ public:
 	/**
 	* Called once every frame.
 	*/
-	void update(float frameTime) override {
-		if (game->getRandomInt(randomInt) == 1) {
-			teleport();
-		}
+	virtual void update(float frameTime) override {
+		
 		if (destroy) {
 			kill();
 		}
@@ -129,7 +128,7 @@ public:
 	/**
 	* Called once every frame.
 	*/
-	void draw(sf::RenderTarget& target) override {
+	virtual void draw(sf::RenderTarget& target) override {
 		target.draw(image);
 	}
 
@@ -138,11 +137,18 @@ public:
 	* To connect a Box2d body to this component use b2Body::SetUserDate(this); inside the init or onStart function.
 	* Do not delete or add physics objects in the scope of this function.
 	*/
-	void beginCollision(Component* collidedComponent, b2Contact* contact) override {
+	virtual void beginCollision(Component* collidedComponent, b2Contact* contact) override {
 		if (auto spell = dynamic_cast<Spell*>(collidedComponent)) {
 			spell->setDestroySpell(true);
 			destroy = true;
 		}
+		if (auto spell = dynamic_cast<Fireball*>(collidedComponent)) {
+			spell->createExplosion();
+		}
+		if (auto spell = dynamic_cast<LightningBolt*>(collidedComponent)) {
+			spell->createExplosion();
+		}
+
 	}
 
 	/**
@@ -158,33 +164,5 @@ public:
 		destroy = flag;
 	}
 
-	void teleport() {
-		game->DestroyBody(body);
-		image.setFillColor(sf::Color::Green);
-
-		image.setPosition(game->getRandomInt(xDist), game->getRandomInt(yDist));
-		bodyDef.position = sfTob2(image.getPosition());
-
-		body = game->CreateBody(&bodyDef);
-		body->SetUserData(this);
-		body->SetFixedRotation(true);
-		fixture = body->CreateFixture(&shape, 1.0f);
-		fixture->SetFriction(0.0f);
-		fixture->SetRestitution(1.0f);
-		fixture->SetSensor(true);
-
-		movesfTob2(image, body);
-
-		float xDistance = sfTob2(endPosition.x - image.getPosition().x);
-		float yDistance = sfTob2(endPosition.y - image.getPosition().y);
-		float hDistance = sqrt(pow(xDistance, 2.0f) + pow(yDistance, 2.0f));
-		float speed = 1.5f;
-		float step = speed / hDistance;
-		b2Vec2 velocity = { step * xDistance, step * yDistance };
-
-		xDist = std::uniform_int_distribution<int>(0, game->getSize().x);
-		yDist = std::uniform_int_distribution<int>(0, game->getSize().y);
-
-		body->SetLinearVelocity(velocity);
-	}
+	
 };

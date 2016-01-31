@@ -283,6 +283,18 @@
     <ClInclude Include="Games\Wizard\UI.h">
       <Filter>Games\Wizard</Filter>
     </ClInclude>
+    <ClInclude Include="Games\Wizard\DisplacementBeast.h">
+      <Filter>Games\Wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\Wizard\FireEnemy.h">
+      <Filter>Games\Wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\Wizard\LightningEnemy.h">
+      <Filter>Games\Wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\Wizard\WaterEnemy.h">
+      <Filter>Games\Wizard</Filter>
+    </ClInclude>
     <ClInclude Include="Games\Wizard\Menu.h">
       <Filter>Games\Wizard</Filter>
     </ClInclude>
