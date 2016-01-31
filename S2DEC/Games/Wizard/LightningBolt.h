@@ -13,7 +13,6 @@ public:
 		createExplosion();
 	}
 
-
 	void update(float frameTime) override {
 		Spell::update(frameTime);
 		if (explosion.getRadius() >= 0) {

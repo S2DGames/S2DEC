@@ -22,7 +22,7 @@ private:
 
 	sf::Vector2f position;
 
-	int health = 1;
+	int health = 10;
 	bool isGrowing = false;
 	bool drawTower = true;
 public:

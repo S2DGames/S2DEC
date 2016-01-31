@@ -35,8 +35,9 @@ public:
 	}
 
 	~Enemy() {
-		body->DestroyFixture(fixture);
-		game->DestroyBody(body);
+		if (body != nullptr) {
+			game->DestroyBody(body);
+		}
 	}
 
 	/**
@@ -82,7 +83,9 @@ public:
 		if (destroy) {
 			kill();
 		}
-		movesfTob2(image, body);
+		else {
+			movesfTob2(image, body);
+		}
 	}
 
 	bool atEndPosition() {

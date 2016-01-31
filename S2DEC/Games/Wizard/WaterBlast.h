@@ -16,23 +16,9 @@ public:
 
 	void update(float frameTime) override {
 		Spell::update(frameTime);
-
-		/*if (explosion.getRadius()<1 && explosion.getRadius() > 0) {
-			this->owner->destroy();
-		}*/
-		
-
 	}
 
 	void draw(sf::RenderTarget& target) override {
 		Spell::draw(target);
-	}
-
-	void beginCollision(Component* collidedComponent, b2Contact* contact) override {
-
-	}
-
-	void endCollision(Component* collidedComponent, b2Contact* contact) override {
-
 	}
 };

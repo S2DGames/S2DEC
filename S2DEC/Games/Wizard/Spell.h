@@ -53,8 +53,12 @@ public:
 			angle = 360 - (-angle);
 		}
 		image.setRotation(angle);
+	}
 
-
+	~Spell() {
+		if (body != nullptr) {
+			game->DestroyBody(body);
+		}
 	}
 
 	virtual void init() override {
@@ -93,7 +97,7 @@ public:
 	}
 
 	virtual void update(float frameTime) override {
-		if (isAlive) {
+		if (isAlive && body != nullptr) {
 			movesfTob2(image, body);
 		}
 		if (destroySpell && isAlive && spellType != SpellType::Water) {
@@ -104,6 +108,7 @@ public:
 		if (image.getPosition().x > (game->getSize().x + image.getSize().x) || image.getPosition().x < (-image.getSize().x)) {
 			if (body != nullptr) {
 				game->DestroyBody(body);
+				body = nullptr;
 			}
 			owner->destroy();
 		}
@@ -111,6 +116,7 @@ public:
 		if (image.getPosition().y >(game->getSize().y + image.getSize().y) || image.getPosition().y < (-image.getSize().y)) {
 			if (body != nullptr) {
 				game->DestroyBody(body);
+				body = nullptr;
 			}
 			owner->destroy();
 		}
@@ -132,6 +138,7 @@ public:
 
 	void DestroySpell() {
 		game->DestroyBody(body);
+		body = nullptr;
 		//this->owner->destroy();
 		isAlive = false;
 	}
