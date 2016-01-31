@@ -20,10 +20,14 @@ private:
 	vector<sf::Keyboard::Key> playerKeyPresses;
 	vector<sf::Keyboard::Key> start{ sf::Keyboard::Q, sf::Keyboard::W, sf::Keyboard::E, sf::Keyboard::A, sf::Keyboard::S, sf::Keyboard::D};
 	vector<sf::Keyboard::Key> end{ sf::Keyboard::E, sf::Keyboard::W, sf::Keyboard::Q, sf::Keyboard::D, sf::Keyboard::S, sf::Keyboard::A };
+	vector<sf::Keyboard::Key> easy{ sf::Keyboard::Q, sf::Keyboard::Q, sf::Keyboard::Q, sf::Keyboard::Q, sf::Keyboard::Q, sf::Keyboard::Q };
+	vector<sf::Keyboard::Key> hard{ sf::Keyboard::W, sf::Keyboard::W, sf::Keyboard::W, sf::Keyboard::W, sf::Keyboard::W, sf::Keyboard::W };
+	vector<sf::Keyboard::Key> developer{ sf::Keyboard::E, sf::Keyboard::E, sf::Keyboard::E, sf::Keyboard::E, sf::Keyboard::E, sf::Keyboard::E };
+	int& localDifficulty;
 
 public:
-	Menu(vector<sf::Keyboard::Key> controls) : controls(controls){
-		
+	Menu(vector<sf::Keyboard::Key> controls, int& difficulty) : controls(controls), localDifficulty(difficulty){
+
 	}
 
 	/**
@@ -178,6 +182,15 @@ public:
 		else if(spellType == SpellType::End) {
 			game->endGame();
 		}
+		else if (spellType == SpellType::Easy) {
+			localDifficulty = 4;
+		}
+		else if (spellType == SpellType::Hard) {
+			localDifficulty = 8;
+		}
+		else if (spellType == SpellType::Developer) {
+			localDifficulty = 8;
+		}
 	}
 
 	/**
@@ -194,6 +207,39 @@ public:
 		SpellType spellType;
 		//TODO make the selection of spells unique
 		//TODO make this area NOT a horrific mess of code, embarassing generations of programmers
+		for (int index = 0; index < 6; index++) {
+			if (keyPresses[index] == easy[index]) {
+				matchCount++;
+			}
+		}
+		if (matchCount == 6) {
+			return SpellType::Easy;
+		}
+		else {
+			matchCount = 0;
+		}
+		for (int index = 0; index < 6; index++) {
+			if (keyPresses[index] == hard[index]) {
+				matchCount++;
+			}
+		}
+		if (matchCount == 6) {
+			return SpellType::Hard;
+		}
+		else {
+			matchCount = 0;
+		}
+		for (int index = 0; index < 6; index++) {
+			if (keyPresses[index] == developer[index]) {
+				matchCount++;
+			}
+		}
+		if (matchCount == 6) {
+			return SpellType::Developer;
+		}
+		else {
+			matchCount = 0;
+		}
 		for (int index = 0; index < 6; index++) {
 			if (keyPresses[index] == start[index]) {
 				matchCount++;

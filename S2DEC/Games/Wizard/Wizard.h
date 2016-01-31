@@ -39,16 +39,17 @@ private:
 	SpellType spellType;
 	vector<sf::Keyboard::Key> playerKeyPresses;
 
-	int difficultyLength = 4;
+	int difficultyLength;
 	vector<sf::Keyboard::Key> fireBall{ sf::Keyboard::W, sf::Keyboard::W, sf::Keyboard::S, sf::Keyboard::S, sf::Keyboard::A, sf::Keyboard::D, sf::Keyboard::A, sf::Keyboard::D };
 	vector<sf::Keyboard::Key> waterBlast{ sf::Keyboard::A, sf::Keyboard::Q, sf::Keyboard::E, sf::Keyboard::D, sf::Keyboard::A, sf::Keyboard::Q, sf::Keyboard::E, sf::Keyboard::D};
 	vector<sf::Keyboard::Key> lightningBolt{ sf::Keyboard::Q, sf::Keyboard::E, sf::Keyboard::W, sf::Keyboard::W, sf::Keyboard::S, sf::Keyboard::S, sf::Keyboard::A, sf::Keyboard::D};
 
 public:
-	Wizard(sf::Vector2f position) {
+	Wizard(sf::Vector2f position, int difficulty) {
 		image.setSize(sf::Vector2f(20.0f, 20.0f));
 		image.setPosition(position);
 		image.setOrigin((image.getSize().x) / 2.0f, (image.getSize().y) / 2.0f);
+		difficultyLength = difficulty;
 		//bodyDef.position = { sfTob2(position) };
 	}
 

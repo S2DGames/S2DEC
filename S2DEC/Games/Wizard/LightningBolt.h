@@ -27,7 +27,7 @@ public:
 
 	void draw(sf::RenderTarget& target) override {
 		target.draw(explosion);
-		Spell::draw(target);
+		//Spell::draw(target);
 	}
 
 	void createExplosion() {

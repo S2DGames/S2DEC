@@ -28,12 +28,12 @@ int main(){
 	//loadFireMonsterGame(&game);
 
 	GameState gs;
-
-	loadMenu(&game);
+	int difficulty = 4;
+	loadMenu(&game, difficulty);
 	game.init();
 	gs = game.play();
 	while (gs != GameState::CLOSING) {
-		loadLevel1(&game);
+		loadLevel1(&game, difficulty);
 		game.init();
 		//game.setVerticalSyncEnabled(true);
 		gs = game.play();
