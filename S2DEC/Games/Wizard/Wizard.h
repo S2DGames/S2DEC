@@ -56,9 +56,6 @@ public:
 		music.setVolume(25.0f);
 		music.play();
 		sound.setBuffer(buffer);
-		if (!buffer.loadFromFile("C:\\Users\\tivanyo\\Desktop\\Casting Spell.mp3")) {
-			cout << "ERROR: Cannot load sound";
-		}
 		//bodyDef.type = b2_dynamicBody;
 
 		//shape.SetAsBox(sfTob2(image.getSize().x / 2.0f), sfTob2(image.getSize().y / 2.0f));
@@ -97,16 +94,26 @@ public:
 
 		if (game->getMouseState(sf::Mouse::Left) == KEY_PRESSED) {
 			if(canFire){
-				
-				sound.play();
 				Entity& spell = game->createEntity("Spell");
 				if (spellType == SpellType::Fire) {
+					if (!buffer.loadFromFile("resources\\Fireball.wav")) {
+						cout << "ERROR: Cannot load sound";
+					}
+					sound.play();
 					spell.addComponent<Fireball>(sf::Vector2f{ image.getPosition().x, image.getPosition().y }, sf::Vector2f{ (float)game->getMousePos().x, (float)game->getMousePos().y });
 				}
 				else if (spellType == SpellType::Water) {
+					if (!buffer.loadFromFile("resources\\Water Wave.wav")) {
+						cout << "ERROR: Cannot load sound";
+					}
+					sound.play();
 					spell.addComponent<WaterBlast>(sf::Vector2f{ image.getPosition().x, image.getPosition().y }, sf::Vector2f{ (float)game->getMousePos().x, (float)game->getMousePos().y });
 				}
 				else if (spellType == SpellType::Lightning) {
+					if (!buffer.loadFromFile("resources\\Lightening.wav")) {
+						cout << "ERROR: Cannot load sound";
+					}
+					sound.play();
 					spell.addComponent<LightningBolt>(sf::Vector2f{ image.getPosition().x, image.getPosition().y }, sf::Vector2f{ (float)game->getMousePos().x, (float)game->getMousePos().y });
 				}
 				canFire = false;

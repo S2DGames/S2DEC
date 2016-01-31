@@ -236,7 +236,11 @@
     <Text Include="Games\Simulator\planning.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Media Include="..\..\Casting Spell.wav" />
+    <Media Include="..\Release\resources\Fireball.wav" />
     <Media Include="..\Release\resources\GL010_A_Hero_Rises_Full.wav" />
+    <Media Include="..\Release\resources\Lightening.wav" />
+    <Media Include="..\Release\resources\Water Wave.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

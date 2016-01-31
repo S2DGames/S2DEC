@@ -290,5 +290,17 @@
     <Media Include="..\Release\resources\GL010_A_Hero_Rises_Full.wav">
       <Filter>Games\Wizard</Filter>
     </Media>
+    <Media Include="..\..\Casting Spell.wav">
+      <Filter>Games\Wizard</Filter>
+    </Media>
+    <Media Include="..\Release\resources\Fireball.wav">
+      <Filter>Games\Wizard</Filter>
+    </Media>
+    <Media Include="..\Release\resources\Lightening.wav">
+      <Filter>Games\Wizard</Filter>
+    </Media>
+    <Media Include="..\Release\resources\Water Wave.wav">
+      <Filter>Games\Wizard</Filter>
+    </Media>
   </ItemGroup>
 </Project>
