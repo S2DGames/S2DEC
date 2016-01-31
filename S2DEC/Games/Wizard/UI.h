@@ -66,7 +66,7 @@ public:
 		if (!music.openFromFile("resources\\GL010_A_Hero_Rises_Full.wav")) {
 		cout << "Unable to load music" << endl;
 		}
-		music.setVolume(25.0f);
+		music.setVolume(5.0f);
 		music.play();
 		music.setLoop(true);
 

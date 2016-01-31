@@ -7,6 +7,7 @@ using namespace S2D;
 class DisplacementBeast : public Enemy {
 private:
 	std::uniform_int_distribution<int> randomInt{ 0,2500 };
+	int jumpCount = 2;
 public:
 	DisplacementBeast(sf::Vector2f position, sf::Vector2f endPosition, void* spawner) : Enemy(position, endPosition, spawner) {
 
@@ -16,7 +17,10 @@ public:
 	void update(float frameTime) override {
 		Enemy::update(frameTime);
 		if (game->getRandomInt(randomInt) == 1) {
-			teleport();
+			if (jumpCount > 0) {
+				teleport();
+				jumpCount--;
+			}
 		}
 	}
 
