@@ -37,6 +37,9 @@
     <Filter Include="Games\Wizard">
       <UniqueIdentifier>{ef8940b3-d3da-4486-a09a-aecc4fb8fa77}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Games\Wizard\Pictures and Stuff">
+      <UniqueIdentifier>{6130248a-5003-478d-8156-ef48d8d9c0e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\CollisionListener.cpp">
@@ -305,23 +308,28 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <Media Include="..\Release\resources\GL010_A_Hero_Rises_Full.wav">
-      <Filter>Games\Wizard</Filter>
-    </Media>
     <Media Include="..\..\Casting Spell.wav">
-      <Filter>Games\Wizard</Filter>
+      <Filter>Games\Wizard\Pictures and Stuff</Filter>
     </Media>
     <Media Include="..\Release\resources\Fireball.wav">
-      <Filter>Games\Wizard</Filter>
+      <Filter>Games\Wizard\Pictures and Stuff</Filter>
+    </Media>
+    <Media Include="..\Release\resources\GL010_A_Hero_Rises_Full.wav">
+      <Filter>Games\Wizard\Pictures and Stuff</Filter>
     </Media>
     <Media Include="..\Release\resources\Lightening.wav">
-      <Filter>Games\Wizard</Filter>
-    </Media>
-    <Media Include="..\Release\resources\Water Wave.wav">
-      <Filter>Games\Wizard</Filter>
+      <Filter>Games\Wizard\Pictures and Stuff</Filter>
     </Media>
     <Media Include="resources\mage string.wav">
-      <Filter>Games\Wizard</Filter>
+      <Filter>Games\Wizard\Pictures and Stuff</Filter>
     </Media>
+    <Media Include="..\Release\resources\Water Wave.wav">
+      <Filter>Games\Wizard\Pictures and Stuff</Filter>
+    </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\spellbook.png">
+      <Filter>Games\Wizard\Pictures and Stuff</Filter>
+    </Image>
   </ItemGroup>
 </Project>
