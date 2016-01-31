@@ -13,7 +13,7 @@
 #include "LightningBolt.h"
 #include "SFML/Audio/Sound.hpp"
 #include "SFML/Audio/SoundBuffer.hpp"
-#include "SFML/Audio//Music.hpp"
+//#include "SFML/Audio//Music.hpp"
 #include "UI.h"
 
 using namespace S2D;
@@ -24,7 +24,7 @@ private:
 	sf::SoundBuffer spellBuffer;
 	sf::Sound sound;
 	sf::Sound spellSound;
-	sf::Music music;
+	//sf::Music music;
 	vector<string> runeSounds;
 	int runeIndex = 0;
 
@@ -57,9 +57,9 @@ public:
 	* Called when this component is added to an Entity.
 	*/
 	void init() override {
-		if (!music.openFromFile("resources\\GL010_A_Hero_Rises_Full.wav")) {
+		/*if (!music.openFromFile("resources\\GL010_A_Hero_Rises_Full.wav")) {
 			cout << "Unable to load music" << endl;
-		}
+		}*/
 		runeSounds.emplace_back("resources\\Tone 1.wav");
 		runeSounds.emplace_back("resources\\Tone 1.wav");
 		runeSounds.emplace_back("resources\\Tone 2.wav");
@@ -72,9 +72,9 @@ public:
 		runeSounds.emplace_back("resources\\Water Wave.wav");
 		runeSounds.emplace_back("resources\\Lightening.wav");
 
-		music.setVolume(25.0f);
+		/*music.setVolume(25.0f);
 		music.play();
-		music.setLoop(true);
+		music.setLoop(true);*/
 		sound.setBuffer(buffer);
 		spellSound.setBuffer(spellBuffer);
 		//bodyDef.type = b2_dynamicBody;

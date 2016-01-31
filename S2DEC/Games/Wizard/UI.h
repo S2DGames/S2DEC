@@ -4,6 +4,7 @@
 #include "SFML/Graphics/CircleShape.hpp"
 #include "SFML/Graphics/RectangleShape.hpp"
 #include "SFML/Graphics/Font.hpp"
+#include "SFML/Audio//Music.hpp"
 #include "Component.h"
 #include "Game.h"
 #include "Util.h"
@@ -24,6 +25,8 @@ private:
 	sf::RectangleShape healthBar;
 	sf::RectangleShape healthBarOutline;
 
+	sf::Music music;
+
 	float currentDegree = 0.0f;
 	int spellCount = 0;
 
@@ -42,6 +45,13 @@ public:
 	}
 
 	void init() override {
+		if (!music.openFromFile("resources\\GL010_A_Hero_Rises_Full.wav")) {
+		cout << "Unable to load music" << endl;
+		}
+		music.setVolume(25.0f);
+		music.play();
+		music.setLoop(true);
+
 		lightTexture.loadFromFile("resources/LTBL2/pointLightTexture.png");
 		lightTexture.setSmooth(true);
 
