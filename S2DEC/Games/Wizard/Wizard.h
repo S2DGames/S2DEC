@@ -11,11 +11,18 @@
 #include "Fireball.h"
 #include "WaterBlast.h"
 #include "LightningBolt.h"
+#include "SFML/Audio/Sound.hpp"
+#include "SFML/Audio/SoundBuffer.hpp"
+#include "SFML/Audio//Music.hpp"
 
 using namespace S2D;
 
 class Wizard : public Component {
 private:
+	sf::SoundBuffer buffer;
+	sf::Sound sound;
+	sf::Music music;
+
 	sf::RectangleShape image;
 
 	b2Body* body{ nullptr };
@@ -43,6 +50,15 @@ public:
 	* Called when this component is added to an Entity.
 	*/
 	void init() override {
+		if (!music.openFromFile("resources\\GL010_A_Hero_Rises_Full.wav")) {
+			cout << "Unable to load music" << endl;
+		}
+		music.setVolume(25.0f);
+		music.play();
+		sound.setBuffer(buffer);
+		if (!buffer.loadFromFile("C:\\Users\\tivanyo\\Desktop\\Casting Spell.mp3")) {
+			cout << "ERROR: Cannot load sound";
+		}
 		//bodyDef.type = b2_dynamicBody;
 
 		//shape.SetAsBox(sfTob2(image.getSize().x / 2.0f), sfTob2(image.getSize().y / 2.0f));
@@ -56,7 +72,7 @@ public:
 	}
 
 	void onStart() override {
-
+		
 	}
 
 	void update(float frameTime) override {
@@ -81,6 +97,8 @@ public:
 
 		if (game->getMouseState(sf::Mouse::Left) == KEY_PRESSED) {
 			if(canFire){
+				
+				sound.play();
 				Entity& spell = game->createEntity("Spell");
 				if (spellType == SpellType::Fire) {
 					spell.addComponent<Fireball>(sf::Vector2f{ image.getPosition().x, image.getPosition().y }, sf::Vector2f{ (float)game->getMousePos().x, (float)game->getMousePos().y });

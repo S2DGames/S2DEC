@@ -286,4 +286,9 @@
       <Filter>Games\Simulator</Filter>
     </Text>
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="..\Release\resources\GL010_A_Hero_Rises_Full.wav">
+      <Filter>Games\Wizard</Filter>
+    </Media>
+  </ItemGroup>
 </Project>
