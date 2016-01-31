@@ -17,6 +17,7 @@ protected:
 	sf::RectangleShape image;
 	bool destroySpell = false;
 	b2Body* body{ nullptr };
+	void* ui;
 
 private:
 	bool isAlive = true;
@@ -46,7 +47,6 @@ public:
 			image.setFillColor(sf::Color::Yellow);
 		}
 
-		
 		float angle = atan2(endPosition.y - image.getPosition().y, endPosition.x - image.getPosition().x);
 		angle = angle * RADTODEG;
 		if (angle < 0){
@@ -143,7 +143,5 @@ public:
 		isAlive = false;
 	}
 
-	void setDestroySpell(bool flag) {
-		destroySpell = flag;
-	}
+	void setDestroySpell(bool flag);
 };

@@ -58,7 +58,7 @@ void Game::init(){
 		globalLightSprite.setOrigin(getSize().x / 2.0f, getSize().y / 2.0f);
 		globalLightSprite.setPosition(getView().getCenter());
 
-		ltbl::LightSystem::_ambientColor = sf::Color::Black;
+		ltbl::LightSystem::_ambientColor = sf::Color{ 200, 200, 200 };
 	}
 
 	/*gridTexture.create(videoMode.width, videoMode.height);
