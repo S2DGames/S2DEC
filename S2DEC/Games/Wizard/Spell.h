@@ -76,10 +76,10 @@ public:
 		float speed = 1.5f;
 
 		if (spellType == SpellType::Fire) {
-			speed = 1.5f;
+			speed = 3.0f;
 		}
 		else if (spellType == SpellType::Water) {
-			speed = 1.5f;
+			speed = 1.0f;
 		}
 		else if (spellType == SpellType::Lightning) {
 			speed = 1.5f;

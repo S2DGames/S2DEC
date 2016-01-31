@@ -47,7 +47,7 @@ public:
 	}
 
 	void createExplosion() {
-		sound.play();
+		//sound.play();
 		explosion.setRadius(50.0f);
 		explosion.setPosition(Spell::image.getPosition());
 		explosion.setOrigin(explosion.getRadius(), explosion.getRadius());
