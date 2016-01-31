@@ -26,15 +26,18 @@ int main(){
 	//loadSnake(&game);
 	//loadsquaregame(&game);
 	//loadFireMonsterGame(&game);
-	load(&game);
-	
-	//loadSimulator(&game);
-	//the window is created when init is called.
-	game.init();
-	//game.setVerticalSyncEnabled(true);
 
-	//The entry point to the main loop.
-	GameState gs = game.play();
+	GameState gs;
+
+	loadMenu(&game);
+	game.init();
+	gs = game.play();
+	while (gs != GameState::CLOSING) {
+		loadLevel1(&game);
+		game.init();
+		//game.setVerticalSyncEnabled(true);
+		gs = game.play();
+	}
 
 	if(gs == CLOSING){
 		//once the game finishes/is exited, call this to ensure everything closes properly.

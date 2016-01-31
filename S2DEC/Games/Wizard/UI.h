@@ -51,6 +51,7 @@ public:
 
 		healthBar.setPosition(game->getSize().x / 2.0f, 15.0f);
 		healthBarOutline.setPosition(game->getSize().x / 2.0f, 15.0f);
+
 		sf::CircleShape shape1{ 10 };
 		shape1.setOrigin({ shape1.getRadius(), shape1.getRadius() });
 		shape1.setFillColor(sf::Color::Blue);

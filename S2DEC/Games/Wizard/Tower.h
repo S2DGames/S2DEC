@@ -70,6 +70,7 @@ public:
 				if (body != nullptr) {
 					game->DestroyBody(body);
 				}
+				game->endScene();
 				owner->destroy();
 			}
 		}
