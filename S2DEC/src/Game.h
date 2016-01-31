@@ -149,6 +149,8 @@ namespace S2D{
 
 		void endScene();
 
+		void endGame();
+
 		void close();
 
 		sf::FloatRect getCameraRect();

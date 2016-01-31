@@ -201,6 +201,10 @@ void Game::endScene(){
 	EntityManager::destroyAll();
 }
 
+void Game::endGame() {
+	state = CLOSING;
+}
+
 void Game::close(){
 	sf::RenderWindow::close();
 	EntityManager::destroyAll();

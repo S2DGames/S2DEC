@@ -101,12 +101,12 @@ public:
 	*/
 	void update(float frameTime) override {
 		for (auto key : game->getKeysPressed()) {
-			if (playerKeyPresses.size() < 8) {
+			if (playerKeyPresses.size() < 6) {
 				playerKeyPresses.emplace_back(key);
 			}
 		}
 
-		if (playerKeyPresses.size() == 8) {
+		if (playerKeyPresses.size() == 6) {
 			if ((spellType = checkForSpellCombo(playerKeyPresses)) > SpellType::None) {
 				cout << (int)spellType << endl;
 				canFire = true;
@@ -171,6 +171,13 @@ public:
 				//game->removeLight(lights[5]);
 			}
 		}
+
+		if (spellType == SpellType::Start) {
+			game->endScene();
+		}
+		else if(spellType == SpellType::End) {
+			game->endGame();
+		}
 	}
 
 	/**
@@ -187,23 +194,23 @@ public:
 		SpellType spellType;
 		//TODO make the selection of spells unique
 		//TODO make this area NOT a horrific mess of code, embarassing generations of programmers
-		for (int index = 0; index < 8; index++) {
+		for (int index = 0; index < 6; index++) {
 			if (keyPresses[index] == start[index]) {
 				matchCount++;
 			}
 		}
-		if (matchCount == 8) {
+		if (matchCount == 6) {
 			return SpellType::Start;
 		}
 		else {
 			matchCount = 0;
 		}
-		for (int index = 0; index < 8; index++) {
+		for (int index = 0; index < 6; index++) {
 			if (keyPresses[index] == end[index]) {
 				matchCount++;
 			}
 		}
-		if (matchCount == 8) {
+		if (matchCount == 6) {
 			return SpellType::End;
 		}
 		return SpellType::None;
