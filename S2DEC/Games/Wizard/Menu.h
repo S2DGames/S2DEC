@@ -35,9 +35,9 @@ private:
 	sf::Font font;
 	sf::Text text;
 	string easyString = "          EASY\n\nStart:                     Q W E A S D\nFire:                        W W S S\nLightning:           Q E W W\nWater:                     A Q E D\nEnd:                          E W Q D S A";
-	string hardString = "          HARD\n\nStart:                     Q W E A S D\nFire:                    W W S S A D\nLightning:       Q E W W S S\nWater:                 A Q E D A Q\nEnd:                          E W Q D S A";
-	string developerString = "     DEVELOPER\n\nStart:                     Q W E A S D\nFire:                W W S S A D A D\nLightning:   Q E W W S S A D\nWater:             A Q E D A Q E D\nEnd:                          E W Q D S A";
-
+	string hardString = "          HARD\n\nStart:                     Q W E A S D\nFire:                         W W S S A D\nLightning:            Q E W W S S\nWater:                      A Q E D A Q\nEnd:                          E W Q D S A";
+	string developerString = "     DEVELOPER\n\nStart:                     Q W E A S D\nFire:                     W W S S A D A D\nLightning:        Q E W W S S A D\nWater:                  A Q E D A Q E D\nEnd:                          E W Q D S A";
+	sf::Text title;
 public:
 	Menu(vector<sf::Keyboard::Key> controls, int& difficulty) : controls(controls), localDifficulty(difficulty) {
 		font.loadFromFile("resources/Font.ttf");
@@ -45,6 +45,10 @@ public:
 		text.setCharacterSize(18);
 		text.setString(easyString);
 		text.setPosition({30.0f, 490.0f});
+		title.setFont(font);
+		title.setCharacterSize(50);
+		title.setPosition(490, 10);
+		title.setString("Wiz  Biz");
 
 		spellbookTexture.loadFromFile("resources/spellbook.png");
 		spellbookSprite.setTexture(spellbookTexture);
@@ -235,6 +239,7 @@ public:
 			target.draw(glyph);
 		}
 		target.draw(text);
+		target.draw(title);
 	}
 
 	SpellType checkForSpellCombo(vector<sf::Keyboard::Key> keyPresses) {
